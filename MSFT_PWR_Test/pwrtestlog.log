@@ -1,0 +1,19 @@
+Start: PwrTest
+SYSTEM_POWER_CAPABILITIES 
+    SystemS1StateSupported = 0 
+    SystemS2StateSupported = 0 
+    SystemS3StateSupported = 0 
+    SystemS4StateSupported = 1 
+    SystemS5StateSupported = 1 
+    WakeAlarmPresent       = 1 
+    AcOnLineWakeSupported  = 0 
+    RtcWakeSupported       = S4 
+    FastSystemS4           = 0 
+    VideoDimPresent        = 1 
+    HiberFilePresent       = 1 
+    AoAc                   = 1 
+Error: System does not support the target sleep state.
+    File: base\power\tools\pwrtest\exe\scenariosleep.cpp
+    Line: 1057
+    Error Code: 0x8007065e
+End: Pass, PwrTest, (null)

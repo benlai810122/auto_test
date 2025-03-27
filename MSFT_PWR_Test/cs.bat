@@ -1,0 +1,1 @@
+pwrtest.exe /cs /s:3 /c:1500 /d:30 /p:30

@@ -1,0 +1,1 @@
+pwrtest.exe /sleep /s:4 /c:1 /d:60 /p:60

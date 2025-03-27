@@ -1,0 +1,26 @@
+<PwrTestLog date="03/19/2025" time="16:28:51" filename="C:\Users\Admin\Desktop\auto_workspace\MSFT_PWR_Test\pwrtestlog.xml">
+  <SystemInformation>
+    <ComputerName>DESKTOP-LGJ88V6</ComputerName>
+    <OSBuildNumber>26120</OSBuildNumber>
+    <SystemManufacturer>Dell Inc.</SystemManufacturer>
+    <SystemProductName>Latitude 9430</SystemProductName>
+    <BIOSVersion>89.12.1</BIOSVersion>
+    <BIOSReleaseDate>05/04/2022</BIOSReleaseDate>
+    <ProcessorCount>12</ProcessorCount>
+    <ProcessorPackageCount>1</ProcessorPackageCount>
+  </SystemInformation>
+  <SYSTEM_POWER_CAPABILITIES>
+    <SystemS1StateSupported>0</SystemS1StateSupported>
+    <SystemS2StateSupported>0</SystemS2StateSupported>
+    <SystemS3StateSupported>0</SystemS3StateSupported>
+    <SystemS4StateSupported>1</SystemS4StateSupported>
+    <SystemS5StateSupported>1</SystemS5StateSupported>
+    <WakeAlarmPresent>1</WakeAlarmPresent>
+    <AcOnLineWakeSupported>0</AcOnLineWakeSupported>
+    <RtcWakeSupported>4</RtcWakeSupported>
+    <FastSystemS4>0</FastSystemS4>
+    <VideoDimPresent>1</VideoDimPresent>
+    <HiberFilePresent>1</HiberFilePresent>
+    <AoAc>1</AoAc>
+  </SYSTEM_POWER_CAPABILITIES>
+</PwrTestLog>

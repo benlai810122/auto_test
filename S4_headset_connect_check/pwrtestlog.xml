@@ -1,0 +1,12 @@
+<PwrTestLog date="03/17/2025" time="16:33:14" filename="C:\Users\Admin\Desktop\auto_workspace\S4_headset_connect_check\pwrtestlog.xml">
+  <SystemInformation>
+    <ComputerName>DESKTOP-LGJ88V6</ComputerName>
+    <OSBuildNumber>26120</OSBuildNumber>
+    <SystemManufacturer>Dell Inc.</SystemManufacturer>
+    <SystemProductName>Latitude 9430</SystemProductName>
+    <BIOSVersion>89.12.1</BIOSVersion>
+    <BIOSReleaseDate>05/04/2022</BIOSReleaseDate>
+    <ProcessorCount>12</ProcessorCount>
+    <ProcessorPackageCount>1</ProcessorPackageCount>
+  </SystemInformation>
+</PwrTestLog>

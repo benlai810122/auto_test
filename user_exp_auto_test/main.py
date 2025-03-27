@@ -1,0 +1,373 @@
+
+
+from bt_control import BluetoothControl as b_control
+from pynput.keyboard import Key, Controller
+from teams_meeting_control import MeetingControl 
+from teams_call.auto_vpt.vpt_contoller import VPTControl
+from wrt_controller import WRTController
+from audio_detect_control import AudioDetectController
+from video_control import VideoControl
+from utils import log  as logger
+from utils import Utils
+from enum import Enum
+import serial.tools.list_ports
+import time
+import serial
+import os
+import pygame
+import pyautogui
+
+
+
+headset = "Dell WL5024 Headset"
+target_port_desc = "USB-SERIAL CH340"
+teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
+Timeout_s = 5
+sleep_time_s = 60
+wake_up_time_s = 60
+states = '4'
+
+class SoundOuput(Enum):
+    Teams = 1
+    Local = 2
+
+output_source = SoundOuput.Local
+
+
+def go_to_sleep():
+    '''
+    using keybaord to go to sleep mode
+    '''
+    keyboard = Controller()
+    keyboard.press(Key.cmd)
+    time.sleep(0.3)
+    keyboard.press('x')
+    time.sleep(0.3)
+    keyboard.release('x')
+    time.sleep(0.3)
+    keyboard.release(Key.cmd)
+    time.sleep(0.3)
+    keyboard.tap('u')
+    time.sleep(0.3)
+    keyboard.tap('s')
+
+
+
+def arduino_board_check() -> str:
+    '''
+    arduino board checking
+    '''
+    ports = serial.tools.list_ports.comports()
+    for port, desc, hwid in ports:
+        if target_port_desc in desc:
+            target_port = port
+            print(f"{port}: {desc}")
+            return port
+    if not target_port:
+        return ""
+    
+def turn_on_headset(ser:serial.Serial, command:bytes)->bool:
+    '''
+    turn on the headset and check if headset connect
+    '''
+    counter = 0
+    while counter < Timeout_s:
+        if b_control.status_check(target=headset, type="AudioEndpoint"):
+            print("Headset connect!")
+            return True
+        else:
+            print("headset doesn't connet, click the power button to turn on")
+            ser.write(command)
+            time.sleep(12)
+            counter+=1
+    return False
+    
+
+def turn_off_headset(ser:serial.Serial, command:bytes)->None:
+    '''
+    turn off the headset and check if headset disconnect
+    '''
+    counter = 0
+    while counter <Timeout_s:
+        if not b_control.status_check(target=headset, type="AudioEndpoint"):
+            print("Headset disconnect!")
+            return True
+        else:
+            print("headset still, click the power button to turn off")
+            ser.write(command)
+            time.sleep(10)
+            counter+=1
+    return False
+
+def voice_detect(ser:serial.Serial, command:bytes)->bool:
+    '''
+    detect the sound
+    '''
+    ser.write(command)
+    time.sleep(3)
+    res = ser.read()
+    print(f'*******************res = {res}***********************')
+    return True if b'1' in res else False
+
+
+def buzzer_buzzing(command:bytes)->bool:
+    '''
+    let buzzer start buzzing for 5 sec
+    '''
+    ser.write(command)
+
+def open_teams_call_and_join_meeting( t_control:MeetingControl)->bool:
+    '''
+    open teams call and join the specific meeting
+    '''
+    t_control.open_teams()
+    time.sleep(10)
+    if t_control.join_meeting():
+        time.sleep(5)
+        t_control.open_camera_and_mute()
+        time.sleep(5)
+        return True
+    else:
+        return False
+    
+
+def close_teams_call_and_vpt():
+    '''
+    close the teams call and vpt robot
+    '''
+    MeetingControl.end_meeting()
+    time.sleep(5)
+    MeetingControl.close_teams()
+    VPTControl.vpt_bot_close()
+
+
+def get_arduino_port()->str:
+    '''
+    check and get the arduino board serial port
+    '''
+    serial_port = ""
+    while True:
+        serial_port = arduino_board_check()
+        if serial_port=="":
+            print("Please connect the arduino board! and press any key to continue")
+            input()
+        else:
+            break
+    
+    return serial_port
+
+
+def output_test_init(output_source:SoundOuput)->bool:
+    '''
+    doing some pre init before test the headset output function , like open teams or local music
+    '''
+    match output_source:
+        case SoundOuput.Teams:
+            # open the teams call and join the meeting 
+            res = open_teams_call_and_join_meeting(t_control=t_control)
+            if not res:
+                logger.error('Can not join the Teams call meeting!')
+                close_teams_call_and_vpt()
+                return False
+            logger.info("Join the meeting...")
+            # teams call robot join
+            res = v_control.vpt_bot_join()
+            if not res:
+                logger.error('Can not execute VPT successfully')
+                close_teams_call_and_vpt()
+                return False
+            logger.info("VPT teams robot join the meeting...")
+
+        case SoundOuput.Local:
+            videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
+            videoControl.play()
+
+    return True
+        
+
+
+def output_test_del(output_source:SoundOuput)->bool:
+    '''
+    doing some pre init before test the headset output function , like open teams or local music
+    '''
+    match output_source:
+
+        case SoundOuput.Teams:
+            #close the teams call and vpt robot
+            close_teams_call_and_vpt()
+            logger.info("Close the meeting and VPT robot")
+          
+        case SoundOuput.Local:
+            #close the media player
+            VideoControl.stop_play()
+            
+
+
+    
+    return True
+
+def mouse_function_detect_s4(ser:serial.Serial, command:bytes)->bool:
+    """_summary_
+        check mouse function still working or not (s4 states)
+    Returns:
+        bool: _description_
+    """
+    counter = 0
+    pygame.init()
+    screen = pygame.display.set_mode((1920, 1200))
+    running = True
+    logger.info("BLE mouse function test start")
+    #control mouse clicking
+    ser.write(command)
+    #start cehcking mouse click
+    while counter < Timeout_s:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                logger.error("mouse function test have unexpected issue!")
+                pygame.quit()
+                return False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                logger.info("BLE mouse function pass!")
+                pygame.quit()
+                return True
+        counter+=1
+        time.sleep(1)
+    pygame.quit()
+    logger.error("mouse function test fail!")
+    return False
+
+def mouse_function_detect_s3(ser:serial.Serial, command:bytes, sleep_time:int)->bool:
+    """_summary_
+        check mouse function still working or not (s3 states)
+    Returns:
+        bool: _description_
+    """
+    logger.info("BLE mouse function test setting...")
+    #control mouse clicking
+    #command.join(sleep_time)
+    ser.write(command)
+    logger.info(f"BLE mouse will click after {sleep_time} second! ")
+    return True
+
+def arduino_serial_port_reset(ser:serial.Serial):
+    ser.close()
+    time.sleep(5)
+    return serial.Serial(serial_port, 115200)
+    
+
+if __name__ == "__main__":
+    serial_port = get_arduino_port()
+    cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:{states} /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
+    cmd_servo = str.encode("0")
+    cmd_voice_detect = str.encode("1")
+    cmd_buzzer = str.encode("2")
+    cmd_mouse_s4 = str.encode("3")
+    cmd_mouse_s3 = str.encode("4")
+    ser = serial.Serial(serial_port, 115200)
+    t_control = MeetingControl(meeting_link=teams_url,teams_path="\\teams_call\\")
+    v_control = VPTControl()
+    time.sleep(5)
+    test_success_count = 0
+    test_total_count = 0
+    keyboard = Controller()
+
+    while(True):
+
+        res_mouse = False
+        res_output = False
+        output_init_flag = 0
+        res_input = False
+        logger.info('Test start...')
+
+        #s3 states
+        #mouse_function_detect_s3(ser=ser,command=cmd_mouse_s3,sleep_time=sleep_time_s)
+        #go_to_sleep()
+        #time.sleep(Wake_up_time_s)
+
+        #s4 states
+        #go to sleep mode first and waiting for mouse click
+        #logger.info(f'Go to s{states} mode!')
+        #Utils.run_sync_cmd(cmd=cmd_pwrtest)
+
+        #mouse clicking function checking
+        res_mouse = mouse_function_detect_s4(ser = ser, command= cmd_mouse_s4)
+        time.sleep(10)
+
+        #ser = arduino_serial_port_reset()
+
+        # turn on the headset 
+        if not turn_on_headset(ser = ser, command= cmd_servo):
+            logger.error('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
+            break
+        logger.info("Turn on the headset successfully, connected")
+
+        # doing output test pre init and headset output function check
+        if output_test_init(output_source=output_source):
+            # play sound 20 sec before detect
+            time.sleep(20)
+            #voice detect
+            res_output = voice_detect(ser = ser, command=cmd_voice_detect)
+            if not res_output:
+                logger.error('Headset output function have some issue!')
+                logger.error('Record wrt log...')
+                WRTController.dump_wrt_log()
+                logger.error('Record wrt log successfully')
+            logger.info("Headset output function is working!")
+            output_test_del(output_source=output_source)
+        else:
+            logger.error('Headset output test init have some issue!')
+            output_init_flag = 1
+
+
+        #headset input function test
+        ad_Controller = AudioDetectController(headset= headset, threshold=3000)
+        buzzer_buzzing(command=cmd_buzzer)
+        res_input = ad_Controller.audio_detect()
+        if not res_input:
+            logger.error('Headset input function have some issue!')
+            logger.error('Record wrt log...')
+            WRTController.dump_wrt_log()
+            logger.error('Record wrt log successfully')
+        logger.info("Headset input function is working!")
+
+        #turn off the headset
+        if not turn_off_headset(ser = ser, command= cmd_servo):
+            logger.error('Can not turn off the Headset, stop test!')
+            break
+        logger.info("Headset turn off successfully, disconneted")
+
+
+        #summary the test result
+        logger.info(f'mouse function: {res_mouse}')
+        logger.info(f'headset output function: {res_output}, init issue:{output_init_flag}')
+        logger.info(f'headset input function: {res_input}')
+        if res_output and res_input:
+            test_success_count+=1
+        test_total_count+=1
+        logger.info(f'successfully test  {test_success_count} times')
+        logger.info(f'Total test  {test_total_count} times')
+    
+
+
+
+
+
+
+       
+    
+    
+        
+
+
+
+    
+    
+    
+
+
+            
+    
+    
+
+        
+

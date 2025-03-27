@@ -1,0 +1,1244 @@
+2025-03-12 15:05:29,756 [INFO] <main.py> <module>() Test start...
+2025-03-12 15:05:31,848 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-12 15:06:17,231 [INFO] <main.py> <module>() Join the meeting...
+2025-03-12 15:07:34,256 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-12 15:08:04,272 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-12 15:08:11,748 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-12 15:08:14,072 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-12 15:09:04,161 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-12 15:09:04,163 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-12 15:09:04,163 [INFO] <main.py> <module>() Total test  1 times
+2025-03-12 15:09:04,165 [INFO] <main.py> <module>() Test start...
+2025-03-12 15:10:04,050 [ERROR] <main.py> <module>() Can not turn on the Headset or headset can not connect to the dut, stop test!
+2025-03-17 15:37:33,817 [INFO] <main.py> <module>() Test start...
+2025-03-17 15:37:36,984 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 15:38:20,989 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 15:39:30,016 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 15:40:00,032 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 15:40:07,237 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 15:40:09,199 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 15:40:45,246 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 15:40:45,246 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 15:40:45,246 [INFO] <main.py> <module>() Total test  1 times
+2025-03-17 15:40:45,246 [INFO] <main.py> <module>() Test start...
+2025-03-17 15:53:02,941 [INFO] <main.py> <module>() Test start...
+2025-03-17 15:53:04,571 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 15:53:48,432 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 15:55:00,092 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 15:55:30,108 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 15:55:37,395 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 15:55:39,428 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 15:56:36,551 [ERROR] <main.py> <module>() Can not turn off the Headset, stop test!
+2025-03-17 16:09:30,749 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:10:06,881 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:33:41,129 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:33:42,697 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:34:26,994 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:35:38,490 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:36:08,506 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:36:15,777 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:36:17,934 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:36:30,662 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 16:36:30,673 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 16:36:30,673 [INFO] <main.py> <module>() Total test  1 times
+2025-03-17 16:36:30,673 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:36:43,643 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:37:27,303 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:39:14,791 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:39:44,806 [ERROR] <main.py> <module>() Headset output function have some issue!
+2025-03-17 16:39:44,809 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-17 16:40:12,354 [WARNING] <selenium_manager.py> _process_logs() Error sending stats to Plausible: error sending request for url (https://plausible.io/api/event)
+2025-03-17 16:41:15,285 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-17 16:41:15,287 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:41:22,537 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:41:24,457 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:41:37,251 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 16:41:37,251 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 16:41:37,251 [INFO] <main.py> <module>() Total test  2 times
+2025-03-17 16:41:37,263 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:41:50,213 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:42:34,827 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:43:49,958 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:44:19,973 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:44:27,136 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:44:29,096 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:44:41,626 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 16:44:41,626 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-17 16:44:41,626 [INFO] <main.py> <module>() Total test  3 times
+2025-03-17 16:44:41,642 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:44:54,616 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:45:38,284 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:46:52,494 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:47:22,509 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:47:29,691 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:47:31,668 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:52:10,126 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:52:23,232 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:53:08,057 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:54:18,805 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:54:48,820 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:54:56,023 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:54:58,312 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:55:11,180 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 16:55:11,180 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 16:55:11,180 [INFO] <main.py> <module>() Total test  1 times
+2025-03-17 16:55:11,180 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:55:24,139 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 16:56:07,877 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 16:57:18,081 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 16:57:48,097 [ERROR] <main.py> <module>() Headset output function have some issue!
+2025-03-17 16:57:48,099 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-17 16:58:50,286 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-17 16:58:50,287 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 16:58:57,516 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 16:58:59,463 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 16:59:12,402 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 16:59:12,402 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 16:59:12,402 [INFO] <main.py> <module>() Total test  2 times
+2025-03-17 16:59:12,402 [INFO] <main.py> <module>() Test start...
+2025-03-17 16:59:25,582 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:00:10,170 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:01:22,442 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:01:52,457 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:01:59,643 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:02:13,233 [ERROR] <main.py> <module>() Headset input function have some issue!
+2025-03-17 17:02:13,238 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-17 17:03:14,808 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-17 17:03:14,808 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:03:27,785 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:03:27,785 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-17 17:03:27,785 [INFO] <main.py> <module>() Total test  3 times
+2025-03-17 17:03:27,800 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:03:40,887 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:04:24,548 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:05:36,942 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:06:06,957 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:06:14,160 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:06:15,035 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:06:27,895 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:06:27,895 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-17 17:06:27,895 [INFO] <main.py> <module>() Total test  4 times
+2025-03-17 17:06:27,895 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:06:40,880 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:07:25,540 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:08:38,685 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:09:08,701 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:09:15,907 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:09:16,753 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:09:29,521 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:09:29,521 [INFO] <main.py> <module>() successfully test  3 times
+2025-03-17 17:09:29,521 [INFO] <main.py> <module>() Total test  5 times
+2025-03-17 17:09:29,521 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:09:42,600 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:10:26,243 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:11:40,015 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:12:10,030 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:12:17,185 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:12:19,222 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:12:31,824 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:12:31,824 [INFO] <main.py> <module>() successfully test  4 times
+2025-03-17 17:12:31,824 [INFO] <main.py> <module>() Total test  6 times
+2025-03-17 17:12:31,824 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:12:44,821 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:13:29,153 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:14:44,551 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:15:14,566 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:15:21,736 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:15:23,722 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:15:36,461 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:15:36,461 [INFO] <main.py> <module>() successfully test  5 times
+2025-03-17 17:15:36,461 [INFO] <main.py> <module>() Total test  7 times
+2025-03-17 17:15:36,461 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:15:49,495 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:16:33,101 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:17:45,201 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:18:15,217 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:18:22,372 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:18:22,596 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:18:35,533 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:18:35,533 [INFO] <main.py> <module>() successfully test  6 times
+2025-03-17 17:18:35,533 [INFO] <main.py> <module>() Total test  8 times
+2025-03-17 17:18:35,533 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:18:48,516 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:19:33,169 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:20:45,733 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:21:15,749 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:21:22,994 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:21:23,799 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:21:36,887 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:21:36,887 [INFO] <main.py> <module>() successfully test  7 times
+2025-03-17 17:21:36,887 [INFO] <main.py> <module>() Total test  9 times
+2025-03-17 17:21:36,889 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:21:49,927 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:22:33,612 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:23:47,431 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:24:17,446 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:24:24,674 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:24:25,482 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:24:38,506 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:24:38,506 [INFO] <main.py> <module>() successfully test  8 times
+2025-03-17 17:24:38,506 [INFO] <main.py> <module>() Total test  10 times
+2025-03-17 17:24:38,506 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:24:51,593 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:25:35,876 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:26:47,510 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:27:17,526 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:27:24,710 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:27:26,710 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:27:39,564 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:27:39,564 [INFO] <main.py> <module>() successfully test  9 times
+2025-03-17 17:27:39,566 [INFO] <main.py> <module>() Total test  11 times
+2025-03-17 17:27:39,566 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:27:52,517 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:28:36,188 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:29:48,536 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:30:18,552 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:30:25,765 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:30:39,414 [ERROR] <main.py> <module>() Headset input function have some issue!
+2025-03-17 17:30:39,414 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-17 17:31:41,631 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-17 17:31:41,631 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:31:54,643 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:31:54,643 [INFO] <main.py> <module>() successfully test  9 times
+2025-03-17 17:31:54,646 [INFO] <main.py> <module>() Total test  12 times
+2025-03-17 17:31:54,646 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:32:07,772 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:32:52,139 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:34:04,464 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-17 17:34:34,479 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-17 17:34:41,662 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-17 17:34:42,477 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-17 17:34:55,486 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-17 17:34:55,486 [INFO] <main.py> <module>() successfully test  10 times
+2025-03-17 17:34:55,486 [INFO] <main.py> <module>() Total test  13 times
+2025-03-17 17:34:55,490 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:35:08,320 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:35:34,426 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:35:34,430 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:35:34,431 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:35:35,872 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:36:01,857 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:36:01,861 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:36:01,862 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:36:03,386 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:36:29,139 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:36:29,139 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:36:29,139 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:36:30,647 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:36:56,573 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:36:56,578 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:36:56,580 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:36:58,125 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:37:24,002 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:37:24,006 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:37:24,007 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:37:25,440 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:37:51,388 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:37:51,388 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:37:51,388 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:37:52,916 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:38:18,856 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:38:18,859 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:38:18,860 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:38:20,364 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:38:46,297 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:38:46,301 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:38:46,302 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:38:47,857 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:39:13,816 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:39:13,816 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:39:13,831 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:39:15,405 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:39:41,350 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:39:41,354 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:39:41,355 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:39:42,850 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:40:08,760 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:40:08,763 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:40:08,764 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:40:10,211 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:40:36,127 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-17 17:40:36,127 [ERROR] <main.py> <module>() Can not join the Teams call meeting!
+2025-03-17 17:40:36,127 [INFO] <main.py> <module>() Test start...
+2025-03-17 17:40:37,699 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-17 17:41:21,197 [INFO] <main.py> <module>() Join the meeting...
+2025-03-17 17:42:36,353 [INFO] <main.py> <module>() VPT teams robot join the meeting...
+2025-03-18 17:48:36,110 [INFO] <main.py> <module>() Test start...
+2025-03-18 17:48:37,783 [INFO] <main.py> mouse_function_detect() VPT teams robot join the meeting...
+2025-03-18 17:49:09,853 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-18 18:07:07,865 [INFO] <main.py> <module>() Test start...
+2025-03-18 18:07:24,785 [INFO] <main.py> <module>() Test start...
+2025-03-18 18:08:23,568 [INFO] <main.py> <module>() Test start...
+2025-03-18 18:08:24,818 [INFO] <main.py> mouse_function_detect() VPT teams robot join the meeting...
+2025-03-18 18:08:27,971 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-18 18:08:54,324 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-18 18:08:54,327 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-19 10:32:55,531 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:32:56,900 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:32:57,905 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:33:15,417 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 10:33:59,494 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-19 10:35:36,502 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-19 10:36:06,518 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-19 10:36:13,866 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-19 10:36:16,087 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 10:36:30,733 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-19 10:36:30,736 [INFO] <main.py> <module>() mouse function: True
+2025-03-19 10:36:30,736 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-19 10:36:30,736 [INFO] <main.py> <module>() headset input function: True
+2025-03-19 10:36:30,739 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-19 10:36:30,739 [INFO] <main.py> <module>() Total test  1 times
+2025-03-19 10:36:30,741 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:36:34,114 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:36:39,322 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-19 10:37:18,048 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 10:38:02,882 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-19 10:39:41,480 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-19 10:40:11,494 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-19 10:40:18,908 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-19 10:40:32,676 [ERROR] <main.py> <module>() Headset input function have some issue!
+2025-03-19 10:40:32,678 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-19 10:41:36,841 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-19 10:41:36,843 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 10:45:56,624 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:45:58,215 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:45:59,222 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:46:36,754 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 10:47:20,859 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-19 10:48:49,618 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-19 10:49:19,635 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-19 10:49:26,978 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-19 10:49:29,174 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() mouse function: True
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() headset input function: True
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() Total test  1 times
+2025-03-19 10:49:42,980 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:49:43,912 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:49:49,130 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-19 10:50:02,820 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 10:50:47,674 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-19 10:52:04,984 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-19 10:52:34,997 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-19 10:52:42,375 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-19 10:52:47,895 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() mouse function: False
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() headset input function: True
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() Total test  2 times
+2025-03-19 10:53:02,182 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:53:06,022 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:53:11,229 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-19 10:53:25,028 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 10:54:08,912 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-19 10:55:31,982 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-19 10:56:01,997 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-19 10:56:09,369 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-19 10:56:14,984 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 10:56:28,874 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-19 10:56:28,874 [INFO] <main.py> <module>() mouse function: False
+2025-03-19 10:56:28,876 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-19 10:56:28,878 [INFO] <main.py> <module>() headset input function: True
+2025-03-19 10:56:28,878 [INFO] <main.py> <module>() successfully test  3 times
+2025-03-19 10:56:28,878 [INFO] <main.py> <module>() Total test  3 times
+2025-03-19 10:56:28,878 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:56:32,953 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:56:38,180 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-19 10:59:08,014 [INFO] <main.py> <module>() Test start...
+2025-03-19 10:59:09,387 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:59:10,400 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 10:59:12,487 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 13:59:20,439 [INFO] <main.py> <module>() Test start...
+2025-03-19 13:59:20,439 [INFO] <main.py> <module>() Go in to s3 mode!
+2025-03-19 14:00:19,102 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:00:19,102 [INFO] <main.py> <module>() Go in to s3 mode!
+2025-03-19 14:00:22,247 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:00:25,376 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 14:00:56,333 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 14:10:02,665 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:10:02,665 [INFO] <main.py> <module>() Go in to s3 mode!
+2025-03-19 14:10:06,062 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:10:07,067 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 14:10:10,589 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 14:17:19,868 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:17:19,868 [INFO] <main.py> <module>() Go in to s3 mode!
+2025-03-19 14:17:23,081 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:17:24,090 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 14:23:13,461 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:23:13,461 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 14:23:16,750 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:23:17,757 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 14:24:06,127 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:24:06,127 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 14:24:09,299 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:24:14,473 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-19 14:24:16,363 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 14:24:42,060 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-19 14:24:42,060 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-19 14:24:49,334 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-19 14:25:02,870 [ERROR] <main.py> <module>() Headset input function have some issue!
+2025-03-19 14:25:02,870 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-19 14:26:52,194 [INFO] <main.py> <module>() Test start...
+2025-03-19 14:26:52,194 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 14:26:55,402 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 14:26:56,407 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 14:26:58,319 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 17:52:06,931 [INFO] <main.py> <module>() Test start...
+2025-03-19 17:52:06,931 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 17:53:01,687 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 17:53:04,732 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 17:55:16,901 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 17:57:52,311 [INFO] <main.py> <module>() Test start...
+2025-03-19 17:57:52,311 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 17:59:13,782 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 17:59:16,841 [INFO] <main.py> mouse_function_detect() BLE mouse function test pass!
+2025-03-19 18:01:00,965 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 18:01:05,707 [INFO] <teams_meeting_control.py> open_teams() teams call configure error: Can't not open the teams call meeting link
+2025-03-19 18:04:21,873 [INFO] <main.py> <module>() Test start...
+2025-03-19 18:04:21,873 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 18:05:42,839 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 18:05:45,945 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-19 18:06:10,221 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 18:06:36,347 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-19 18:06:36,347 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-19 18:06:43,430 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-19 18:06:45,042 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-19 18:06:56,984 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-19 18:06:56,984 [INFO] <main.py> <module>() mouse function: True
+2025-03-19 18:06:56,984 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-19 18:06:56,984 [INFO] <main.py> <module>() headset input function: True
+2025-03-19 18:06:57,000 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-19 18:06:57,000 [INFO] <main.py> <module>() Total test  1 times
+2025-03-19 18:06:57,002 [INFO] <main.py> <module>() Test start...
+2025-03-19 18:06:57,002 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 18:08:17,787 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 18:08:18,805 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-19 18:09:23,028 [INFO] <main.py> <module>() Test start...
+2025-03-19 18:09:23,028 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 18:09:26,174 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 18:09:27,179 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-19 18:09:45,208 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 18:09:54,328 [INFO] <teams_meeting_control.py> open_teams() teams call configure error: Can't not open the teams call meeting link
+2025-03-19 18:10:34,195 [INFO] <main.py> <module>() Test start...
+2025-03-19 18:10:34,195 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 18:11:59,862 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 18:12:00,900 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-19 18:12:48,877 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 18:14:18,910 [INFO] <main.py> <module>() Test start...
+2025-03-19 18:14:18,910 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-19 18:15:41,742 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-19 18:15:42,767 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-19 18:15:54,192 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-19 18:16:37,303 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 10:23:16,752 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:23:16,752 [INFO] <main.py> <module>() Go to s3 mode!
+2025-03-20 10:23:20,357 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-20 10:23:21,380 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-20 10:23:44,816 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 10:42:21,068 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:42:21,068 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 10:42:36,168 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:42:36,168 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 10:43:17,224 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:43:17,226 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 10:43:19,136 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-20 10:43:24,415 [ERROR] <main.py> mouse_function_detect() mouse function test fail!
+2025-03-20 10:43:37,221 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 10:44:17,592 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:44:17,592 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 10:44:18,731 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-20 10:44:22,738 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-20 10:44:35,187 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 10:59:28,530 [INFO] <main.py> <module>() Test start...
+2025-03-20 10:59:28,530 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 10:59:29,888 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-20 10:59:32,949 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-20 11:32:06,737 [INFO] <main.py> <module>() Test start...
+2025-03-20 11:32:06,737 [INFO] <main.py> <module>() Go to s4 mode!
+2025-03-20 11:32:09,927 [INFO] <main.py> mouse_function_detect() BLE mouse function test start
+2025-03-20 11:32:13,004 [INFO] <main.py> mouse_function_detect() BLE mouse function pass!
+2025-03-20 11:32:24,835 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 15:21:49,141 [INFO] <main.py> <module>() Test start...
+2025-03-20 15:21:49,141 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 15:21:49,145 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 15:22:36,353 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 15:23:20,129 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 15:25:48,277 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 15:26:18,292 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 15:26:25,486 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 15:26:27,440 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 16:29:52,280 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:29:52,282 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:29:52,282 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:31:36,992 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:31:36,994 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:31:37,000 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:34:20,297 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:34:20,297 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:34:20,299 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:39:41,563 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:39:41,567 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:39:41,569 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:44:56,242 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:44:56,242 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:44:56,246 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:47:52,794 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:47:52,794 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:47:52,794 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:53:01,286 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:53:01,287 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:53:01,287 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:55:14,646 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:55:14,648 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:55:14,653 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:56:43,800 [INFO] <main.py> <module>() Test start...
+2025-03-20 16:56:43,800 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 16:56:43,800 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 16:58:15,753 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 16:58:59,546 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:00:39,859 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 17:01:09,868 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 17:01:17,099 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 17:01:19,040 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() mouse function: False
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() Total test  1 times
+2025-03-20 17:01:32,528 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:01:32,528 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:01:32,528 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:02:52,396 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:03:36,897 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:05:36,869 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 17:06:06,883 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 17:06:14,065 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 17:06:19,737 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:06:33,204 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:06:33,204 [INFO] <main.py> <module>() mouse function: False
+2025-03-20 17:06:33,204 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-20 17:06:33,216 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:06:33,216 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-20 17:06:33,216 [INFO] <main.py> <module>() Total test  2 times
+2025-03-20 17:06:33,216 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:06:33,218 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:06:33,218 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:07:53,687 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:08:19,829 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-20 17:08:19,833 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-20 17:08:27,004 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-20 17:08:29,202 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() mouse function: False
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() Total test  3 times
+2025-03-20 17:08:42,706 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:08:42,706 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:08:42,706 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:10:37,872 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:11:22,099 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:15:49,045 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:15:49,045 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:15:49,045 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:16:59,119 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:17:43,045 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:20:12,305 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:20:12,305 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:20:12,307 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:21:20,316 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:22:03,961 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:23:20,262 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 17:23:50,275 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 17:23:57,599 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 17:24:03,101 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:24:15,966 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:24:15,966 [INFO] <main.py> <module>() mouse function: False
+2025-03-20 17:24:15,966 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-20 17:24:15,966 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:24:15,966 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-20 17:24:15,982 [INFO] <main.py> <module>() Total test  1 times
+2025-03-20 17:24:15,982 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:24:15,982 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:24:15,982 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:25:58,525 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:26:25,526 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-20 17:26:25,539 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-20 17:26:32,735 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-20 17:26:34,472 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() mouse function: False
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() Total test  2 times
+2025-03-20 17:26:47,193 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:26:47,193 [INFO] <main.py> mouse_function_detect_s3() BLE mouse function test setting...
+2025-03-20 17:26:47,193 [INFO] <main.py> mouse_function_detect_s3() BLE mouse will click after 60 second! 
+2025-03-20 17:28:22,254 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:28:23,408 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-20 17:28:24,421 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-20 17:28:48,008 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:29:31,865 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:31:01,612 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 17:31:31,625 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 17:31:38,928 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 17:31:39,182 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() mouse function: True
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() headset input function: True
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() Total test  1 times
+2025-03-20 17:31:52,491 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:31:53,414 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-20 17:31:54,420 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-20 17:32:18,135 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:32:45,119 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-20 17:32:45,119 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-20 17:32:52,259 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-20 17:33:06,994 [ERROR] <main.py> <module>() Headset input function have some issue!
+2025-03-20 17:33:06,997 [ERROR] <main.py> <module>() Record wrt log...
+2025-03-20 17:34:11,553 [ERROR] <main.py> <module>() Record wrt log successfully
+2025-03-20 17:34:11,553 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() mouse function: True
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() headset input function: False
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() Total test  2 times
+2025-03-20 17:34:24,460 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:34:25,703 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-20 17:34:26,710 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-20 17:35:35,009 [ERROR] <main.py> <module>() Can not turn on the Headset or headset can not connect to the dut, stop test!
+2025-03-20 17:36:17,398 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:36:18,388 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-20 17:36:19,403 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-20 17:36:31,092 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-20 17:37:15,077 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-20 17:38:30,174 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-20 17:39:00,188 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-20 17:39:07,351 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-20 17:39:13,014 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-20 17:40:10,521 [ERROR] <main.py> <module>() Can not turn off the Headset, stop test!
+2025-03-20 17:48:27,452 [INFO] <main.py> <module>() Test start...
+2025-03-20 17:48:28,919 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-20 17:48:29,953 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-20 17:48:42,057 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:00:04,530 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:00:04,887 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:00:09,965 [ERROR] <main.py> mouse_function_detect_s4() mouse function test fail!
+2025-03-21 14:01:18,533 [ERROR] <main.py> <module>() Can not turn on the Headset or headset can not connect to the dut, stop test!
+2025-03-21 14:02:38,311 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:02:38,616 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:02:39,621 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:02:51,193 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:03:35,291 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-21 14:04:51,308 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-21 14:05:21,322 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-21 14:05:28,565 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-21 14:05:30,603 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:06:35,331 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:06:35,572 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:06:36,596 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:06:48,210 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:07:33,079 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-21 14:09:31,230 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-21 14:10:01,243 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-21 14:10:08,537 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-21 14:10:08,836 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() mouse function: True
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() headset input function: True
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() Total test  1 times
+2025-03-21 14:10:33,885 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:10:34,101 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:10:35,113 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:16:50,960 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:16:51,222 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:16:52,247 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:17:59,679 [ERROR] <main.py> <module>() Can not turn on the Headset or headset can not connect to the dut, stop test!
+2025-03-21 14:18:26,132 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:18:26,406 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:18:27,429 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:18:38,897 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:19:05,307 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-21 14:19:05,310 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-21 14:19:12,564 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-21 14:19:14,195 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:19:27,425 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-21 14:19:27,425 [INFO] <main.py> <module>() mouse function: True
+2025-03-21 14:19:27,425 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-21 14:19:27,427 [INFO] <main.py> <module>() headset input function: True
+2025-03-21 14:19:27,427 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-21 14:19:27,429 [INFO] <main.py> <module>() Total test  1 times
+2025-03-21 14:19:27,429 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:19:27,646 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:19:28,649 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:24:09,918 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:24:10,258 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:24:11,280 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:24:34,947 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:25:02,584 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-21 14:25:02,589 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-21 14:25:09,814 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-21 14:25:11,381 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:25:24,836 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-21 14:25:24,836 [INFO] <main.py> <module>() mouse function: True
+2025-03-21 14:25:24,838 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-21 14:25:24,838 [INFO] <main.py> <module>() headset input function: True
+2025-03-21 14:25:24,838 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-21 14:25:24,838 [INFO] <main.py> <module>() Total test  1 times
+2025-03-21 14:25:24,842 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:25:25,061 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:25:26,064 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:25:49,382 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:26:15,607 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-21 14:26:15,613 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-21 14:26:22,844 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-21 14:26:24,406 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:29:06,986 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:29:07,278 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:29:08,290 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-21 14:29:31,905 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-21 14:30:15,592 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-21 14:31:34,256 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-21 14:32:04,270 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-21 14:32:11,452 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-21 14:32:13,578 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-21 14:32:26,842 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-21 14:32:26,842 [INFO] <main.py> <module>() mouse function: True
+2025-03-21 14:32:26,842 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-21 14:32:26,842 [INFO] <main.py> <module>() headset input function: True
+2025-03-21 14:32:26,842 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-21 14:32:26,858 [INFO] <main.py> <module>() Total test  1 times
+2025-03-21 14:32:26,858 [INFO] <main.py> <module>() Test start...
+2025-03-21 14:32:27,047 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-21 14:32:28,055 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:28:31,630 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:28:32,225 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:28:35,350 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:28:48,868 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:29:33,026 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 11:30:29,389 [WARNING] <selenium_manager.py> _process_logs() Error sending stats to Plausible: error sending request for url (https://plausible.io/api/event)
+2025-03-24 11:31:27,448 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 11:31:57,462 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 11:32:04,690 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 11:32:06,827 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 11:32:19,826 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 11:32:19,826 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 11:32:19,826 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 11:32:19,826 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 11:32:19,842 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 11:32:19,842 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 11:32:19,842 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:32:20,050 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:32:21,067 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:33:08,159 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:33:52,943 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 11:35:06,131 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 11:35:36,144 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 11:35:43,316 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 11:35:45,525 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 11:35:59,021 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 11:35:59,024 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 11:35:59,024 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 11:35:59,024 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 11:35:59,024 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-24 11:35:59,024 [INFO] <main.py> <module>() Total test  2 times
+2025-03-24 11:35:59,028 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:35:59,259 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:36:00,276 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:36:23,989 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:37:07,681 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 11:38:20,402 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 11:38:50,415 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 11:38:57,658 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 11:38:59,686 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 11:39:13,190 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 11:39:13,190 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 11:39:13,190 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 11:39:13,190 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 11:39:13,190 [INFO] <main.py> <module>() successfully test  3 times
+2025-03-24 11:39:13,206 [INFO] <main.py> <module>() Total test  3 times
+2025-03-24 11:39:13,206 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:39:13,455 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:39:14,470 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:39:38,110 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:40:23,563 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 11:41:45,498 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 11:42:15,512 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 11:42:22,751 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 11:42:25,106 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 11:42:38,168 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 11:42:38,173 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 11:42:38,174 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 11:42:38,174 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 11:42:38,174 [INFO] <main.py> <module>() successfully test  4 times
+2025-03-24 11:42:38,174 [INFO] <main.py> <module>() Total test  4 times
+2025-03-24 11:42:38,174 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:42:38,383 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:42:43,464 [ERROR] <main.py> mouse_function_detect_s4() mouse function test fail!
+2025-03-24 11:43:06,874 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:50:48,546 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:50:48,818 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:50:49,849 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:51:01,454 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:51:45,179 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 11:52:58,376 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 11:53:28,390 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 11:53:35,583 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 11:53:38,004 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 11:53:50,526 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 11:53:50,526 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 11:53:50,526 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 11:53:50,538 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 11:53:50,540 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 11:53:50,540 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 11:53:50,540 [INFO] <main.py> <module>() Test start...
+2025-03-24 11:53:50,741 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 11:53:51,768 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 11:54:15,120 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 11:54:59,927 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:02:11,659 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:02:11,953 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:02:15,031 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:02:26,734 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:03:10,607 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:04:45,521 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 14:05:15,535 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 14:05:22,780 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 14:05:24,816 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:11:03,422 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:11:03,722 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:11:04,729 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:11:27,938 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:11:50,545 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:11:50,550 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:11:57,802 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:11:59,397 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 14:12:12,524 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:12:12,805 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:12:13,811 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:12:36,906 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:12:57,908 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:12:57,913 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:13:05,119 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:13:06,757 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() Total test  2 times
+2025-03-24 14:13:19,849 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:13:20,108 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:13:21,116 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:14:07,527 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:14:29,453 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:14:29,457 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:14:36,720 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:15:11,736 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:15:12,037 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:15:13,057 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:15:24,746 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:15:51,169 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:15:51,174 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:15:58,477 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:16:00,125 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:16:13,137 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:16:13,137 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:16:13,137 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:16:13,137 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:16:13,137 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-24 14:16:13,152 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 14:16:13,153 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:16:13,359 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:16:14,364 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:16:37,845 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:17:04,732 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:17:04,736 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:17:11,968 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:17:13,640 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:17:26,450 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:17:26,450 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:17:26,450 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:17:26,460 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:17:26,461 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-24 14:17:26,461 [INFO] <main.py> <module>() Total test  2 times
+2025-03-24 14:17:26,464 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:17:26,695 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:17:29,703 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:24:37,832 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:24:38,201 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:24:39,207 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:24:50,814 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:25:34,691 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:30:17,805 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:30:18,101 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:30:19,107 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:30:30,931 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:30:58,180 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:30:58,185 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:31:05,454 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:31:06,984 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() successfully test  0 times
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 14:31:19,636 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:31:19,882 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:31:20,887 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:32:07,751 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:32:08,126 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:32:09,135 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:33:01,199 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:33:34,623 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:33:34,627 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:33:41,947 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:33:43,626 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:35:18,755 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:35:19,006 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:35:20,010 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:35:45,135 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:36:28,800 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:37:55,880 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 14:38:15,895 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 14:38:23,039 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 14:38:28,321 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:38:41,242 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:38:41,242 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:38:41,246 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 14:38:41,246 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:38:41,246 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 14:38:41,248 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 14:38:41,248 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:38:41,687 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:38:42,695 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:39:07,414 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:39:40,474 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-03-24 14:39:40,479 [ERROR] <main.py> output_test_init() Can not join the Teams call meeting!
+2025-03-24 14:39:47,659 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-24 14:39:49,712 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:40:02,300 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:40:02,300 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:40:02,300 [INFO] <main.py> <module>() headset output function: False, init issue:1
+2025-03-24 14:40:02,317 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:40:02,317 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 14:40:02,317 [INFO] <main.py> <module>() Total test  2 times
+2025-03-24 14:40:02,317 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:40:02,594 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:40:03,606 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:40:28,797 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:41:12,364 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:42:43,613 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 14:43:03,630 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 14:43:10,939 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 14:43:16,717 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:43:29,903 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:43:29,913 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:43:29,915 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 14:43:29,915 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:43:29,915 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-24 14:43:29,917 [INFO] <main.py> <module>() Total test  3 times
+2025-03-24 14:43:29,917 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:43:30,160 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:43:31,202 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:44:23,079 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 14:45:07,779 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 14:47:15,880 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 14:47:35,894 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 14:47:43,196 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 14:47:49,069 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 14:48:02,071 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 14:48:02,071 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 14:48:02,071 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 14:48:02,071 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 14:48:02,087 [INFO] <main.py> <module>() successfully test  3 times
+2025-03-24 14:48:02,087 [INFO] <main.py> <module>() Total test  4 times
+2025-03-24 14:48:02,087 [INFO] <main.py> <module>() Test start...
+2025-03-24 14:48:02,289 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 14:48:03,296 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 14:49:21,634 [ERROR] <main.py> <module>() Can not turn on the Headset or headset can not connect to the dut, stop test!
+2025-03-24 15:01:55,920 [INFO] <main.py> <module>() Test start...
+2025-03-24 15:01:56,230 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 15:01:59,303 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 15:02:10,994 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 15:02:55,138 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 15:04:39,413 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 15:05:09,537 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 15:05:16,797 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 15:05:22,337 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 15:05:35,589 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 15:05:35,589 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 15:05:35,589 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 15:05:35,605 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 15:05:35,605 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 15:05:35,605 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 15:05:35,605 [INFO] <main.py> <module>() Test start...
+2025-03-24 15:05:35,764 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 15:05:36,777 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 15:06:02,070 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 15:06:46,948 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 15:09:08,399 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 15:09:38,522 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 15:09:45,864 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 15:09:51,458 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 15:10:04,636 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 15:10:04,643 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 15:10:04,643 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 15:10:04,643 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:10:15,158 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:10:15,497 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:10:16,525 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:10:41,854 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:11:25,878 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:13:21,370 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:13:51,503 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:13:58,730 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:14:04,353 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:14:17,582 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:14:17,586 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:14:17,586 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:14:17,586 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:14:17,586 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 16:14:17,588 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 16:14:17,588 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:14:17,738 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:14:18,753 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:14:43,978 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:15:28,829 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:18:53,715 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:18:54,024 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:18:55,037 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:19:06,768 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:19:50,575 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:21:36,120 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:21:36,414 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:21:37,419 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:21:49,168 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:22:32,943 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:29:03,209 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:29:03,478 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:29:04,500 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:29:16,323 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:30:00,075 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:31:35,173 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:32:05,300 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:32:12,594 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:32:18,144 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:32:46,257 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:32:46,618 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:32:47,623 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:33:12,740 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:33:57,559 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:35:08,506 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:35:38,633 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:35:45,911 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:35:51,526 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() Total test  1 times
+2025-03-24 16:36:04,689 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:36:04,946 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:36:06,040 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:36:31,178 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:37:14,911 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:39:13,182 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:39:43,317 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:39:50,627 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:39:51,453 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:40:04,238 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:40:04,238 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:40:04,240 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:40:04,241 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:40:04,242 [INFO] <main.py> <module>() successfully test  2 times
+2025-03-24 16:40:04,242 [INFO] <main.py> <module>() Total test  2 times
+2025-03-24 16:40:04,244 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:40:04,452 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:40:05,462 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:40:30,533 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:41:15,172 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:42:32,804 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:43:02,932 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:43:10,145 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:43:15,638 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:43:28,594 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:43:28,594 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:43:28,594 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:43:28,600 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:43:28,600 [INFO] <main.py> <module>() successfully test  3 times
+2025-03-24 16:43:28,600 [INFO] <main.py> <module>() Total test  3 times
+2025-03-24 16:43:28,601 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:43:28,774 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:43:29,786 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:43:54,948 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:44:38,646 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:46:16,179 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:46:46,299 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:46:53,579 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:46:54,426 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:47:07,727 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:47:07,729 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:47:07,730 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:47:07,730 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:47:07,731 [INFO] <main.py> <module>() successfully test  4 times
+2025-03-24 16:47:07,731 [INFO] <main.py> <module>() Total test  4 times
+2025-03-24 16:47:07,731 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:47:07,945 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:47:08,959 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:47:34,064 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:48:18,576 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:49:32,088 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:50:02,214 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:50:09,440 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:50:14,946 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:50:28,162 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:50:28,162 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:50:28,162 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:50:28,175 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:50:28,175 [INFO] <main.py> <module>() successfully test  5 times
+2025-03-24 16:50:28,178 [INFO] <main.py> <module>() Total test  5 times
+2025-03-24 16:50:28,179 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:50:28,389 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:50:29,399 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:50:54,418 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:51:38,213 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:53:05,732 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:53:35,865 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:53:43,180 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:53:48,703 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() successfully test  6 times
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() Total test  6 times
+2025-03-24 16:54:01,682 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:54:01,855 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:54:02,891 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:54:27,712 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:55:12,541 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 16:56:47,264 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 16:57:17,399 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 16:57:24,637 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 16:57:30,082 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 16:57:43,160 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 16:57:43,160 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 16:57:43,160 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 16:57:43,171 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 16:57:43,171 [INFO] <main.py> <module>() successfully test  7 times
+2025-03-24 16:57:43,173 [INFO] <main.py> <module>() Total test  7 times
+2025-03-24 16:57:43,173 [INFO] <main.py> <module>() Test start...
+2025-03-24 16:57:43,353 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 16:57:44,361 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 16:58:09,652 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 16:58:53,391 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 17:00:23,294 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 17:00:53,418 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 17:01:00,664 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 17:01:06,140 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 17:01:19,059 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 17:01:19,059 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 17:01:19,059 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 17:01:19,059 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 17:01:19,072 [INFO] <main.py> <module>() successfully test  8 times
+2025-03-24 17:01:19,076 [INFO] <main.py> <module>() Total test  8 times
+2025-03-24 17:01:19,076 [INFO] <main.py> <module>() Test start...
+2025-03-24 17:01:19,333 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 17:01:20,340 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 17:01:45,314 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 17:02:29,840 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 17:03:55,190 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 17:04:25,316 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 17:04:32,580 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 17:04:38,079 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-24 17:04:51,161 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-24 17:04:51,176 [INFO] <main.py> <module>() mouse function: True
+2025-03-24 17:04:51,177 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-24 17:04:51,177 [INFO] <main.py> <module>() headset input function: True
+2025-03-24 17:04:51,178 [INFO] <main.py> <module>() successfully test  9 times
+2025-03-24 17:04:51,178 [INFO] <main.py> <module>() Total test  9 times
+2025-03-24 17:04:51,178 [INFO] <main.py> <module>() Test start...
+2025-03-24 17:04:51,409 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-24 17:04:52,415 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-24 17:05:17,724 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-24 17:06:01,460 [INFO] <main.py> output_test_init() Join the meeting...
+2025-03-24 17:07:47,024 [INFO] <main.py> output_test_init() VPT teams robot join the meeting...
+2025-03-24 17:08:17,163 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-24 17:08:24,467 [INFO] <main.py> <module>() Close the meeting and VPT robot
+2025-03-24 17:08:26,470 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 13:49:22,744 [INFO] <main.py> <module>() Test start...
+2025-03-26 13:49:23,091 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 13:49:27,118 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 13:49:54,177 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 13:51:34,130 [INFO] <main.py> <module>() Test start...
+2025-03-26 13:51:34,340 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 13:51:35,349 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 13:51:47,138 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 13:51:47,879 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-26 13:51:49,698 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 13:57:18,489 [INFO] <main.py> <module>() Test start...
+2025-03-26 13:57:19,415 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 13:57:22,527 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 13:57:36,428 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 13:57:36,959 [ERROR] <main.py> <module>() Headset output test init have some issue!
+2025-03-26 13:57:38,034 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 13:59:43,667 [INFO] <main.py> <module>() Test start...
+2025-03-26 13:59:43,986 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 13:59:44,994 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 14:00:10,141 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 14:00:40,712 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-26 14:00:42,730 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 14:00:55,796 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-26 14:00:55,799 [INFO] <main.py> <module>() mouse function: True
+2025-03-26 14:00:55,800 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-26 14:00:55,800 [INFO] <main.py> <module>() headset input function: True
+2025-03-26 14:00:55,801 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-26 14:00:55,802 [INFO] <main.py> <module>() Total test  1 times
+2025-03-26 14:00:55,802 [INFO] <main.py> <module>() Test start...
+2025-03-26 14:00:56,057 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 14:00:57,065 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 14:01:22,024 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 14:01:52,489 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-26 14:01:54,358 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 14:59:54,669 [INFO] <main.py> <module>() Test start...
+2025-03-26 14:59:55,044 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 14:59:58,163 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 15:00:20,039 [INFO] <main.py> <module>() Test start...
+2025-03-26 15:00:20,391 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 15:00:21,396 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 15:00:57,644 [INFO] <main.py> <module>() Test start...
+2025-03-26 15:00:57,992 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 15:00:59,000 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!
+2025-03-26 15:01:24,377 [INFO] <main.py> <module>() Turn on the headset successfully, connected
+2025-03-26 15:01:54,967 [INFO] <main.py> <module>() Headset output function is working!
+2025-03-26 15:01:56,832 [INFO] <main.py> <module>() Headset input function is working!
+2025-03-26 15:02:09,933 [INFO] <main.py> <module>() Headset turn off successfully, disconneted
+2025-03-26 15:02:09,935 [INFO] <main.py> <module>() mouse function: True
+2025-03-26 15:02:09,936 [INFO] <main.py> <module>() headset output function: True, init issue:0
+2025-03-26 15:02:09,937 [INFO] <main.py> <module>() headset input function: True
+2025-03-26 15:02:09,937 [INFO] <main.py> <module>() successfully test  1 times
+2025-03-26 15:02:09,937 [INFO] <main.py> <module>() Total test  1 times
+2025-03-26 15:02:09,939 [INFO] <main.py> <module>() Test start...
+2025-03-26 15:02:10,193 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function test start
+2025-03-26 15:02:11,199 [INFO] <main.py> mouse_function_detect_s4() BLE mouse function pass!

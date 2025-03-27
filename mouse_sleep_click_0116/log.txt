@@ -1,0 +1,7 @@
+2025-03-07 18:14:07,657 INFO mouse click 1 times!
+2025-03-07 18:14:10,870 INFO mouse click 2 times!
+2025-03-07 18:14:14,064 INFO mouse click 3 times!
+2025-03-07 18:14:17,269 INFO mouse click 4 times!
+2025-03-07 18:14:21,468 INFO mouse click 5 times!
+2025-03-07 18:14:23,663 INFO mouse click 6 times!
+2025-03-07 18:14:25,867 INFO mouse click 7 times!
