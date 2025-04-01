@@ -46,6 +46,7 @@ void loop() {
         delay(10);
         detected_time--;
       }
+      Serial.write(ping_states+0x30);
     }
     else if(mode =='2')
     {
@@ -58,7 +59,7 @@ void loop() {
       int counter = 0;
       while(counter<click_times)
       {
-        mouse_click(myservo_mouse,0,22,500);
+        mouse_click(myservo_mouse,0,17,500);
         counter++;
         delay(1000);
       }
@@ -72,7 +73,7 @@ void loop() {
       int counter = 0;
       while(counter<click_times)
       {
-        mouse_click(myservo_mouse,0,22,500);
+        mouse_click(myservo_mouse,0,17,500);
         counter++;
         delay(1000);
       }
