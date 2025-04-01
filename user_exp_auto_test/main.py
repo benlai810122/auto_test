@@ -19,19 +19,30 @@ import pyautogui
 
 
 
+class States(Enum):
+    idle = 0
+    go_to_s3 = 1
+    go_to_s4 = 2
+
+class Headset(Enum):
+    idle = 0
+    turn_on_off = 1
+
+class SoundOuput(Enum):
+    Teams = 1
+    Local = 2
+
+
 headset = "Dell WL5024 Headset"
 target_port_desc = "USB-SERIAL CH340"
 teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
 Timeout_s = 5
 sleep_time_s = 60
 wake_up_time_s = 60
-states = '4'
-
-class SoundOuput(Enum):
-    Teams = 1
-    Local = 2
-
+states = States.go_to_s3
 output_source = SoundOuput.Local
+headset_setting = Headset.idle
+
 
 
 def go_to_sleep():
@@ -66,38 +77,52 @@ def arduino_board_check() -> str:
     if not target_port:
         return ""
     
-def turn_on_headset(ser:serial.Serial, command:bytes)->bool:
+def headset_init(headset_states:Headset,ser:serial.Serial, command:bytes)->bool:
     '''
-    turn on the headset and check if headset connect
+    headset states init and check
+    idle: only check the headset states, don't turn on off the headset power
+    turn_on_off: turn on the headset and then check the connect states
     '''
     counter = 0
-    while counter < Timeout_s:
-        if b_control.status_check(target=headset, type="AudioEndpoint"):
-            print("Headset connect!")
-            return True
-        else:
-            print("headset doesn't connet, click the power button to turn on")
-            ser.write(command)
-            time.sleep(12)
-            counter+=1
-    return False
+
+    match headset_states:
+        case Headset.turn_on_off:
+            while counter < Timeout_s:
+                if b_control.status_check(target=headset, type="AudioEndpoint"):
+                    print("Headset connect!")
+                    return True
+                else:
+                    print("headset doesn't connet, click the power button to turn on")
+                    ser.write(command)
+                    time.sleep(12)
+                    counter+=1
+            return False
+        case Headset.idle:
+            return b_control.status_check(target=headset, type="AudioEndpoint")
+
     
 
-def turn_off_headset(ser:serial.Serial, command:bytes)->None:
+def headset_del(headset_states:Headset, ser:serial.Serial, command:bytes)->bool:
     '''
-    turn off the headset and check if headset disconnect
+    idle: do nothing
+    turn on off: turn off the headset and make sure the headset is disconnect
     '''
-    counter = 0
-    while counter <Timeout_s:
-        if not b_control.status_check(target=headset, type="AudioEndpoint"):
-            print("Headset disconnect!")
+    match headset_states:
+        case Headset.turn_on_off:
+            counter = 0
+            while counter <Timeout_s:
+                if not b_control.status_check(target=headset, type="AudioEndpoint"):
+                    print("Headset disconnect!")
+                    return True
+                else:
+                    print("headset still, click the power button to turn off")
+                    ser.write(command)
+                    time.sleep(10)
+                    counter+=1
+            return False
+        case Headset.idle:
             return True
-        else:
-            print("headset still, click the power button to turn off")
-            ser.write(command)
-            time.sleep(10)
-            counter+=1
-    return False
+        
 
 def voice_detect(ser:serial.Serial, command:bytes)->bool:
     '''
@@ -200,15 +225,11 @@ def output_test_del(output_source:SoundOuput)->bool:
         case SoundOuput.Local:
             #close the media player
             VideoControl.stop_play()
-            
-
-
-    
     return True
 
-def mouse_function_detect_s4(ser:serial.Serial, command:bytes)->bool:
+def mouse_function_detect(ser:serial.Serial, command:bytes)->bool:
     """_summary_
-        check mouse function still working or not (s4 states)
+        check mouse function still working or not
     Returns:
         bool: _description_
     """
@@ -250,19 +271,50 @@ def mouse_function_detect_s3(ser:serial.Serial, command:bytes, sleep_time:int)->
     return True
 
 def arduino_serial_port_reset(ser:serial.Serial):
+    """_summary_
+    reset the arduino serial port after s3 or s4
+    Args:
+        ser (serial.Serial): _description_
+
+    Returns:
+        _type_: _description_
+    """
     ser.close()
     time.sleep(5)
     return serial.Serial(serial_port, 115200)
-    
 
+def dut_states_init(states:States)->None:
+    """_summary_
+    setting dut states, s3 ,s4 or idle 
+
+    Args:
+        states (States): _description_
+    """
+    match states:
+
+        case States.idle:
+            pass
+        
+        case States.go_to_s3:
+            mouse_function_detect_s3(ser=ser,command=cmd_mouse_delay_clicking,sleep_time=sleep_time_s)
+            go_to_sleep()
+            time.sleep(wake_up_time_s)
+        
+        case States.go_to_s4:
+            #go to sleep mode first and waiting for mouse click
+            cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:4 /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
+            logger.info(f'Go to s{states} mode!')
+            Utils.run_sync_cmd(cmd=cmd_pwrtest)
+            
+
+    
 if __name__ == "__main__":
     serial_port = get_arduino_port()
-    cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:{states} /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
     cmd_servo = str.encode("0")
     cmd_voice_detect = str.encode("1")
     cmd_buzzer = str.encode("2")
-    cmd_mouse_s4 = str.encode("3")
-    cmd_mouse_s3 = str.encode("4")
+    cmd_mouse_clicking = str.encode("3")
+    cmd_mouse_delay_clicking = str.encode("4")
     ser = serial.Serial(serial_port, 115200)
     t_control = MeetingControl(meeting_link=teams_url,teams_path="\\teams_call\\")
     v_control = VPTControl()
@@ -279,29 +331,25 @@ if __name__ == "__main__":
         res_input = False
         logger.info('Test start...')
 
-        #s3 states
-        #mouse_function_detect_s3(ser=ser,command=cmd_mouse_s3,sleep_time=sleep_time_s)
-        #go_to_sleep()
-        #time.sleep(Wake_up_time_s)
+        #dut states setting 
+        dut_states_init(states=states)
 
-        #s4 states
-        #go to sleep mode first and waiting for mouse click
-        #logger.info(f'Go to s{states} mode!')
-        #Utils.run_sync_cmd(cmd=cmd_pwrtest)
-
-        #mouse clicking function checking
-        res_mouse = mouse_function_detect_s4(ser = ser, command= cmd_mouse_s4)
+        # reset the serport states
+        ser = arduino_serial_port_reset(ser=ser)
+        time.sleep(5)
+        
+        # mouse function test
+        res_mouse = mouse_function_detect(ser = ser, command= cmd_mouse_clicking)
         time.sleep(10)
 
-        #ser = arduino_serial_port_reset()
-
-        # turn on the headset 
-        if not turn_on_headset(ser = ser, command= cmd_servo):
+        # headset init
+        if not headset_init(headset_setting, ser = ser, command= cmd_servo):
             logger.error('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
             break
+
         logger.info("Turn on the headset successfully, connected")
 
-        # doing output test pre init and headset output function check
+        # doing output test init and headset output function check
         if output_test_init(output_source=output_source):
             # play sound 20 sec before detect
             time.sleep(20)
@@ -331,7 +379,7 @@ if __name__ == "__main__":
         logger.info("Headset input function is working!")
 
         #turn off the headset
-        if not turn_off_headset(ser = ser, command= cmd_servo):
+        if not headset_del(headset_setting, ser = ser, command= cmd_servo):
             logger.error('Can not turn off the Headset, stop test!')
             break
         logger.info("Headset turn off successfully, disconneted")
