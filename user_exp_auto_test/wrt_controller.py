@@ -1,9 +1,5 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
+import subprocess
+from utils import log as logger
 
 
 class WRTController:
@@ -15,34 +11,39 @@ class WRTController:
         """
         dump wrt log
         """
-        driver = webdriver.Chrome()
-        driver.get("http://localhost:8082/")
+        logger.info("Starting 'cde dump_collect' to gather WRT logs.")
+
         try:
-            #button content = ' Dump & Collect '
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"//*[text()=' Dump & Collect ']"))  
-            ).click()
-            time.sleep(20)
-            
-            #button content = ' Generate Report '
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"//*[text()=' Generate Report ']"))  
-            ).click()
+            result = subprocess.run(
+                r'"C:\Program Files\Intel\WRT2\cde.exe" dump_collect',
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
+            )
 
-            time.sleep(30)
+            if result.returncode != 0:
+                logger.error(f"'dump_collect' command failed: {result.stderr.strip()}")
+                return
 
-            #button content = ' Clear History '
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"//*[text()=' Clear History ']"))  
-            ).click()
+            result = subprocess.run(
+                r'"C:\Program Files\Intel\WRT2\cde.exe" generate_report',
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
+            )
 
-            time.sleep(5)
+            if result.returncode != 0:
+                logger.error(f"'generate_report' command failed: {result.stderr.strip()}")
+                return
 
-            driver.close()
+            result = subprocess.run(
+                r'"C:\Program Files\Intel\WRT2\cde.exe" clear_all',
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
+            )
+            if result.returncode != 0:
+                logger.error(f"'clear_all' command failed: {result.stderr.strip()}")
+                return
+        except Exception as e:
+            logger.error(f"Failed to execute command: {e}")
+            return
+        
+        logger.info("Command executed successfully. Parsing output...")
 
-        except:
-            print("Some error happened!")
-            raise Exception("")
-         
 if __name__ == "__main__":
     WRTController.dump_wrt_log()

@@ -37,10 +37,10 @@ headset = "Dell WL5024 Headset"
 target_port_desc = "USB-SERIAL CH340"
 teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
 Timeout_s = 5
-sleep_time_s = 60
+sleep_time_s = 90
 wake_up_time_s = 60
 states = States.go_to_s3
-output_source = SoundOuput.Local
+output_source = SoundOuput.Teams
 headset_setting = Headset.idle
 
 
@@ -235,7 +235,7 @@ def mouse_function_detect(ser:serial.Serial, command:bytes)->bool:
     """
     counter = 0
     pygame.init()
-    screen = pygame.display.set_mode((1920, 1200))
+    screen = pygame.display.set_mode((2560, 1600))
     running = True
     logger.info("BLE mouse function test start")
     #control mouse clicking
@@ -349,6 +349,21 @@ if __name__ == "__main__":
 
         logger.info("Turn on the headset successfully, connected")
 
+        time.sleep(5)
+        logger.info('Start headset input function test...')
+        #headset input function test
+        ad_Controller = AudioDetectController(headset= headset, threshold=200)
+        buzzer_buzzing(command=cmd_buzzer)
+        res_input = ad_Controller.audio_detect()
+        if not res_input:
+            logger.error('Headset input function have some issue!')
+            logger.error('Record wrt log...')
+            WRTController.dump_wrt_log()
+            logger.error('Record wrt log successfully')
+        logger.info("Headset input function is working!")
+
+        time.sleep(5)
+        logger.info('Start headset output function test...')
         # doing output test init and headset output function check
         if output_test_init(output_source=output_source):
             # play sound 20 sec before detect
@@ -365,18 +380,6 @@ if __name__ == "__main__":
         else:
             logger.error('Headset output test init have some issue!')
             output_init_flag = 1
-
-
-        #headset input function test
-        ad_Controller = AudioDetectController(headset= headset, threshold=3000)
-        buzzer_buzzing(command=cmd_buzzer)
-        res_input = ad_Controller.audio_detect()
-        if not res_input:
-            logger.error('Headset input function have some issue!')
-            logger.error('Record wrt log...')
-            WRTController.dump_wrt_log()
-            logger.error('Record wrt log successfully')
-        logger.info("Headset input function is working!")
 
         #turn off the headset
         if not headset_del(headset_setting, ser = ser, command= cmd_servo):

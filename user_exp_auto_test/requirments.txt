@@ -8,3 +8,4 @@ pytesseract
 selenium
 pyaudio
 numpy
+opencv-python

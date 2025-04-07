@@ -51,7 +51,7 @@ void loop() {
     else if(mode =='2')
     {
       digitalWrite(buzzer_ping,HIGH);
-      delay(2000);
+      delay(5000);
       digitalWrite(buzzer_ping,LOW);
     }
     else if (mode =='3')
@@ -59,7 +59,7 @@ void loop() {
       int counter = 0;
       while(counter<click_times)
       {
-        mouse_click(myservo_mouse,0,17,500);
+        mouse_click(myservo_mouse,0,20,500);
         counter++;
         delay(1000);
       }
@@ -73,7 +73,7 @@ void loop() {
       int counter = 0;
       while(counter<click_times)
       {
-        mouse_click(myservo_mouse,0,17,500);
+        mouse_click(myservo_mouse,0,20,500);
         counter++;
         delay(1000);
       }

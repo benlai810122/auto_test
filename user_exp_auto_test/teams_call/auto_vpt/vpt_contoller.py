@@ -55,7 +55,7 @@ class VPTControl:
         print(window)
         window.activate()
         window.moveTo(0,0)
-        window.resizeTo(1920, 1000)
+        window.resizeTo(2560, 1200)
 
     
         screenshot_path = path.dirname(__file__) + "\\VPT\\"
