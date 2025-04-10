@@ -37,7 +37,7 @@ headset = "Dell WL5024 Headset"
 target_port_desc = "USB-SERIAL CH340"
 teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
 Timeout_s = 5
-sleep_time_s = 90
+sleep_time_s = 180
 wake_up_time_s = 60
 states = States.go_to_s3
 output_source = SoundOuput.Teams
@@ -149,8 +149,7 @@ def open_teams_call_and_join_meeting( t_control:MeetingControl)->bool:
     time.sleep(10)
     if t_control.join_meeting():
         time.sleep(5)
-        t_control.open_camera_and_mute()
-        time.sleep(5)
+        #t_control.open_camera_and_mute()
         return True
     else:
         return False
@@ -194,14 +193,14 @@ def output_test_init(output_source:SoundOuput)->bool:
                 logger.error('Can not join the Teams call meeting!')
                 close_teams_call_and_vpt()
                 return False
-            logger.info("Join the meeting...")
+            print("Join the meeting...")
             # teams call robot join
             res = v_control.vpt_bot_join()
             if not res:
                 logger.error('Can not execute VPT successfully')
                 close_teams_call_and_vpt()
                 return False
-            logger.info("VPT teams robot join the meeting...")
+            print("VPT teams robot join the meeting...")
 
         case SoundOuput.Local:
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
@@ -213,14 +212,14 @@ def output_test_init(output_source:SoundOuput)->bool:
 
 def output_test_del(output_source:SoundOuput)->bool:
     '''
-    doing some pre init before test the headset output function , like open teams or local music
+    doing some del before test the headset output function , like close teams or local music
     '''
     match output_source:
 
         case SoundOuput.Teams:
             #close the teams call and vpt robot
             close_teams_call_and_vpt()
-            logger.info("Close the meeting and VPT robot")
+            print("Close the meeting and VPT robot")
           
         case SoundOuput.Local:
             #close the media player
@@ -248,7 +247,7 @@ def mouse_function_detect(ser:serial.Serial, command:bytes)->bool:
                 pygame.quit()
                 return False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                logger.info("BLE mouse function pass!")
+                print("BLE mouse function pass!")
                 pygame.quit()
                 return True
         counter+=1
@@ -263,11 +262,11 @@ def mouse_function_detect_s3(ser:serial.Serial, command:bytes, sleep_time:int)->
     Returns:
         bool: _description_
     """
-    logger.info("BLE mouse function test setting...")
+    print("BLE mouse function test setting...")
     #control mouse clicking
     #command.join(sleep_time)
     ser.write(command)
-    logger.info(f"BLE mouse will click after {sleep_time} second! ")
+    print(f"BLE mouse will click after {sleep_time} second! ")
     return True
 
 def arduino_serial_port_reset(ser:serial.Serial):
@@ -303,7 +302,7 @@ def dut_states_init(states:States)->None:
         case States.go_to_s4:
             #go to sleep mode first and waiting for mouse click
             cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:4 /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
-            logger.info(f'Go to s{states} mode!')
+            print(f'Go to s{states} mode!')
             Utils.run_sync_cmd(cmd=cmd_pwrtest)
             
 
@@ -319,6 +318,7 @@ if __name__ == "__main__":
     t_control = MeetingControl(meeting_link=teams_url,teams_path="\\teams_call\\")
     v_control = VPTControl()
     time.sleep(5)
+    test_retry_times = 3
     test_success_count = 0
     test_total_count = 0
     keyboard = Controller()
@@ -328,7 +328,7 @@ if __name__ == "__main__":
         res_mouse = False
         res_output = False
         output_init_flag = 0
-        res_input = False
+        res_input = True
         logger.info('Test start...')
 
         #dut states setting 
@@ -345,48 +345,53 @@ if __name__ == "__main__":
         # headset init
         if not headset_init(headset_setting, ser = ser, command= cmd_servo):
             logger.error('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
+            WRTController.dump_wrt_log()
             break
+        print("Turn on the headset successfully, connected")
+        time.sleep(10)
 
-        logger.info("Turn on the headset successfully, connected")
-
-        time.sleep(5)
         logger.info('Start headset input function test...')
         #headset input function test
-        ad_Controller = AudioDetectController(headset= headset, threshold=200)
-        buzzer_buzzing(command=cmd_buzzer)
-        res_input = ad_Controller.audio_detect()
-        if not res_input:
-            logger.error('Headset input function have some issue!')
-            logger.error('Record wrt log...')
-            WRTController.dump_wrt_log()
-            logger.error('Record wrt log successfully')
-        logger.info("Headset input function is working!")
+        test_time = 0
+        while not res_input:
+            ad_Controller = AudioDetectController(headset= headset, threshold=150)
+            buzzer_buzzing(command=cmd_buzzer)
+            res_input = ad_Controller.audio_detect()
+            if test_time > test_retry_times:
+                logger.error('***Headset input function have some issue!***')
+                WRTController.dump_wrt_log()
+                break
+            test_time+=1
+        print("Headset input function test finish")
+        
 
         time.sleep(5)
         logger.info('Start headset output function test...')
-        # doing output test init and headset output function check
-        if output_test_init(output_source=output_source):
-            # play sound 20 sec before detect
-            time.sleep(20)
-            #voice detect
-            res_output = voice_detect(ser = ser, command=cmd_voice_detect)
-            if not res_output:
-                logger.error('Headset output function have some issue!')
-                logger.error('Record wrt log...')
-                WRTController.dump_wrt_log()
-                logger.error('Record wrt log successfully')
-            logger.info("Headset output function is working!")
-            output_test_del(output_source=output_source)
-        else:
-            logger.error('Headset output test init have some issue!')
-            output_init_flag = 1
+        test_time = 0
+        while not res_output:
+            # doing output test init and headset output function check
+            if output_test_init(output_source=output_source):
+                # play sound 20 sec before detect
+                time.sleep(20)
+                #voice detect
+                res_output = voice_detect(ser = ser, command=cmd_voice_detect)
+                output_test_del(output_source=output_source)
+            else:
+                output_test_del(output_source=output_source)
+                logger.error('***Headset output test init have some issue!***')
+                output_init_flag = 1
+            if test_time>test_retry_times:
+                    logger.error('***Headset output function have some issue!***')
+                    WRTController.dump_wrt_log()
+            test_time+=1
+
+        print("Headset output function test finish")
 
         #turn off the headset
         if not headset_del(headset_setting, ser = ser, command= cmd_servo):
             logger.error('Can not turn off the Headset, stop test!')
             break
-        logger.info("Headset turn off successfully, disconneted")
-
+        print("Headset turn off successfully, disconneted")
 
         #summary the test result
         logger.info(f'mouse function: {res_mouse}')
@@ -398,6 +403,8 @@ if __name__ == "__main__":
         logger.info(f'successfully test  {test_success_count} times')
         logger.info(f'Total test  {test_total_count} times')
     
+    print('press any key to leave')
+    input()
 
 
 

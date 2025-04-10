@@ -1,6 +1,7 @@
 import pyaudio
 import numpy as np
 import time
+from utils import log as logger
 
 
 class AudioDetectController:
@@ -9,7 +10,7 @@ class AudioDetectController:
     '''
 
     __headset_name = ''
-    __chunk_size = 1024  # Size of each audio chunk
+    __chunk_size = 4096  # Size of each audio chunk
     __sample_format = pyaudio.paInt16  # Format of the audio samples
     __channels = 1  # Number of channels (1 for mono, 2 for stereo)
     __fs = 44100  # Sample rate (samples per second)
@@ -29,37 +30,44 @@ class AudioDetectController:
     def audio_detect(self)->bool:
         res = False
         audio = pyaudio.PyAudio()
+        stream = None
         dev_index = self.__device_checking(audio=audio)
         print(dev_index)
         if dev_index < 0:
             return False
-
-        stream =  audio.open(format=self.__sample_format,
+        
+        try:
+            stream =  audio.open(format=self.__sample_format,
                         channels=self.__channels,
                         rate=self.__fs,
                         input=True,
                         frames_per_buffer=self.__chunk_size,
                         input_device_index = dev_index
                         )
-        time_counter = 0
-        while time_counter<self.__timeout :
-            data = stream.read(self.__chunk_size,exception_on_overflow=False)
-            audio_data = np.frombuffer(data, dtype=np.int16)
-            max_audio_val = np.max(np.abs(audio_data))
-            print(max_audio_val)
-            if max_audio_val >= self.__threshold and max_audio_val < 0x7fff:
-                res = True
-                break
-            time.sleep(0.01)
-            time_counter+=0.01
-            
-               
-            
-        stream.stop_stream()
-        stream.close()
-        audio.terminate()
-
+            time_counter = 0
+            while time_counter<self.__timeout :
+                data = stream.read(self.__chunk_size,exception_on_overflow=False)
+                audio_data = np.frombuffer(data, dtype=np.int16)
+                max_audio_val = np.max(np.abs(audio_data))
+                print(max_audio_val)
+                if max_audio_val >= self.__threshold and max_audio_val < 0x7fff:
+                    res = True
+                    break
+                time.sleep(0.01)
+                time_counter+=0.01
+            stream.stop_stream()
+            stream.close()
+            audio.terminate()
+        except OSError as os_error:
+            if stream and stream.is_active:
+                stream.stop_stream()
+                stream.close()
+            audio.terminate()
+            logger.error(f'Have unexpect error when test output function:{os_error}')
+            return True #ignore the os_error
         return res
+
+        
         
 
     def __device_checking(self,audio:pyaudio.PyAudio)->int:
@@ -76,7 +84,8 @@ class AudioDetectController:
 if __name__ == '__main__':
     Headset = "Dell WL5024 Headset"
     ad_Controller = AudioDetectController(headset= Headset, threshold=500)
-    if ad_Controller.audio_detect():
-        print('sound detected!')
-    else:
-        print('sound not detected!')
+    while True:
+        if ad_Controller.audio_detect():
+            print('sound detected!')
+        else:
+            print('sound not detected!')

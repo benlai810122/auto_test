@@ -67,15 +67,25 @@ class VPTControl:
             self.__execute_vpt()
             #screenshot
             self.__screenshot(save_path=screenshot_path)
-            #analyze the pitcute to get verify code
-            verify_code = self.__analyze_verify_code(picture_path = screenshot_path)
-            #open the verify web page and input the verify code
-            driver = webdriver.Chrome()
-            driver.get("https://microsoft.com/devicelogin")
-            doing_verify_flag = self.__input_verify_code(driver=driver, verify_code=verify_code)
+            
+            try:
+                #analyze the pitcute to get verify code
+                verify_code = self.__analyze_verify_code(picture_path = screenshot_path)
+                #open the verify web page and input the verify code
+                driver = webdriver.Chrome()
+                driver.get("https://microsoft.com/devicelogin")
+                doing_verify_flag = self.__input_verify_code(driver=driver, verify_code=verify_code)
+            except:
+                return False
 
-        #input email info after inserting verify code 
-        self.__input_email_info(driver=driver)
+         
+        try:
+            #input email info after inserting verify code
+            self.__input_email_info(driver=driver)
+        except:
+            return False
+        
+        #click the console window and press enter
         time.sleep(5)
         pyautogui.click(x=400,y=400)
         time.sleep(5)
