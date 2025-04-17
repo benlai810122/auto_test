@@ -42,6 +42,7 @@ wake_up_time_s = 60
 states = States.go_to_s3
 output_source = SoundOuput.Teams
 headset_setting = Headset.idle
+continue_fail_limit = 5
 
 
 
@@ -318,9 +319,10 @@ if __name__ == "__main__":
     t_control = MeetingControl(meeting_link=teams_url,teams_path="\\teams_call\\")
     v_control = VPTControl()
     time.sleep(5)
-    test_retry_times = 3
+    test_retry_times = 5
     test_success_count = 0
     test_total_count = 0
+    continue_fail_count = 0
     keyboard = Controller()
 
     while(True):
@@ -328,7 +330,7 @@ if __name__ == "__main__":
         res_mouse = False
         res_output = False
         output_init_flag = 0
-        res_input = True
+        res_input = False
         logger.info('Test start...')
 
         #dut states setting 
@@ -383,6 +385,7 @@ if __name__ == "__main__":
             if test_time>test_retry_times:
                     logger.error('***Headset output function have some issue!***')
                     WRTController.dump_wrt_log()
+                    break
             test_time+=1
 
         print("Headset output function test finish")
@@ -399,9 +402,15 @@ if __name__ == "__main__":
         logger.info(f'headset input function: {res_input}')
         if res_output and res_input:
             test_success_count+=1
+            continue_fail_count = 0
+        else:
+            continue_fail_count+=1
         test_total_count+=1
         logger.info(f'successfully test  {test_success_count} times')
         logger.info(f'Total test  {test_total_count} times')
+        if continue_fail_count >= continue_fail_limit:
+            logger.info("out of maxium continue fail range, stop testing!")
+            break
     
     print('press any key to leave')
     input()
