@@ -76,16 +76,16 @@ class AudioDetectController:
         for i in range(0, numdevices):
             if (audio.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
                 dev_name = audio.get_device_info_by_host_api_device_index(0, i).get('name')
+                print(dev_name)
                 if self.__headset_name in dev_name:
                     return i
         return -1
 
 
 if __name__ == '__main__':
-    Headset = "Dell WL5024 Headset"
-    ad_Controller = AudioDetectController(headset= Headset, threshold=500)
-    while True:
-        if ad_Controller.audio_detect():
-            print('sound detected!')
-        else:
-            print('sound not detected!')
+    headset = "Lenovo Go WL ANC"
+    ad_Controller = AudioDetectController(headset= headset, threshold=500)
+    if ad_Controller.audio_detect():
+        print('sound detected!')
+    else:
+        print('sound not detected!')

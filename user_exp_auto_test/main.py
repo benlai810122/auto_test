@@ -31,9 +31,10 @@ class Headset(Enum):
 class SoundOuput(Enum):
     Teams = 1
     Local = 2
+    Teams_Local = 3
 
 
-headset = "Dell WL5024 Headset"
+headset = "Dell WL5024"
 target_port_desc = "USB-SERIAL CH340"
 teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
 Timeout_s = 5
@@ -207,6 +208,21 @@ def output_test_init(output_source:SoundOuput)->bool:
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
             videoControl.play()
 
+        case SoundOuput.Teams_Local:
+
+             # open the teams call and join the meeting 
+            res = open_teams_call_and_join_meeting(t_control=t_control)
+            if not res:
+                logger.error('Can not join the Teams call meeting!')
+                close_teams_call_and_vpt()
+                return False
+            print("Join the meeting...")
+            # start playing local music after joining the teams call meeting
+            videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
+            videoControl.play()
+
+
+
     return True
         
 
@@ -225,6 +241,11 @@ def output_test_del(output_source:SoundOuput)->bool:
         case SoundOuput.Local:
             #close the media player
             VideoControl.stop_play()
+
+        case SoundOuput.Teams_Local:
+            MeetingControl.close_teams()
+            VideoControl.stop_play()
+            #close the teams call and vpt robot
     return True
 
 def mouse_function_detect(ser:serial.Serial, command:bytes)->bool:
@@ -319,7 +340,7 @@ if __name__ == "__main__":
     t_control = MeetingControl(meeting_link=teams_url,teams_path="\\teams_call\\")
     v_control = VPTControl()
     time.sleep(5)
-    test_retry_times = 5
+    test_retry_times = 3
     test_success_count = 0
     test_total_count = 0
     continue_fail_count = 0
@@ -330,7 +351,7 @@ if __name__ == "__main__":
         res_mouse = False
         res_output = False
         output_init_flag = 0
-        res_input = False
+        res_input = True
         logger.info('Test start...')
 
         #dut states setting 
