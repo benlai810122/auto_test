@@ -16,6 +16,7 @@ import serial
 import os
 import pygame
 import pyautogui
+from datetime import datetime
 
 
 
@@ -34,17 +35,16 @@ class SoundOuput(Enum):
     Teams_Local = 3
 
 
-headset = "Dell WL5024"
+headset = "Zone"
 target_port_desc = "USB-SERIAL CH340"
-teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d"
+teams_url = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MWQ5MTEwZmUtNWZkMy00YzZkLTgwOTMtNWVjMTc3NjMxZWMz%40thread.v2/0?context=%7b%22Tid%22%3a%228e44b933-0b1e-4e67-be0c-c7e0761eb4db%22%2c%22Oid%22%3a%2232692ba0-ede0-450b-8142-3f487cabff7b%22%7d"
 Timeout_s = 5
 sleep_time_s = 180
 wake_up_time_s = 60
-states = States.go_to_s3
-output_source = SoundOuput.Teams
+states = States.go_to_s4
+output_source = SoundOuput.Local
 headset_setting = Headset.idle
 continue_fail_limit = 5
-
 
 
 def go_to_sleep():
@@ -345,6 +345,7 @@ if __name__ == "__main__":
     test_total_count = 0
     continue_fail_count = 0
     keyboard = Controller()
+    issue_occuring_time = ""
 
     while(True):
 
@@ -355,6 +356,7 @@ if __name__ == "__main__":
         logger.info('Test start...')
 
         #dut states setting 
+
         dut_states_init(states=states)
 
         # reset the serport states
@@ -381,6 +383,8 @@ if __name__ == "__main__":
             buzzer_buzzing(command=cmd_buzzer)
             res_input = ad_Controller.audio_detect()
             if test_time > test_retry_times:
+                if continue_fail_count == 0 :
+                        issue_occuring_time = datetime.now()
                 logger.error('***Headset input function have some issue!***')
                 WRTController.dump_wrt_log()
                 break
@@ -404,6 +408,8 @@ if __name__ == "__main__":
                 logger.error('***Headset output test init have some issue!***')
                 output_init_flag = 1
             if test_time>test_retry_times:
+                    if continue_fail_count == 0 :
+                        issue_occuring_time = datetime.now()
                     logger.error('***Headset output function have some issue!***')
                     WRTController.dump_wrt_log()
                     break
@@ -431,6 +437,7 @@ if __name__ == "__main__":
         logger.info(f'Total test  {test_total_count} times')
         if continue_fail_count >= continue_fail_limit:
             logger.info("out of maxium continue fail range, stop testing!")
+            logger.info(f"first issue occuring time: {issue_occuring_time}")
             break
     
     print('press any key to leave')

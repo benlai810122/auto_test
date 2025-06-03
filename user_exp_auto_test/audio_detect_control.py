@@ -83,7 +83,7 @@ class AudioDetectController:
 
 
 if __name__ == '__main__':
-    headset = "Lenovo Go WL ANC"
+    headset = "LE-Zone"
     ad_Controller = AudioDetectController(headset= headset, threshold=500)
     if ad_Controller.audio_detect():
         print('sound detected!')
