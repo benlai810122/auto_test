@@ -1,0 +1,11 @@
+pyserial
+pynput
+pygame
+pyautogui
+pyscreenshot
+pillow
+pytesseract
+seleniumpyaudio
+numpy
+opencv-python
+PyQt5
