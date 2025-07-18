@@ -1,1 +1,1 @@
-python.exe test_process.py
+python.exe ui_main.py

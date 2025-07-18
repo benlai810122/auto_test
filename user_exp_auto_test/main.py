@@ -319,7 +319,7 @@ def dut_states_init(states:States)->None:
         case States.go_to_s3:
             mouse_function_detect_s3(ser=ser,command=cmd_mouse_delay_clicking,sleep_time=sleep_time_s)
             go_to_sleep()
-            time.sleep(wake_up_time_s)
+            
         
         case States.go_to_s4:
             #go to sleep mode first and waiting for mouse click
@@ -358,6 +358,8 @@ if __name__ == "__main__":
         #dut states setting 
 
         dut_states_init(states=states)
+
+        time.sleep(wake_up_time_s)
 
         # reset the serport states
         ser = arduino_serial_port_reset(ser=ser)

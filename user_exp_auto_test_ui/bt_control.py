@@ -53,9 +53,26 @@ class BluetoothControl:
             return False
         return False
     
+    @staticmethod
+    def find_headset() -> str:
+        """
+        responsible to check the connecting status of specific bluetooth device
+        """
+        cmd = (
+            f"Get-PnpDevice -class AudioEndpoint |Select FriendlyName, Status |Select-string -Pattern headset"
+        )
+        # example of output: @{FriendlyName=Headphones (Galaxy Buds2 Pro); Status=OK}
+        result = Utils.run_sync_ps_cmd(cmd)
+        device = re.findall(r"(?<=FriendlyName=Headset \()(?!(?:.*Hands\-Free|.*Microsoft))(.*?)(?=\); Status=OK)", result)
+        return device[0] if device else "None"
+    
+    
     
 
 
 if __name__ == "__main__":
-    print(BluetoothControl.status_check(target="Zone", type="AudioEndpoint"))
+    #print(BluetoothControl.status_check(target="Zone", type="AudioEndpoint"))
+    device = BluetoothControl.find_headset()
+    print(device)
+    pass
  

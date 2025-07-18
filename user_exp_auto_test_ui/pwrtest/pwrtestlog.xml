@@ -1,12 +1,12 @@
-<PwrTestLog date="06/23/2025" time="17:18:03" filename="C:\Users\Comm\Desktop\auto_workplace\auto_test\user_exp_auto_test\pwrtest\pwrtestlog.xml">
+<PwrTestLog date="07/15/2025" time="17:42:18" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
   <SystemInformation>
-    <ComputerName>DESKTOP-C4UDCHM</ComputerName>
-    <OSBuildNumber>26100</OSBuildNumber>
-    <SystemManufacturer>HP</SystemManufacturer>
-    <SystemProductName>HP EliteBook 8 G1i 14 inch Notebook AI PC</SystemProductName>
-    <BIOSVersion>X70 Ver. 00.12.00</BIOSVersion>
-    <BIOSReleaseDate>10/09/2024</BIOSReleaseDate>
-    <ProcessorCount>14</ProcessorCount>
+    <ComputerName>DESKTOP-LGJ88V6</ComputerName>
+    <OSBuildNumber>26200</OSBuildNumber>
+    <SystemManufacturer>Dell Inc.</SystemManufacturer>
+    <SystemProductName>Latitude 9430</SystemProductName>
+    <BIOSVersion>89.12.1</BIOSVersion>
+    <BIOSReleaseDate>05/04/2022</BIOSReleaseDate>
+    <ProcessorCount>12</ProcessorCount>
     <ProcessorPackageCount>1</ProcessorPackageCount>
   </SystemInformation>
   <SYSTEM_POWER_CAPABILITIES>
@@ -24,19 +24,19 @@
     <AoAc>1</AoAc>
   </SYSTEM_POWER_CAPABILITIES>
   <SleepScenario>
-    <SleepTransitions hybrid="1" delay="180" sleeptime="60" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
-      <SleepTransition number="0" status="5439557">
-        <StartT>06/23/2025 17:18:04</StartT>
-        <EndT>06/23/2025 17:19:20</EndT>
-        <Duration>00:01:16</Duration>
+    <SleepTransitions hybrid="1" delay="60" sleeptime="60" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
+      <SleepTransition number="0" status="6619244">
+        <StartT>07/15/2025 17:42:19</StartT>
+        <EndT>07/15/2025 17:43:38</EndT>
+        <Duration>00:01:18</Duration>
         <TargetState>4</TargetState>
         <EffectiveState>4</EffectiveState>
-        <Suspend>8620</Suspend>
-        <BIOSInit>7313</BIOSInit>
-        <DriverInit>3211</DriverInit>
-        <HiberPagesWritten>1201072</HiberPagesWritten>
-        <HiberRead>3394</HiberRead>
-        <HiberWrite>3736</HiberWrite>
+        <Suspend>5520</Suspend>
+        <BIOSInit>7272</BIOSInit>
+        <DriverInit>1481</DriverInit>
+        <HiberPagesWritten>707322</HiberPagesWritten>
+        <HiberRead>5408</HiberRead>
+        <HiberWrite>9495</HiberWrite>
       </SleepTransition>
     </SleepTransitions>
   </SleepScenario>

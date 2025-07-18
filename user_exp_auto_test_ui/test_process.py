@@ -31,9 +31,9 @@ class Headset(Enum):
     turn_on_off = 1
 
 class SoundOuput(Enum):
-    Teams = 1
-    Local = 2
-    Teams_Local = 3
+    Teams = 0
+    Local = 1
+    Teams_Local = 2
 
 
 
@@ -50,6 +50,7 @@ class Basic_Config:
     headset_setting:int = Headset.idle.value
     test_retry_times:int = 3
     continue_fail_limit:int = 5
+    output_source_play_time_s:int = 20
     do_mouse_flag:bool = True
     do_headset_input_flag:bool = True
     do_headset_output_flag:bool = True
@@ -328,12 +329,12 @@ def dut_states_init(power_states:Power_States,wake_up_time_s:int,sleep_time_s:in
     
     match power_states:
         case Power_States.idle.value:
-            time.sleep(wake_up_time_s)
+            pass
         case Power_States.go_to_s3.value:
             print(f'Go to ms mode!')
             mouse_function_detect_s3(ser=ser,command=s3_cmd,sleep_time=sleep_time_s)
             go_to_sleep()
-            time.sleep(wake_up_time_s)
+            
         case Power_States.go_to_s4.value:
             print(f'Go to s4 mode!')
             #go to sleep mode first and waiting for mouse click
@@ -370,6 +371,8 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
         #dut states setting 
         dut_states_init(power_states=b_config.power_state, wake_up_time_s=b_config.wake_up_time_s,
                         sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = cmd_mouse_delay_clicking)
+        
+        time.sleep(b_config.wake_up_time_s)
 
         # reset the serport states
         ser = arduino_serial_port_reset(ser=ser,serial_port=serial_port)
@@ -419,7 +422,7 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
                 # doing output test init and headset output function check
                 if output_test_init(output_source=b_config.output_source,t_control=t_control,v_control=v_control,log_callback=log_callback):
                     # play sound 20 sec before detect
-                    time.sleep(20)
+                    time.sleep(b_config.output_source_play_time_s)
                     #voice detect
                     res_output = voice_detect(ser = ser, command=cmd_voice_detect)
                     output_test_del(output_source=b_config.output_source)

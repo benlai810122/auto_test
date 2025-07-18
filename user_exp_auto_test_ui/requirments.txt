@@ -5,7 +5,7 @@ pyautogui
 pyscreenshot
 pillow
 pytesseract
-seleniumpyaudio
+selenium
 numpy
 opencv-python
 PyQt5
