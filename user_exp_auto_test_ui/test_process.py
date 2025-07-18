@@ -112,7 +112,7 @@ def headset_init(headset_states:Headset,ser:serial.Serial, command:bytes,headset
                     return True
                 else:
                     print("headset doesn't connet, click the power button to turn on")
-                    ser.write(command)
+                    ser.write(command+b'\n')
                     time.sleep(12)
                     counter+=1
             return False
@@ -135,7 +135,7 @@ def headset_del(headset_states:Headset, ser:serial.Serial, command:bytes,headset
                     return True
                 else:
                     print("headset still, click the power button to turn off")
-                    ser.write(command)
+                    ser.write(command+b'\n')
                     time.sleep(10)
                     counter+=1
             return False
@@ -147,7 +147,7 @@ def voice_detect(ser:serial.Serial, command:bytes)->bool:
     '''
     detect the sound
     '''
-    ser.write(command)
+    ser.write(command+b'\n')
     time.sleep(3)
     res = ser.read()
     print(f'*******************res = {res}***********************')
@@ -158,7 +158,7 @@ def buzzer_buzzing(ser:serial.Serial,command:bytes)->bool:
     '''
     let buzzer start buzzing for 5 sec
     '''
-    ser.write(command)
+    ser.write(command+b'\n')
 
 def open_teams_call_and_join_meeting( t_control:MeetingControl)->bool:
     '''
@@ -275,7 +275,7 @@ def mouse_function_detect(ser:serial.Serial, command:bytes, timeout_s:int,log_ca
     running = True
     log_callback("BLE mouse function test start")
     #control mouse clicking
-    ser.write(command)
+    ser.write(command+b'\n')
     #start cehcking mouse click
     while counter < timeout_s:
         for event in pygame.event.get():
@@ -300,9 +300,8 @@ def mouse_function_detect_s3(ser:serial.Serial, command:bytes, sleep_time:int)->
         bool: _description_
     """
     print("BLE mouse function test setting...")
-    #control mouse clicking
-    #command.join(sleep_time)
-    ser.write(command)
+    cmd = f'4,{sleep_time}\n'.encode()
+    ser.write(cmd)
     print(f"BLE mouse will click after {sleep_time} second! ")
     return True
 
@@ -469,10 +468,6 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
     
 if __name__ == "__main__":
     b_config  = Basic_Config()
-    b_config.sleep_time_s = 1
-    b_config.do_mouse_flag = False
-    b_config.do_headset_input_flag = False
-    
     def log_callback(meg:str):
         print(meg)
     run_test(b_config,log_callback=log_callback)
