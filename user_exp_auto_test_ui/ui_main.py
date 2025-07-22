@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QComboBox, QCheckBox,QLineEdit,
+    QApplication, QWidget, QLabel, QComboBox, QCheckBox,QLineEdit, QTableView,QSlider,
     QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QGroupBox, QFormLayout,QRadioButton
 )
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
 import sys
 import test_process
@@ -15,11 +16,12 @@ from functools import partial
 
 class BTTestApp(QWidget):
     b_config:Basic_Config = None
+    test_case_number:int = 0
     def __init__(self, b_config:Basic_Config):
         super().__init__()
         self.b_config = b_config
         self.setWindowTitle("User Experience Auto Test")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 800, 800)
         self.init_ui()
         self.bt_device_check()
         self.ui_renew()
@@ -89,6 +91,44 @@ class BTTestApp(QWidget):
         test_layout.addWidget(self.ck_btn_h_output)
         test_case_group.setLayout(test_layout)
 
+        # --- Task schedule table ---
+        task_schedule_group = QGroupBox("Test Case Selection")
+        task_schedule_layout = QVBoxLayout()
+
+        task_setting_laylout = QHBoxLayout()
+        self.lab_test_times = QLabel('Test times:')
+        self.value_tts = QLabel('100')  # Default value
+        self.value_tts.setAlignment(Qt.AlignCenter)
+        self.value_tts.setStyleSheet('font-size: 16px;')
+        self.slider_test_times = QSlider(Qt.Horizontal)
+        self.slider_test_times.setMinimum(10)
+        self.slider_test_times.setMaximum(1000)
+        self.slider_test_times.setValue(100)
+        self.slider_test_times.setTickInterval(10)
+        self.slider_test_times.setTickPosition(QSlider.TicksBelow)
+        self.slider_test_times.valueChanged.connect(partial(self.update_slider_value,"test_times"))
+
+        self.btn_add = QPushButton("Add")
+        self.btn_add.clicked.connect(partial(self.task_schedule_setting,"add"))
+        self.btn_delet = QPushButton("Delet")
+        self.btn_delet.clicked.connect(partial(self.task_schedule_setting,"delet"))
+
+        task_setting_laylout.addWidget(self.lab_test_times)
+        task_setting_laylout.addWidget(self.slider_test_times)
+        task_setting_laylout.addWidget(self.value_tts)
+        task_setting_laylout.addWidget(self.btn_add)
+        task_setting_laylout.addWidget(self.btn_delet)
+
+        self.task_schedule_model = QStandardItemModel(0, 2) 
+        self.task_schedule_model.setHorizontalHeaderLabels([ "Test items", "times"])
+        table_view = QTableView()
+        table_view.setModel(self.task_schedule_model)
+        table_view.setColumnWidth(0, 600)
+        table_view.setColumnWidth(1, 100)
+        task_schedule_layout.addLayout(task_setting_laylout)
+        task_schedule_layout.addWidget(table_view)
+        task_schedule_group.setLayout(task_schedule_layout)
+
         # --- Log Output ---
         self.log_output = QTextEdit()
         self.log_output.setReadOnly(True)
@@ -107,11 +147,36 @@ class BTTestApp(QWidget):
         layout.addWidget(device_group)
         layout.addWidget(power_states_group)
         layout.addWidget(test_case_group)
+        layout.addWidget(task_schedule_group)
         layout.addWidget(QLabel("Test Progress:"))
         layout.addWidget(self.log_output)
         layout.addLayout(button_layout)
 
         self.setLayout(layout)
+
+    def task_schedule_setting(self, name:str):
+        match name:
+            case "add":
+                comment = ""
+                # power states:
+                match self.b_config.power_state:
+                    case Power_States.idle.value:
+                        comment+="Idle,"
+                    case Power_States.go_to_s3.value:
+                        comment+="MS,"
+                    case Power_States.go_to_s4.value:
+                        comment+="S4,"
+                # test case:
+                if self.b_config.do_mouse_flag:
+                    comment += "mouse function "
+                if self.b_config.do_headset_output_flag:
+                    comment += "headset_output "
+                if self.b_config.do_headset_input_flag:
+                    comment += "headset_input "
+                new_row = [QStandardItem(comment), QStandardItem(self.value_tts.text())]
+                self.task_schedule_model.appendRow(new_row)
+            case "delet":
+                pass
 
     def power_states_setting(self, power_states:int):
         #setting the power states
@@ -167,7 +232,12 @@ class BTTestApp(QWidget):
             self.ck_btn_h_output.setChecked(True)
         if b_config.do_headset_input_flag:
             self.ck_btn_h_input.setChecked(True)
-
+    
+    def update_slider_value(self,value_name,value):
+        match value_name:
+            case "test_times":
+                 self.value_tts.setText(str(value))
+        
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

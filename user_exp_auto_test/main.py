@@ -51,6 +51,7 @@ class Basic_Config:
     test_retry_times:int = 3
     continue_fail_limit:int = 5
     output_source_play_time_s:int = 20
+    do_headset_init_flag:bool = True
     do_mouse_flag:bool = True
     do_headset_input_flag:bool = True
     do_headset_output_flag:bool = True
@@ -367,7 +368,7 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
         output_init_flag = 0
         log_callback('Test start...')
        
-        #dut states setting 
+        #dut states setting
         dut_states_init(power_states=b_config.power_state, wake_up_time_s=b_config.wake_up_time_s,
                         sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = cmd_mouse_delay_clicking)
         
@@ -385,12 +386,13 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
             res_mouse = True
 
         # headset init
-        if not headset_init(headset= b_config.headset, headset_states=b_config.headset_setting, timeout_s= b_config.timeout_s, ser = ser, command= cmd_servo):
-            log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
-            WRTController.dump_wrt_log()
-            break
-        print("Turn on the headset successfully, connected")
-        time.sleep(10)
+        if b_config.do_headset_init_flag:
+            if not headset_init(headset= b_config.headset, headset_states=b_config.headset_setting, timeout_s= b_config.timeout_s, ser = ser, command= cmd_servo):
+                log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
+                WRTController.dump_wrt_log()
+                break
+            print("Turn on the headset successfully, connected")
+            time.sleep(10)
 
         if b_config.do_headset_input_flag:
             log_callback('Start headset input function test...')
@@ -441,16 +443,17 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
             res_input = True
 
         #turn off the headset
-        if not headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,timeout_s=b_config.timeout_s, ser = ser, command= cmd_servo):
-            log_callback('Can not turn off the Headset, stop test!')
-            break
-        print("Headset turn off successfully, disconneted")
+        if b_config.do_headset_init_flag:
+            if not headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,timeout_s=b_config.timeout_s, ser = ser, command= cmd_servo):
+                log_callback('Can not turn off the Headset, stop test!')
+                break
+            print("Headset turn off successfully, disconneted")
 
         #summary the test result
         if b_config.do_mouse_flag: log_callback(f'mouse function: {res_mouse}')
         if b_config.do_headset_output_flag: log_callback(f'headset output function: {res_output}, init issue:{output_init_flag}')
         if b_config.do_headset_input_flag: log_callback(f'headset input function: {res_input}')
-        if res_output and res_input and res_mouse:
+        if (res_output or not b_config.do_headset_output_flag) and (res_input or not b_config.do_headset_input_flag) and (res_mouse or not b_config.do_mouse_flag) :
             test_success_count+=1
             continue_fail_count = 0
         else:

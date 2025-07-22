@@ -45,7 +45,6 @@ class AdvanceSetting(QWidget):
         tos_layout.addWidget(self.slider_timeout)
         tos_layout.addWidget(self.value_tos)
 
-        
         #continue_fail_limit
         cfl_layout = QHBoxLayout()
         self.label_cfl = QLabel('Set Maximum Consecutive Failures:')
