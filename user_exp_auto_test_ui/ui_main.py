@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import pyqtSignal
 import sys
 import test_process
 from test_process import Basic_Config
@@ -13,10 +14,16 @@ from utils import log  as logger
 from bt_control import BluetoothControl
 from ui_adv_setting import AdvanceSetting
 from functools import partial
+import threading
+import copy
+
+done_event = threading.Event()
+
+
 
 class BTTestApp(QWidget):
     b_config:Basic_Config = None
-    test_case_number:int = 0
+    task_schedule:list[Basic_Config] = []
     def __init__(self, b_config:Basic_Config):
         super().__init__()
         self.b_config = b_config
@@ -25,7 +32,7 @@ class BTTestApp(QWidget):
         self.init_ui()
         self.bt_device_check()
         self.ui_renew()
-        
+       
 
     def init_ui(self):
         layout = QVBoxLayout()
@@ -97,14 +104,14 @@ class BTTestApp(QWidget):
 
         task_setting_laylout = QHBoxLayout()
         self.lab_test_times = QLabel('Test times:')
-        self.value_tts = QLabel('100')  # Default value
+        self.value_tts = QLabel('1')  # Default value
         self.value_tts.setAlignment(Qt.AlignCenter)
         self.value_tts.setStyleSheet('font-size: 16px;')
         self.slider_test_times = QSlider(Qt.Horizontal)
-        self.slider_test_times.setMinimum(10)
+        self.slider_test_times.setMinimum(1)
         self.slider_test_times.setMaximum(1000)
-        self.slider_test_times.setValue(100)
-        self.slider_test_times.setTickInterval(10)
+        self.slider_test_times.setValue(1)
+        self.slider_test_times.setTickInterval(1)
         self.slider_test_times.setTickPosition(QSlider.TicksBelow)
         self.slider_test_times.valueChanged.connect(partial(self.update_slider_value,"test_times"))
 
@@ -120,11 +127,10 @@ class BTTestApp(QWidget):
         task_setting_laylout.addWidget(self.btn_delet)
 
         self.task_schedule_model = QStandardItemModel(0, 2) 
-        self.task_schedule_model.setHorizontalHeaderLabels([ "Test items", "times"])
+        self.task_schedule_model.setHorizontalHeaderLabels(["Power States", "Test Case", "times","Status"])
         table_view = QTableView()
         table_view.setModel(self.task_schedule_model)
-        table_view.setColumnWidth(0, 600)
-        table_view.setColumnWidth(1, 100)
+        table_view.setColumnWidth(1, 400)
         task_schedule_layout.addLayout(task_setting_laylout)
         task_schedule_layout.addWidget(table_view)
         task_schedule_group.setLayout(task_schedule_layout)
@@ -157,26 +163,33 @@ class BTTestApp(QWidget):
     def task_schedule_setting(self, name:str):
         match name:
             case "add":
-                comment = ""
+                power_states = ""
                 # power states:
                 match self.b_config.power_state:
                     case Power_States.idle.value:
-                        comment+="Idle,"
+                        power_states+="Idle"
                     case Power_States.go_to_s3.value:
-                        comment+="MS,"
+                        power_states+="MS"
                     case Power_States.go_to_s4.value:
-                        comment+="S4,"
+                        power_states+="S4"
                 # test case:
+                test_case = ""
                 if self.b_config.do_mouse_flag:
-                    comment += "mouse function "
+                    test_case += "mouse function "
                 if self.b_config.do_headset_output_flag:
-                    comment += "headset_output "
+                    test_case += "headset_output "
                 if self.b_config.do_headset_input_flag:
-                    comment += "headset_input "
-                new_row = [QStandardItem(comment), QStandardItem(self.value_tts.text())]
+                    test_case += "headset_input "
+                new_row = [QStandardItem(power_states),QStandardItem(test_case),QStandardItem(self.value_tts.text()), QStandardItem("idle")]
                 self.task_schedule_model.appendRow(new_row)
+                #deep copy the b_config
+                new_task = copy.deepcopy(self.b_config)
+                self.task_schedule.append(new_task)
             case "delet":
-                pass
+                row_count = self.task_schedule_model.rowCount()
+                if row_count:
+                    self.task_schedule_model.removeRow(row_count - 1)
+                    self.task_schedule.pop()
 
     def power_states_setting(self, power_states:int):
         #setting the power states
@@ -187,8 +200,10 @@ class BTTestApp(QWidget):
         is_checked = state == Qt.CheckState.Checked
         setattr(self.b_config,flag_name,is_checked)
 
-    def log_to_ui(self,msg):
+    def log_to_ui(self,msg:str):
         # Run test logic and log output to UI and log file
+        #current_text = self.log_output.toPlainText()
+        #updated_text = f"{msg}\n{current_text}"
         self.log_output.append(msg)
         logger.info(msg)
 
@@ -199,12 +214,25 @@ class BTTestApp(QWidget):
 
     def run_test(self):
         #run the main test process
-        test_process.run_test(b_config=self.b_config,log_callback= self.log_to_ui)
+        def _run_test_process_in_background():
+            row = 0
+            for config in self.task_schedule:
+                self.update_cell(row,3,"running")
+                done_event.clear()
+                test_process.run_test(config,self.log_to_ui,done_event)
+                done_event.wait()
+                self.update_cell(row,3,"Done")
+                row+=1
+
+                
+        test_thread = threading.Thread(target=_run_test_process_in_background)
+        test_thread.start()
 
     def bt_device_check(self):
         #checking the bt device existed, like headset, mouse
         headset = BluetoothControl.find_headset()
         self.led_headset.setText(headset)
+        self.b_config.headset = headset
 
     def advance_setting(self):
         self.settings_window = AdvanceSetting(self.b_config)
@@ -213,7 +241,6 @@ class BTTestApp(QWidget):
 
     def apply_setting(self, basic_config:Basic_Config):
         self.b_config = basic_config
-        self.log_output.append(str(self.b_config))
     
     def ui_renew(self):
         # showing the UI status according to the last time status
@@ -226,17 +253,25 @@ class BTTestApp(QWidget):
             case Power_States.go_to_s4.value:
                 self.rbtn_s4.setChecked(True)
         # --- Test Case Selection ---
-        if b_config.do_headset_input_flag:
+        if self.b_config.do_headset_input_flag:
             self.ck_btn_mouse.setChecked(True)
-        if b_config.do_headset_output_flag:
+        if self.b_config.do_headset_output_flag:
             self.ck_btn_h_output.setChecked(True)
-        if b_config.do_headset_input_flag:
+        if self.b_config.do_headset_input_flag:
             self.ck_btn_h_input.setChecked(True)
     
     def update_slider_value(self,value_name,value):
         match value_name:
             case "test_times":
-                 self.value_tts.setText(str(value))
+                self.value_tts.setText(str(value))
+                self.b_config.test_times = value
+
+
+
+    def update_cell(self, row, col, text):
+        item = self.task_schedule_model.item(row, col)
+        if item:
+            item.setText(text)
         
 
 if __name__ == "__main__":

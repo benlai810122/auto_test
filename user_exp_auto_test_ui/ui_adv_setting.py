@@ -127,25 +127,29 @@ class AdvanceSetting(QWidget):
 
         # ---functional setting ---
         functional_group = QGroupBox("Functional Setting")
-        funcctional_laylout = QFormLayout()
+        functional_laylout = QFormLayout()
 
         #teams_url
         self.led_team_url = QLineEdit()
-        funcctional_laylout.addRow("Teams meeting URL:",self.led_team_url)
+        functional_laylout.addRow("Teams meeting URL:",self.led_team_url)
         #output_source : 2
         self.combo_output_source = QComboBox()
         self.combo_output_source.addItems(["Teams", "Local","Teams_Local"])
-        funcctional_laylout.addRow("Output Source:",self.combo_output_source)
+        functional_laylout.addRow("Output Source:",self.combo_output_source)
         #headset_setting : 0
         self.combo_headset_setting = QComboBox()
         self.combo_headset_setting.addItems(["idle", "turn_on_off"])
-        funcctional_laylout.addRow("Headset Setting :",self.combo_headset_setting)
-
-        functional_group.setLayout(funcctional_laylout)
+        functional_laylout.addRow("Headset Setting :",self.combo_headset_setting)
+        #headset init
+        # --- Test Case Selection ---
+        self.ck_btn_headset_init = QCheckBox("")
+        functional_laylout.addRow("headset init checking:",self.ck_btn_headset_init)
+     
+        functional_group.setLayout(functional_laylout)
         
         self.btn_confirm = QPushButton("Confirm")
         self.btn_confirm.clicked.connect(self.send_setting)
-        #self.btn_confirm.clicked.connect(self.run_test)
+        
 
         layout.addWidget(system_group)
         layout.addWidget(power_state_group)
@@ -166,6 +170,7 @@ class AdvanceSetting(QWidget):
         self.led_team_url.setText(self.b_config.teams_url)
         self.combo_output_source.setCurrentIndex(self.b_config.output_source)
         self.combo_headset_setting.setCurrentIndex(self.b_config.headset_setting)
+        self.ck_btn_headset_init.setChecked(self.b_config.do_headset_init_flag)
         
 
 
@@ -197,6 +202,8 @@ class AdvanceSetting(QWidget):
         data.teams_url = self.led_team_url.text()
         data.output_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
+        data.do_headset_init_flag = self.ck_btn_headset_init.isChecked()
+
         self.setting_changed.emit(data)
         self.close()
 

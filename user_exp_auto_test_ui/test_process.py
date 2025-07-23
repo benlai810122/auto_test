@@ -18,7 +18,7 @@ import pygame
 import pyautogui
 from datetime import datetime
 import yaml
-
+from utils import log  as logger
 
 
 class Power_States(Enum):
@@ -51,9 +51,11 @@ class Basic_Config:
     test_retry_times:int = 3
     continue_fail_limit:int = 5
     output_source_play_time_s:int = 20
+    do_headset_init_flag:bool = True
     do_mouse_flag:bool = True
     do_headset_input_flag:bool = True
     do_headset_output_flag:bool = True
+    test_times:int = 100
 
 
 
@@ -340,11 +342,10 @@ def dut_states_init(power_states:Power_States,wake_up_time_s:int,sleep_time_s:in
             cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:4 /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
             Utils.run_sync_cmd(cmd=cmd_pwrtest)
 
-def run_test(b_config:Basic_Config,log_callback)->bool:
+def run_test(b_config:Basic_Config, log_callback, done_event=None)->bool:
     serial_port = get_arduino_port(b_config.target_port_desc,log_callback=log_callback)
     if not serial_port:
         return False
-
     cmd_servo = str.encode("0")
     cmd_voice_detect = str.encode("1")
     cmd_buzzer = str.encode("2")
@@ -360,17 +361,19 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
     v_control = VPTControl()
     time.sleep(5)
 
-    while(True):
+    while(test_total_count < b_config.test_times):
         res_mouse = False
         res_output = False
         res_input = False
         output_init_flag = 0
         log_callback('Test start...')
        
-        #dut states setting 
+        #dut states setting
         dut_states_init(power_states=b_config.power_state, wake_up_time_s=b_config.wake_up_time_s,
                         sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = cmd_mouse_delay_clicking)
         
+
+        log_callback(f"waiting for {b_config.wake_up_time_s} sec...")
         time.sleep(b_config.wake_up_time_s)
 
         # reset the serport states
@@ -385,12 +388,14 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
             res_mouse = True
 
         # headset init
-        if not headset_init(headset= b_config.headset, headset_states=b_config.headset_setting, timeout_s= b_config.timeout_s, ser = ser, command= cmd_servo):
-            log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
-            WRTController.dump_wrt_log()
-            break
-        print("Turn on the headset successfully, connected")
-        time.sleep(10)
+        if b_config.do_headset_init_flag:
+            if not headset_init(headset= b_config.headset, headset_states=b_config.headset_setting, timeout_s= b_config.timeout_s, ser = ser, command= cmd_servo):
+                log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
+                log_callback('dump wrt log...')
+                WRTController.dump_wrt_log()
+                break
+            log_callback("Turn on the headset successfully, connected")
+            time.sleep(10)
 
         if b_config.do_headset_input_flag:
             log_callback('Start headset input function test...')
@@ -407,7 +412,7 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
                     WRTController.dump_wrt_log()
                     break
                 test_time+=1
-            print("Headset input function test finish")
+            log_callback("Headset input function test finish")
         else:
             res_input = True
         
@@ -436,21 +441,22 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
                         WRTController.dump_wrt_log()
                         break
                 test_time+=1
-            print("Headset output function test finish")
+            log_callback("Headset output function test finish")
         else:
             res_input = True
 
         #turn off the headset
-        if not headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,timeout_s=b_config.timeout_s, ser = ser, command= cmd_servo):
-            log_callback('Can not turn off the Headset, stop test!')
-            break
-        print("Headset turn off successfully, disconneted")
+        if b_config.do_headset_init_flag:
+            if not headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,timeout_s=b_config.timeout_s, ser = ser, command= cmd_servo):
+                log_callback('Can not turn off the Headset, stop test!')
+                break
+            log_callback("Headset turn off successfully, disconneted")
 
         #summary the test result
         if b_config.do_mouse_flag: log_callback(f'mouse function: {res_mouse}')
         if b_config.do_headset_output_flag: log_callback(f'headset output function: {res_output}, init issue:{output_init_flag}')
         if b_config.do_headset_input_flag: log_callback(f'headset input function: {res_input}')
-        if res_output and res_input and res_mouse:
+        if (res_output or not b_config.do_headset_output_flag) and (res_input or not b_config.do_headset_input_flag) and (res_mouse or not b_config.do_mouse_flag) :
             test_success_count+=1
             continue_fail_count = 0
         else:
@@ -463,6 +469,12 @@ def run_test(b_config:Basic_Config,log_callback)->bool:
             log_callback(f"first issue occuring time: {issue_occuring_time}")
             break
     
+    log_callback(f"test finish!")
+    '''
+    generate final test report, TBC...
+    '''
+    if done_event:
+        done_event.set()
             
 
     
@@ -470,6 +482,7 @@ if __name__ == "__main__":
     b_config  = Basic_Config()
     def log_callback(meg:str):
         print(meg)
+        logger.info(meg)
     run_test(b_config,log_callback=log_callback)
 
 

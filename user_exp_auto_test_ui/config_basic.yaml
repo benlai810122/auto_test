@@ -10,5 +10,7 @@ headset_setting : 0
 test_retry_times : 3
 continue_fail_limit : 5
 do_mouse_flag : False
+do_headset_init_flag: True
 do_headset_input_flag : False
 do_headset_output_flag : True
+test_times: 1
