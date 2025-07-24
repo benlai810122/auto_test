@@ -16,6 +16,8 @@ from ui_adv_setting import AdvanceSetting
 from functools import partial
 import threading
 import copy
+import yaml
+from dataclasses import asdict
 
 done_event = threading.Event()
 
@@ -272,7 +274,18 @@ class BTTestApp(QWidget):
         item = self.task_schedule_model.item(row, col)
         if item:
             item.setText(text)
-        
+
+    def closeEvent(self, event):
+        # Convert dataclass to dictionary
+        config_dict = asdict(self.b_config)
+
+        # Save to YAML
+        with open("config_basic.yaml", "w") as f:
+            yaml.dump(config_dict, f)
+
+        print("Configuration saved to config.yaml")
+        event.accept()  # Accept the close event
+            
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
