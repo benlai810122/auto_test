@@ -3,9 +3,9 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QComboBox, QCheckBox,QLineEdit, QTableView,QSlider,
     QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QGroupBox, QFormLayout,QRadioButton
 )
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem,QTextCursor
 from PyQt5.QtCore import Qt
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal ,QObject
 import sys
 import test_process
 from test_process import Basic_Config
@@ -21,9 +21,12 @@ from dataclasses import asdict
 
 done_event = threading.Event()
 
-
+class LogSignal(QObject):
+    log = pyqtSignal(str)
+    cell = pyqtSignal(int,int,str)
 
 class BTTestApp(QWidget):
+    
     b_config:Basic_Config = None
     task_schedule:list[Basic_Config] = []
     def __init__(self, b_config:Basic_Config):
@@ -34,6 +37,9 @@ class BTTestApp(QWidget):
         self.init_ui()
         self.bt_device_check()
         self.ui_renew()
+        self.log_signal = LogSignal()
+        self.log_signal.log.connect(self.log_to_ui)
+        self.log_signal.cell.connect(self.update_cell)
        
 
     def init_ui(self):
@@ -207,6 +213,7 @@ class BTTestApp(QWidget):
         #current_text = self.log_output.toPlainText()
         #updated_text = f"{msg}\n{current_text}"
         self.log_output.append(msg)
+        self.log_output.moveCursor(QTextCursor.End)
         logger.info(msg)
 
     def serial_port_check(self):
@@ -219,16 +226,17 @@ class BTTestApp(QWidget):
         def _run_test_process_in_background():
             row = 0
             for config in self.task_schedule:
-                self.update_cell(row,3,"running")
+                self.log_signal.cell.emit(row,3,"running...")
                 done_event.clear()
-                test_process.run_test(config,self.log_to_ui,done_event)
+                test_process.run_test(config,self.log_signal.log.emit,done_event)
                 done_event.wait()
-                self.update_cell(row,3,"Done")
+                self.log_signal.cell.emit(row,3,"Done")
                 row+=1
 
                 
         test_thread = threading.Thread(target=_run_test_process_in_background)
         test_thread.start()
+        self.save_config()
 
     def bt_device_check(self):
         #checking the bt device existed, like headset, mouse
@@ -268,23 +276,23 @@ class BTTestApp(QWidget):
                 self.value_tts.setText(str(value))
                 self.b_config.test_times = value
 
-
-
     def update_cell(self, row, col, text):
         item = self.task_schedule_model.item(row, col)
         if item:
             item.setText(text)
 
     def closeEvent(self, event):
+        self.save_config()
+        event.accept()  # Accept the close event
+    
+    def save_config(self):
         # Convert dataclass to dictionary
         config_dict = asdict(self.b_config)
-
         # Save to YAML
         with open("config_basic.yaml", "w") as f:
             yaml.dump(config_dict, f)
+        print("Configuration saved to yaml")
 
-        print("Configuration saved to config.yaml")
-        event.accept()  # Accept the close event
             
 
 if __name__ == "__main__":
