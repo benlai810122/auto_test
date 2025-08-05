@@ -18,6 +18,7 @@ import threading
 import copy
 import yaml
 from dataclasses import asdict
+from multiprocessing import Process
 
 done_event = threading.Event()
 
@@ -29,6 +30,7 @@ class BTTestApp(QWidget):
     
     b_config:Basic_Config = None
     task_schedule:list[Basic_Config] = []
+    test_thread:threading = None
     def __init__(self, b_config:Basic_Config):
         super().__init__()
         self.b_config = b_config
@@ -149,12 +151,12 @@ class BTTestApp(QWidget):
 
         # --- Control Buttons ---
         button_layout = QHBoxLayout()
-        self.start_button = QPushButton("Start Test")
-        self.start_button.clicked.connect(self.run_test)
-        self.quit_button = QPushButton("Quit")
-        self.quit_button.clicked.connect(self.close)
-        button_layout.addWidget(self.start_button)
-        button_layout.addWidget(self.quit_button)
+        self.btn_start = QPushButton("Start")
+        self.btn_start.clicked.connect(self.run_test)
+        self.btn_quit = QPushButton("Quit")
+        self.btn_quit.clicked.connect(self.close)
+        button_layout.addWidget(self.btn_start)
+        button_layout.addWidget(self.btn_quit)
 
         # --- Combine All Layouts ---
         layout.addLayout(setting_layout)
@@ -233,10 +235,13 @@ class BTTestApp(QWidget):
                 self.log_signal.cell.emit(row,3,"Done")
                 row+=1
 
-                
-        test_thread = threading.Thread(target=_run_test_process_in_background)
-        test_thread.start()
-        self.save_config()
+
+        if self.btn_start.text() == "Start":    
+            self.test_thread = threading.Thread(target=_run_test_process_in_background)
+            self.test_thread.start()
+            self.save_config()
+            #self.btn_start.setText('Stop')
+       
 
     def bt_device_check(self):
         #checking the bt device existed, like headset, mouse
@@ -263,12 +268,14 @@ class BTTestApp(QWidget):
             case Power_States.go_to_s4.value:
                 self.rbtn_s4.setChecked(True)
         # --- Test Case Selection ---
-        if self.b_config.do_headset_input_flag:
+        if self.b_config.do_mouse_flag:
             self.ck_btn_mouse.setChecked(True)
         if self.b_config.do_headset_output_flag:
             self.ck_btn_h_output.setChecked(True)
         if self.b_config.do_headset_input_flag:
             self.ck_btn_h_input.setChecked(True)
+
+        self.slider_test_times.setValue(self.b_config.test_times)
     
     def update_slider_value(self,value_name,value):
         match value_name:

@@ -136,12 +136,31 @@ class AdvanceSetting(QWidget):
         self.combo_output_source = QComboBox()
         self.combo_output_source.addItems(["Teams", "Local","Teams_Local"])
         functional_laylout.addRow("Output Source:",self.combo_output_source)
+
+        #output_source_play_time_s
+        ospts_layout = QHBoxLayout()
+        self.label_ospts = QLabel('output source play time (s):')
+        self.value_ospts = QLabel('20')  # Default value
+        self.value_ospts.setAlignment(Qt.AlignCenter)
+        self.value_ospts.setStyleSheet('font-size: 16px;')
+        self.slider_ospts = QSlider(Qt.Horizontal)
+        self.slider_ospts.setMinimum(1)
+        self.slider_ospts.setMaximum(3600)
+        self.slider_ospts.setValue(20)
+        self.slider_ospts.setTickInterval(1)
+        self.slider_ospts.setTickPosition(QSlider.TicksBelow)
+        self.slider_ospts.valueChanged.connect(partial(self.update_slider_value,"output_source_play_time_s"))
+        ospts_layout.addWidget(self.label_ospts)
+        ospts_layout.addWidget(self.slider_ospts)
+        ospts_layout.addWidget(self.value_ospts)
+
+        functional_laylout.addRow(ospts_layout)
+
         #headset_setting : 0
         self.combo_headset_setting = QComboBox()
         self.combo_headset_setting.addItems(["idle", "turn_on_off"])
         functional_laylout.addRow("Headset Setting :",self.combo_headset_setting)
         #headset init
-        # --- Test Case Selection ---
         self.ck_btn_headset_init = QCheckBox("")
         functional_laylout.addRow("headset init checking:",self.ck_btn_headset_init)
      
@@ -186,6 +205,8 @@ class AdvanceSetting(QWidget):
                  self.value_sts.setText(str(value))
             case "wake_up_time_s":
                  self.value_wuts.setText(str(value))
+            case "output_source_play_time_s":
+                 self.value_ospts.setText(str(value))
     
 
     def send_setting(self):
@@ -202,6 +223,7 @@ class AdvanceSetting(QWidget):
         data.teams_url = self.led_team_url.text()
         data.output_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
+        data.output_source_play_time_s = self.slider_ospts.value()
         data.do_headset_init_flag = self.ck_btn_headset_init.isChecked()
 
         self.setting_changed.emit(data)
