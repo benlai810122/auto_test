@@ -5,6 +5,7 @@ This file contains the class related to local video or music controlling
 import time
 from utils import Utils
 from os import startfile,path
+import subprocess
 
 
 class VideoControl:
@@ -23,14 +24,16 @@ class VideoControl:
         start playing video with media player
         """
         video_path = path.dirname(__file__) + self.path
-        startfile(video_path)
+        #startfile(video_path)
+        subprocess.Popen(["C:\\Program Files\\Windows Media Player\\wmplayer.exe",video_path])
 
     @staticmethod
     def stop_play():
         """
         Close media player
         """
-        Utils.taskkill("Microsoft.Media.Player")
+        #Utils.taskkill("Microsoft.Media.Player")
+        Utils.taskkill("wmplayer.exe")
 
     
 
@@ -38,7 +41,7 @@ class VideoControl:
 # for testing
 if __name__ == "__main__":
     videoControl = VideoControl(
-        "\\video\\ToS_1080p_23.976fps_H264_7000kbps_8bits_noHDR_2017v1.mp4"
+        "\\local_music\\test.mp3"
     )
     videoControl.play()
     time.sleep(10)
