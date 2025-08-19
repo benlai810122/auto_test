@@ -160,9 +160,7 @@ class AdvanceSetting(QWidget):
         self.combo_headset_setting = QComboBox()
         self.combo_headset_setting.addItems(["idle", "turn_on_off"])
         functional_laylout.addRow("Headset Setting :",self.combo_headset_setting)
-        #headset init
-        self.ck_btn_headset_init = QCheckBox("")
-        functional_laylout.addRow("headset init checking:",self.ck_btn_headset_init)
+        
      
         functional_group.setLayout(functional_laylout)
         
@@ -189,7 +187,7 @@ class AdvanceSetting(QWidget):
         self.led_team_url.setText(self.b_config.teams_url)
         self.combo_output_source.setCurrentIndex(self.b_config.output_source)
         self.combo_headset_setting.setCurrentIndex(self.b_config.headset_setting)
-        self.ck_btn_headset_init.setChecked(self.b_config.do_headset_init_flag)
+     
         
 
 
@@ -224,7 +222,7 @@ class AdvanceSetting(QWidget):
         data.output_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
         data.output_source_play_time_s = self.slider_ospts.value()
-        data.do_headset_init_flag = self.ck_btn_headset_init.isChecked()
+       
 
         self.setting_changed.emit(data)
         self.close()

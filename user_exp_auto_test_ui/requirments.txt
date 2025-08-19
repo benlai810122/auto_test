@@ -10,3 +10,5 @@ numpy
 opencv-python
 PyQt5
 PyYAML
+openpyxl
+pyaudio

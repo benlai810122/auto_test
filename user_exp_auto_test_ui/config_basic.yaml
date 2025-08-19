@@ -1,17 +1,13 @@
 continue_fail_limit: 10
-do_headset_init_flag: false
-do_headset_input_flag: false
-do_headset_output_flag: false
-do_mouse_flag: true
-headset: None
+headset: Dell WL5024 Headset
 headset_setting: 0
-output_source: 2
+output_source: 1
 output_source_play_time_s: 20
-power_state: 0
-sleep_time_s: 60
+sleep_time_s: 300
 target_port_desc: USB-SERIAL CH340
+task_schedule: Idle,Mouse_function + Headset output
 teams_url: https://teams.microsoft.com/l/meetup-join/19%3ameeting_MWQ5MTEwZmUtNWZkMy00YzZkLTgwOTMtNWVjMTc3NjMxZWMz%40thread.v2/0?context=%7b%22Tid%22%3a%228e44b933-0b1e-4e67-be0c-c7e0761eb4db%22%2c%22Oid%22%3a%2232692ba0-ede0-450b-8142-3f487cabff7b%22%7d
 test_retry_times: 3
-test_times: 286
+test_times: 5
 timeout_s: 15
-wake_up_time_s: 30
+wake_up_time_s: 1

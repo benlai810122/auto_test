@@ -15,10 +15,12 @@ int servo_ping_1 = 3;
 int servo_ping_2 = 5;
 int sound_ping = 4;
 int click_times = 5;
+int random_click_times = 10;
 int sleep_time = 60;
 
 const int bufferSize = 64;      // Adjust as needed
 char inputBuffer[bufferSize] = {'\0'};   // Store incoming data
+int delay_time_array[] = {2000,3000,4000,5000};
 int index = 0;
 
 void setup() {
@@ -106,6 +108,19 @@ void test_start()
       counter++;
       delay(1000);
     }
+  }
+  else if (mode =='5')
+  {
+    int counter = 0;
+    while(counter<random_click_times)
+    {
+      mouse_click(myservo_mouse,0,52,500);
+      counter++;
+      int index = random(4);
+      int delay_time = delay_time_array[index];
+      delay(delay_time);
+    }
+    Serial.write("c");
   }
 }
 
