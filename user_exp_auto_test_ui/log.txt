@@ -9818,3 +9818,62 @@
 2025-08-19 14:14:24,841 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:14:24.841369] serial port detected: COM4
 2025-08-19 14:14:29,850 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:14:29.850487] test case: Mouse_function + Headset output
 2025-08-19 14:14:29,853 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:14:29.852607] Start headset output function test...
+2025-08-19 14:24:21,977 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:21.973635] Start testing...
+2025-08-19 14:24:21,993 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:21.993641] serial port detected: COM4
+2025-08-19 14:24:26,989 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:26.989509] test case: Idle
+2025-08-19 14:24:26,989 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:26.989509] waiting for 1 sec...
+2025-08-19 14:24:27,989 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:27.989786] serial port detected: COM4
+2025-08-19 14:24:32,996 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:32.996416] test case: Mouse_function + Headset output
+2025-08-19 14:24:32,996 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:32.996416] Start headset output function test...
+2025-08-19 14:24:53,003 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:24:53.003732] mouse random click start!
+2025-08-19 14:26:03,728 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:26:03.727776] Test terminate!
+2025-08-19 14:34:17,580 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:34:17.578800] Start testing...
+2025-08-19 14:34:17,597 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:34:17.597554] serial port detected: COM4
+2025-08-19 14:38:58,753 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:38:58.745836] Start testing...
+2025-08-19 14:38:58,778 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:38:58.777389] serial port detected: COM4
+2025-08-19 14:39:03,769 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:39:03.769386] test case: Idle
+2025-08-19 14:39:03,769 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:39:03.769386] waiting for 1 sec...
+2025-08-19 14:39:04,778 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:39:04.778532] serial port detected: COM4
+2025-08-19 14:39:09,786 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:39:09.786050] test case: Mouse_function + Headset output
+2025-08-19 14:39:09,790 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:39:09.789539] Start headset output function test...
+2025-08-19 14:40:06,995 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:06.993390] mouse random click start!
+2025-08-19 14:40:36,999 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:36.998771] mouse random click finish!
+2025-08-19 14:40:47,582 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:47.580860] Headset output function test finish
+2025-08-19 14:40:52,587 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:52.587999] serial port detected: COM4
+2025-08-19 14:40:57,594 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:57.594569] test case: Idle
+2025-08-19 14:40:57,597 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:57.597244] waiting for 1 sec...
+2025-08-19 14:40:58,607 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:40:58.606651] serial port detected: COM4
+2025-08-19 14:41:03,609 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:41:03.609234] test case: Mouse_function + Headset output
+2025-08-19 14:41:03,610 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:41:03.610799] Start headset output function test...
+2025-08-19 14:42:00,711 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:00.710166] mouse random click start!
+2025-08-19 14:42:30,723 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:30.721931] mouse random click finish!
+2025-08-19 14:42:41,442 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:41.442251] Headset output function test finish
+2025-08-19 14:42:46,452 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:46.452549] serial port detected: COM4
+2025-08-19 14:42:51,462 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:51.462114] test case: Idle
+2025-08-19 14:42:51,462 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:51.462114] waiting for 1 sec...
+2025-08-19 14:42:52,462 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:52.462799] serial port detected: COM4
+2025-08-19 14:42:57,473 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:57.473457] test case: Mouse_function + Headset output
+2025-08-19 14:42:57,476 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:42:57.475532] Start headset output function test...
+2025-08-19 14:43:54,603 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:43:54.603083] mouse random click start!
+2025-08-19 14:44:24,618 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:24.617631] mouse random click finish!
+2025-08-19 14:44:35,224 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:35.220349] Headset output function test finish
+2025-08-19 14:44:40,228 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:40.228730] serial port detected: COM4
+2025-08-19 14:44:45,236 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:45.236550] test case: Idle
+2025-08-19 14:44:45,239 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:45.236550] waiting for 1 sec...
+2025-08-19 14:44:46,240 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:46.240704] serial port detected: COM4
+2025-08-19 14:44:51,255 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:51.255241] test case: Mouse_function + Headset output
+2025-08-19 14:44:51,257 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:44:51.257255] Start headset output function test...
+2025-08-19 14:45:48,411 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:45:48.411335] mouse random click start!
+2025-08-19 14:46:18,419 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:18.419343] mouse random click finish!
+2025-08-19 14:46:29,076 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:29.072622] Headset output function test finish
+2025-08-19 14:46:34,087 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:34.085463] serial port detected: COM4
+2025-08-19 14:46:39,092 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:39.090139] test case: Idle
+2025-08-19 14:46:39,094 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:39.094744] waiting for 1 sec...
+2025-08-19 14:46:40,092 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:40.092706] serial port detected: COM4
+2025-08-19 14:46:45,107 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:45.107339] test case: Mouse_function + Headset output
+2025-08-19 14:46:45,108 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:46:45.108527] Start headset output function test...
+2025-08-19 14:47:42,229 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:47:42.228111] mouse random click start!
+2025-08-19 14:48:12,245 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:48:12.242044] mouse random click finish!
+2025-08-19 14:48:22,934 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:48:22.929657] Headset output function test finish
+2025-08-19 14:48:27,933 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:48:27.931699] Test Finish! generate final report...
+2025-08-19 14:48:28,056 [INFO] <ui_main.py> log_to_ui() [2025-08-19 14:48:28.056613] Final report is ready!

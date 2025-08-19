@@ -271,7 +271,7 @@ class BTTestApp(QWidget):
     def save_report(self, test_cycle:int, test_fail_times:int):
         #save_report and recover ui
         test_process.save_report(self.b_config,test_cycle,test_fail_times,self.error_message.toPlainText())
-        self.btn_start.setText = "Start"
+        self.btn_start.setText("Start")
         self.enable_all_item()
        
 

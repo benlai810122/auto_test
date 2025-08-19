@@ -451,8 +451,14 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
     if not serial_port:
         log_callback('Can not find the arduino board!')
         return False
-    ser = serial.Serial(serial_port, 115200)
-    time.sleep(5)
+    
+    try:
+        ser = serial.Serial(serial_port, 115200, timeout=30)
+        time.sleep(5)
+    except Exception as ex:
+        log_callback(f'Error happen when creating serial port connection! Error:{ex}')
+        return False
+
     log_callback(f'test case: {test_case}')
 
     match test_case:
@@ -499,7 +505,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
         
         case 'Mouse_function + Headset output':
             # mouse function test
-            res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback,mouse_function_detect=mouse_function_detect)
+            res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback,mouse_function_detect=mouse_random_click)
             time.sleep(5)
             return res
         
@@ -544,6 +550,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
         
         case _:
             log_callback("Not match any test case, please check!")
+
 
         
 
