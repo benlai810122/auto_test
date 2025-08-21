@@ -16,13 +16,13 @@ SYSTEM_POWER_CAPABILITIES
 No.0 Transition -- TargetState: S4
   TargetState:       S4
   EffectiveState:    S4
-  SleepTimeMs:       2647    
-  HiberPagesWritten: 715909  
-  HiberWriteTimeMs:  6252    
-  HiberReadTimeMs:   5485    
-  BiosInitTimeMs:    6667    
-  DriverWakeTimeMs:  1448    
-  Transition StartTime: 07/24/2025 14:53:26::845
-  Transition EndTime:   07/24/2025 14:54:44::164
+  SleepTimeMs:       2259    
+  HiberPagesWritten: 903541  
+  HiberWriteTimeMs:  4803    
+  HiberReadTimeMs:   6918    
+  BiosInitTimeMs:    6832    
+  DriverWakeTimeMs:  1232    
+  Transition StartTime: 08/21/2025 16:23:11::244
+  Transition EndTime:   08/21/2025 16:24:31::430
 No.0 Transition -- Complete
 End: Pass, PwrTest, (null)

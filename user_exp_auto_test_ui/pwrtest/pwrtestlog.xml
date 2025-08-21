@@ -1,4 +1,4 @@
-<PwrTestLog date="07/24/2025" time="14:53:25" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
+<PwrTestLog date="08/21/2025" time="16:23:10" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
   <SystemInformation>
     <ComputerName>DESKTOP-LGJ88V6</ComputerName>
     <OSBuildNumber>26200</OSBuildNumber>
@@ -24,19 +24,19 @@
     <AoAc>1</AoAc>
   </SYSTEM_POWER_CAPABILITIES>
   <SleepScenario>
-    <SleepTransitions hybrid="1" delay="60" sleeptime="60" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
-      <SleepTransition number="0" status="3997774">
-        <StartT>07/24/2025 14:53:26</StartT>
-        <EndT>07/24/2025 14:54:44</EndT>
-        <Duration>00:01:17</Duration>
+    <SleepTransitions hybrid="1" delay="300" sleeptime="60" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
+      <SleepTransition number="0" status="6357062">
+        <StartT>08/21/2025 16:23:11</StartT>
+        <EndT>08/21/2025 16:24:31</EndT>
+        <Duration>00:01:20</Duration>
         <TargetState>4</TargetState>
         <EffectiveState>4</EffectiveState>
-        <Suspend>2647</Suspend>
-        <BIOSInit>6667</BIOSInit>
-        <DriverInit>1448</DriverInit>
-        <HiberPagesWritten>715909</HiberPagesWritten>
-        <HiberRead>5485</HiberRead>
-        <HiberWrite>6252</HiberWrite>
+        <Suspend>2259</Suspend>
+        <BIOSInit>6832</BIOSInit>
+        <DriverInit>1232</DriverInit>
+        <HiberPagesWritten>903541</HiberPagesWritten>
+        <HiberRead>6918</HiberRead>
+        <HiberWrite>4803</HiberWrite>
       </SleepTransition>
     </SleepTransitions>
   </SleepScenario>

@@ -45,6 +45,7 @@ class BTTestApp(QWidget):
         self.setGeometry(100, 100, 800, 1000)
         self.init_ui()
         self.bt_device_check()
+        self.serial_port_check()
         self.ui_renew()
         self.log_signal = LogSignal()
         self.log_signal.log.connect(self.log_to_ui)
@@ -52,7 +53,7 @@ class BTTestApp(QWidget):
         self.log_signal.error.connect(self.error_to_ui)
         self.log_signal.process.connect(self.update_process)
         self.log_signal.save_report.connect(self.save_report)
-       
+    
 
     def init_ui(self):
         layout = QVBoxLayout()
@@ -299,14 +300,16 @@ class BTTestApp(QWidget):
     def serial_port_check(self):
         #check arduino board existed 
         self.log_output.clear()  # Clear previous logs
-        test_process.get_arduino_port(port=self.b_config.target_port_desc, log_callback=self.log_to_ui)
-
+        self.b_config.com = test_process.get_arduino_port(port=self.b_config.target_port_desc, log_callback=self.log_to_ui)
+        
     def run_test(self):
         #run the main test process
         def _run_test_process_in_background():
             self.log_signal.log.emit("Start testing...")
             test_fail_times = 0
             test_cycle = 0
+            self.log_signal.process.emit(0,0)
+            test_fail_flag = False
             for cycle in range(self.b_config.test_times):
                 row = 0
                 for test_case in self.task_schedule:
@@ -320,8 +323,11 @@ class BTTestApp(QWidget):
                         error_message =  f"test case: {test_case} item:{row+1} cycles:{cycle}"
                         self.log_signal.cell.emit(row,1,"Fail")
                         self.log_signal.error.emit(error_message)
-                        test_fail_times+=1
+                        test_fail_flag = True
                     row+=1
+                if test_fail_flag:
+                    test_fail_times += 1
+                    test_fail_flag = False
                 test_cycle = cycle
                 # stop thread if stop btn have been clicked
                 if self.thread_stop_flag:
@@ -340,6 +346,8 @@ class BTTestApp(QWidget):
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
+            self.error_message.setPlainText('')
+            self.log_output.setPlainText('')
             self.test_thread = threading.Thread(target=_run_test_process_in_background)
             self.test_thread.start()
             self.save_config()

@@ -10,7 +10,8 @@ from audio_detect_control import AudioDetectController
 from video_control import VideoControl
 from utils import Utils
 from enum import Enum
-import serial.tools.list_ports
+import serial.tools.list_ports 
+from serial.serialutil import SerialException
 import time
 import serial
 import os
@@ -45,7 +46,7 @@ CMD_mouse_clicking = str.encode("3")
 CMD_mouse_delay_clicking = str.encode("4")
 CMD_mouse_random_clicking = str.encode("5")
 CMD_keyboard_clicking = str.encode("6")
-
+g_COM_PORT = ""
 
 
 @dataclass
@@ -54,7 +55,7 @@ class Basic_Config:
     target_port_desc:str = "USB-SERIAL CH340"
     teams_url:str = "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MWQ5MTEwZmUtNWZkMy00YzZkLTgwOTMtNWVjMTc3NjMxZWMz%40thread.v2/0?context=%7b%22Tid%22%3a%228e44b933-0b1e-4e67-be0c-c7e0761eb4db%22%2c%22Oid%22%3a%2232692ba0-ede0-450b-8142-3f487cabff7b%22%7d"
     timeout_s:int = 5
-    sleep_time_s:int = 180
+    sleep_time_s:int = 30
     wake_up_time_s:int = 60
     output_source:int = SoundOuput.Local.value
     headset_setting:int = Headset.idle.value
@@ -63,6 +64,7 @@ class Basic_Config:
     output_source_play_time_s:int = 20
     task_schedule:str = "MS,Idle,headset_output"
     test_times:int = 100
+    com:str = ""
     
 
 
@@ -413,11 +415,25 @@ def arduino_serial_port_reset(ser:serial.Serial,serial_port:str):
     Returns:
         _type_: _description_
     """
-    ser.close()
+    try:
+        ser.close()
+    except:
+        pass
     time.sleep(5)
     return serial.Serial(serial_port, 115200)
 
-def dut_states_init(power_states:Power_States,wake_up_time_s:int,sleep_time_s:int,ser:serial.Serial,s3_cmd)->None:
+def wait_for_port(port_name, timeout=30):
+    """Wait until a specific COM port reappears"""
+    start = time.time()
+    while time.time() - start < timeout:
+        ports = [p.device for p in serial.tools.list_ports.comports()]
+        print(ports)
+        if port_name in ports:
+            return True
+        time.sleep(1)
+    return False
+
+def dut_states_init(power_states:Power_States,wake_up_time_s:int,sleep_time_s:int,ser:serial.Serial)->None:
     """_summary_
     setting dut states, s3 ,s4 or idle 
 
@@ -428,12 +444,32 @@ def dut_states_init(power_states:Power_States,wake_up_time_s:int,sleep_time_s:in
         case Power_States.idle:
             time.sleep(wake_up_time_s)
         case Power_States.go_to_s3:
-            mouse_function_detect_s3(ser=ser,command=s3_cmd,sleep_time=sleep_time_s)
+            mouse_function_detect_s3(ser=ser,command=CMD_mouse_delay_clicking,sleep_time=sleep_time_s)
             go_to_sleep()
         case Power_States.go_to_s4:
             #go to sleep mode first and waiting for mouse click
             cmd_pwrtest = f'pwrtest\pwrtest.exe /sleep /s:4 /c:1 /d:{sleep_time_s} /p:{wake_up_time_s}'
             Utils.run_sync_cmd(cmd=cmd_pwrtest)
+
+
+def safe_write(ser:serial.Serial, data, baudrate=115200):
+    global g_COM_PORT
+    #safe serial wirte cmd to aviod issue
+    try:
+        ser.write(data)
+    except SerialException as e:
+        print(f"[WARN] Serial exception: {e}")
+        try:
+            ser.close()
+        except:
+            pass
+        
+        time.sleep(1)  # wait a bit for device to re-enumerate
+        ser = serial.Serial(g_COM_PORT, baudrate, timeout=30)
+        ser.write(data)
+        ser.close()
+    
+
 
 def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
     """_summary_
@@ -447,112 +483,137 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
         bool: _description_
     """
     #connect to arduino board
-    serial_port = get_arduino_port(b_config.target_port_desc,log_callback=log_callback)
-    if not serial_port:
+    global g_COM_PORT
+    res = True
+    g_COM_PORT = b_config.com
+    ser:serial.Serial = None
+
+    #do nothing if test_case = Idle
+    if test_case == 'Idle':
+        log_callback(f"waiting for {b_config.wake_up_time_s} sec...")
+        time.sleep(b_config.wake_up_time_s)
+        return True
+
+
+    if not g_COM_PORT:
         log_callback('Can not find the arduino board!')
         return False
     
     try:
-        ser = serial.Serial(serial_port, 115200, timeout=30)
-        time.sleep(5)
+        if wait_for_port(g_COM_PORT,30):
+            ser = serial.Serial(g_COM_PORT, 115200, timeout=30)
+            time.sleep(5)
+        else:
+            log_callback(f'Cant not find the serial device')
+            return False
+        
     except Exception as ex:
-        log_callback(f'Error happen when creating serial port connection! Error:{ex}')
+        log_callback(f'Serial port connection error:{ex}')
         return False
 
     log_callback(f'test case: {test_case}')
 
     match test_case:
-        case 'Idle' :
-            log_callback(f"waiting for {b_config.wake_up_time_s} sec...")
-            dut_states_init(power_states=Power_States.idle, wake_up_time_s=b_config.wake_up_time_s,
-                    sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = CMD_mouse_delay_clicking)
-            return True
+        
+        #case 'Idle' :
+            #log_callback(f"waiting for {b_config.wake_up_time_s} sec...")
+            #dut_states_init(power_states=Power_States.idle, wake_up_time_s=b_config.wake_up_time_s,
+                    #sleep_time_s=b_config.sleep_time_s,ser=ser)
         
         case 'MS':
             log_callback(f"go to MS states for {b_config.sleep_time_s} sec...")
             dut_states_init(power_states=Power_States.go_to_s3, wake_up_time_s=b_config.wake_up_time_s,
-                    sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = CMD_mouse_delay_clicking)
-            return True
-        
+                    sleep_time_s=b_config.sleep_time_s,ser=ser)
+            #make sure the laptop go to MS states
+            time.sleep(5)
+            
         case 'S4':
             log_callback(f"go to s4 states for {b_config.sleep_time_s} sec...")
-            dut_states_init(power_states=Power_States.go_to_s3, wake_up_time_s=b_config.wake_up_time_s,
-                    sleep_time_s=b_config.sleep_time_s,ser=ser,s3_cmd = CMD_mouse_delay_clicking)
-            return True
+            dut_states_init(power_states=Power_States.go_to_s4, wake_up_time_s=b_config.wake_up_time_s,
+                    sleep_time_s=b_config.sleep_time_s,ser=ser)
+            
             
         case 'Mouse_function':
             # mouse function test
-            res_mouse = mouse_function_detect(ser = ser, command= CMD_mouse_clicking,
+            res = mouse_function_detect(ser = ser, command= CMD_mouse_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
-            if not res_mouse:
+            if not res:
                 log_callback('mouse function test fail!')
                 log_callback('dump wrt log...')
                 WRTController.dump_wrt_log()
 
             time.sleep(5)
-            return res_mouse
+            
         case 'Mouse_random':
             # mouse function test
-            res_mouse = mouse_random_click(ser = ser, command= CMD_mouse_random_clicking,
+            res = mouse_random_click(ser = ser, command= CMD_mouse_random_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
-            if not res_mouse:
+            if not res:
                 log_callback('mouse function test fail!')
                 log_callback('dump wrt log...')
                 WRTController.dump_wrt_log()
 
             time.sleep(5)
-            return res_mouse
-        
+           
         case 'Mouse_function + Headset output':
             # mouse function test
             res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback,mouse_function_detect=mouse_random_click)
             time.sleep(5)
-            return res
+        
         
         case 'Headset_init':
             # headset init
-            if not headset_init(headset= b_config.headset, headset_states=b_config.headset_setting,
-                                 timeout_s= b_config.timeout_s, ser = ser, command= CMD_servo):
+            res = headset_init(headset= b_config.headset, headset_states=b_config.headset_setting,
+                                 timeout_s= b_config.timeout_s, ser = ser, command= CMD_servo)
+            if not res:
                 log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
                 log_callback('dump wrt log...')
                 WRTController.dump_wrt_log()
-            log_callback("Turn on the headset successfully, connected")
+            else:
+                log_callback("Turn on the headset successfully, connected")
             time.sleep(5)
 
         case 'Headset_input':
             log_callback('Start headset input function test...')
             #headset input function test
             test_time = 0
-            while not res_input:
+            while not res:
                 ad_Controller = AudioDetectController(headset= b_config.headset, threshold=150)
                 buzzer_buzzing(ser=ser,command=CMD_buzzer)
-                res_input = ad_Controller.audio_detect()
+                res = ad_Controller.audio_detect()
                 if test_time > b_config.test_retry_times:
                     log_callback('***Headset input function have some issue!***')
                     WRTController.dump_wrt_log()
-                    return False
+                    break
                 test_time+=1
             log_callback("Headset input function test finish")
             time.sleep(5)
-            return True
         
+    
         case 'Headset_output':
             res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback)
-            return res
 
         case 'Headset_del':
-            if not headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,
-                               timeout_s=b_config.timeout_s, ser = ser, command= CMD_servo):
+            res = headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,
+                               timeout_s=b_config.timeout_s, ser = ser, command= CMD_servo)
+            if not res:
                 log_callback('Can not turn off the Headset, stop test!')
-                return False
-            log_callback("Headset turn off successfully, disconneted")
-            return True
+            else:
+                log_callback("Headset turn off successfully, disconneted")
         
         case _:
             log_callback("Not match any test case, please check!")
-
-
+            res = False
         
+    
+    #close serial connect after testing:
+    try:
+        print("Relsease serial port!")
+        ser.close()
+    except:
+        pass
+
+    return res
 
 
     #summary the test result
@@ -580,7 +641,7 @@ if __name__ == "__main__":
     def log_callback(meg:str):
         print(meg)
         logger.info(meg)
-    test_case = 'Mouse_random'
+    test_case = 'MS'
     run_test(test_case,b_config,log_callback=log_callback)
 
 
