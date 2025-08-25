@@ -25,14 +25,14 @@ class VideoControl:
         """
         video_path = path.dirname(__file__) + self.path
         #startfile(video_path)
-        subprocess.Popen(["C:\\Program Files\\Windows Media Player\\wmplayer.exe",video_path])
+        subprocess.Popen(["explorer",video_path])
 
     @staticmethod
     def stop_play():
         """
         Close media player
         """
-        #Utils.taskkill("Microsoft.Media.Player")
+        Utils.taskkill("Microsoft.Media.Player")
         Utils.taskkill("wmplayer.exe")
 
     
