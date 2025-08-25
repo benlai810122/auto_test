@@ -310,6 +310,7 @@ class BTTestApp(QWidget):
             test_cycle = 0
             self.log_signal.process.emit(0,0)
             test_fail_flag = False
+            test_fail_continue_times = 0
             for cycle in range(self.b_config.test_times):
                 row = 0
                 for test_case in self.task_schedule:
@@ -325,18 +326,32 @@ class BTTestApp(QWidget):
                         self.log_signal.error.emit(error_message)
                         test_fail_flag = True
                     row+=1
+
+                test_cycle = cycle
+                
                 if test_fail_flag:
+                    test_fail_continue_times+=1
                     test_fail_times += 1
                     test_fail_flag = False
-                test_cycle = cycle
-                # stop thread if stop btn have been clicked
-                if self.thread_stop_flag:
-                    break
+                else:
+                    test_fail_continue_times = 0
+
                 #update process lab
                 self.log_signal.process.emit(cycle+1,test_fail_times)
+                
                 #renew the status for another run:
                 for i in range(row):
                     self.log_signal.cell.emit(i,1,"")
+
+                # stop thread if stop btn have been clicked
+                if self.thread_stop_flag:
+                    break
+                
+                # if out of continue fail range, stop testing
+                if test_fail_continue_times >= self.b_config.continue_fail_limit:
+                        self.log_signal.log.emit("Stop testing!")
+                        self.log_signal.error.emit("out of maxium continue fail range, stop testing!")
+                        break
                 
             self.log_signal.log.emit("Test Finish! generate final report...")
             self.log_signal.save_report.emit(test_cycle+1,test_fail_times)

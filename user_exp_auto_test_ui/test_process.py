@@ -113,7 +113,7 @@ def save_report(config: Basic_Config, total_cycles: int, fail_times: int, error_
 
     current_time = datetime.now()
     timestamp_str = current_time.strftime("%Y%m%d_%H%M%S")
-    filename = f"test_report_{timestamp_str}.xlsx"
+    filename = f"report\\test_report_{timestamp_str}.xlsx"
 
     wb.save(filename)
     print(f"✅ Report saved as {filename}")
