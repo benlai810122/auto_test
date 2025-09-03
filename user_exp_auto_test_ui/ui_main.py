@@ -4,12 +4,14 @@ from PyQt5.QtWidgets import (
     QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QGroupBox, QFormLayout,QRadioButton
 )
 from PyQt5.QtGui import QStandardItemModel, QStandardItem,QTextCursor, QColor, QBrush, QFont
+from PyQt5.QtWidgets import QStyle
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSignal ,QObject
 import sys
 import test_process
 from test_process import Basic_Config
 from test_process import Power_States
+from test_process import Test_case
 from utils import log  as logger
 from bt_control import BluetoothControl
 from ui_adv_setting import AdvanceSetting
@@ -28,6 +30,7 @@ class LogSignal(QObject):
     cell = pyqtSignal(int,int,str)
     process = pyqtSignal(int,int)
     save_report = pyqtSignal(int,int)
+    recover = pyqtSignal()
 
 class BTTestApp(QWidget):
     
@@ -42,7 +45,7 @@ class BTTestApp(QWidget):
         super().__init__()
         self.b_config = b_config
         self.setWindowTitle("User Experience Auto Test")
-        self.setGeometry(100, 100, 800, 1000)
+        self.setGeometry(100, 100, 1200, 1000)
         self.init_ui()
         self.bt_device_check()
         self.serial_port_check()
@@ -53,10 +56,13 @@ class BTTestApp(QWidget):
         self.log_signal.error.connect(self.error_to_ui)
         self.log_signal.process.connect(self.update_process)
         self.log_signal.save_report.connect(self.save_report)
+        self.log_signal.recover.connect(self.enable_all_item)
     
 
     def init_ui(self):
-        layout = QVBoxLayout()
+        layout_main = QHBoxLayout()
+        layout_1 = QVBoxLayout()
+        layout_2 = QVBoxLayout()
 
         # --- setting ---
         self.setting_group = QGroupBox("Setting")
@@ -96,9 +102,9 @@ class BTTestApp(QWidget):
         self.rbtn_s4 = QRadioButton("S4")
         self.btn_ps_add = QPushButton("Add")
 
-        self.rbtn_idle.clicked.connect(partial(self.power_states_setting,"Idle"))
-        self.rbtn_ms.clicked.connect(partial(self.power_states_setting,"MS"))
-        self.rbtn_s4.clicked.connect(partial(self.power_states_setting,"S4"))
+        self.rbtn_idle.clicked.connect(partial(self.power_states_setting, Test_case.Idle.value))
+        self.rbtn_ms.clicked.connect(partial(self.power_states_setting,Test_case.MS.value))
+        self.rbtn_s4.clicked.connect(partial(self.power_states_setting,Test_case.S4.value))
         self.btn_ps_add.clicked.connect(partial(self.task_schedule_setting,"ps_add"))
         self.btn_ps_add.setMaximumWidth(100)
 
@@ -115,34 +121,43 @@ class BTTestApp(QWidget):
 
         func_level_1 =  QHBoxLayout()
         self.ck_btn_mouse = QRadioButton("Mouse Function")
-        self.ck_btn_h_input = QRadioButton("Headset Input")
-        self.ck_btn_h_output = QRadioButton("Headset Output")
-        self.ck_btn_mouse.clicked.connect(partial(self.test_case_setting,'Mouse_function'))
-        self.ck_btn_h_input.clicked.connect(partial(self.test_case_setting,'Headset_input'))
-        self.ck_btn_h_output.clicked.connect(partial(self.test_case_setting,'Headset_output'))
+        self.ck_btn_m_random = QRadioButton("Mouse Random")
+        self.ck_btn_m_h_function = QRadioButton("Mouse + Headset_output")
+        self.ck_btn_ml = QRadioButton("Mouse Latency")
+        self.ck_btn_mouse.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_function.value))
+        self.ck_btn_m_random.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_random.value))
+        self.ck_btn_m_h_function.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_Headset_output.value))
+        self.ck_btn_ml.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_latency.value))
         func_level_1.addWidget(self.ck_btn_mouse)
-        func_level_1.addWidget(self.ck_btn_h_input)
-        func_level_1.addWidget(self.ck_btn_h_output)
+        func_level_1.addWidget(self.ck_btn_m_random)
+        func_level_1.addWidget(self.ck_btn_m_h_function)
+        func_level_1.addWidget(self.ck_btn_ml)
 
         func_level_2 =  QHBoxLayout()
+        self.ck_btn_h_input = QRadioButton("Headset Input")
+        self.ck_btn_h_output = QRadioButton("Headset Output")
         self.ck_btn_h_init = QRadioButton("Headset Init")
         self.ck_btn_h_del = QRadioButton("Headset Del")
-        self.ck_btn_m_random = QRadioButton("Mouse Random")
-        self.ck_btn_h_init.clicked.connect(partial(self.test_case_setting,'Headset_init'))
-        self.ck_btn_h_del.clicked.connect(partial(self.test_case_setting,'Headset_del'))
-        self.ck_btn_m_random.clicked.connect(partial(self.test_case_setting,'Mouse_random'))
+        self.ck_btn_h_input.clicked.connect(partial(self.test_case_setting,Test_case.Headset_input.value))
+        self.ck_btn_h_output.clicked.connect(partial(self.test_case_setting,Test_case.Headset_output.value))
+        self.ck_btn_h_init.clicked.connect(partial(self.test_case_setting,Test_case.Headset_init.value))
+        self.ck_btn_h_del.clicked.connect(partial(self.test_case_setting,Test_case.Headset_del.value))
+        func_level_2.addWidget(self.ck_btn_h_input)
+        func_level_2.addWidget(self.ck_btn_h_output)
         func_level_2.addWidget(self.ck_btn_h_init)
         func_level_2.addWidget(self.ck_btn_h_del)
-        func_level_2.addWidget(self.ck_btn_m_random)
 
         func_level_3 =  QHBoxLayout()
-        self.ck_btn_h_m_function = QRadioButton("Mouse_function + Headset output")
-        self.empty_1 = QLabel("")
-        self.empty_2 = QLabel("")
-        self.ck_btn_h_m_function.clicked.connect(partial(self.test_case_setting,'Mouse_function + Headset output'))
-        func_level_3.addWidget(self.ck_btn_h_m_function)
-        func_level_3.addWidget(self.empty_1)
-        func_level_3.addWidget(self.empty_2)
+        self.ck_btn_k_function = QRadioButton("Keyboard Function")
+        self.ck_btn_kl = QRadioButton("Keyboard Latency")
+        self.emtpy1 = QLabel("")
+        self.emtpy2 = QLabel("")
+        self.ck_btn_k_function.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_function.value))
+        self.ck_btn_kl.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_latency.value))
+        func_level_3.addWidget(self.ck_btn_k_function)
+        func_level_3.addWidget(self.ck_btn_kl)
+        func_level_3.addWidget(self.emtpy1)
+        func_level_3.addWidget(self.emtpy2)
 
 
         self.btn_tc_add = QPushButton("Add")
@@ -190,15 +205,38 @@ class BTTestApp(QWidget):
             }
         """)
     
-        self.btn_delet = QPushButton("Delet")
+        self.btn_delet = QPushButton("undo")
         self.btn_delet.clicked.connect(partial(self.task_schedule_setting,"delet"))
-        self.btn_delet.setMaximumWidth(100)
+        self.btn_delet.setMaximumWidth(200)
+        self.btn_delet.setIcon(self.style().standardIcon(QStyle.SP_ArrowBack))
 
         self.task_schedule_model = QStandardItemModel(0, 2) 
         self.task_schedule_model.setHorizontalHeaderLabels(["Test Case","Status"])
+
         table_view = QTableView()
         table_view.setModel(self.task_schedule_model)
-        table_view.setColumnWidth(0, 500)
+        table_view.setColumnWidth(0,350)
+
+
+        table_view.setStyleSheet("""
+            QTableView {
+                gridline-color: #555;
+                background-color: #f9f9f9;
+                alternate-background-color: #eaeaea;
+                border: 1px solid #ccc;
+                font-family: Segoe UI;
+                font-size: 11pt;
+            }
+            QHeaderView::section {
+                background-color: #444;
+                color: white;
+                padding: 4px;
+                border: 1px solid #333;
+                font-weight: bold;
+            }
+        """)
+        table_view.setAlternatingRowColors(True)
+        table_view.setShowGrid(False)
         task_schedule_layout.addLayout(task_setting_laylout)
         task_schedule_layout.addWidget(self.lab_test_process)
         task_schedule_layout.addWidget(table_view)
@@ -209,14 +247,14 @@ class BTTestApp(QWidget):
 
         self.log_output = QTextEdit()
         self.log_output.setReadOnly(True)
-        self.log_output.setMaximumHeight(150)
+        #.log_output.setMaximumHeight(150)
         font = QFont("Arial", 10)  # font family, size
         self.log_output.setFont(font)
 
         # --- Error message ---
         self.error_message = QTextEdit()
         self.error_message.setReadOnly(True)
-        self.error_message.setMaximumHeight(80)
+        self.error_message.setMaximumHeight(150)
         self.error_message.setTextColor(QColor("red"))
         font = QFont("Arial", 12)  # font family, size
         self.error_message.setFont(font)
@@ -228,22 +266,29 @@ class BTTestApp(QWidget):
         self.btn_start.clicked.connect(self.run_test)
         self.btn_quit = QPushButton("Quit")
         self.btn_quit.clicked.connect(self.close)
+
+        self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        self.btn_quit.setIcon(self.style().standardIcon(QStyle.SP_DialogCloseButton))
         button_layout.addWidget(self.btn_start)
         button_layout.addWidget(self.btn_quit)
 
         # --- Combine All Layouts ---
-        layout.addWidget(self.setting_group)
-        layout.addWidget(self.device_group)
-        layout.addWidget(self.power_states_group)
-        layout.addWidget(self.test_case_group)
-        layout.addWidget(self.task_schedule_group)
-        layout.addWidget(QLabel("Test Progress:"))
-        layout.addWidget(self.log_output)
-        layout.addWidget(QLabel("Error Message:"))
-        layout.addWidget(self.error_message)
-        layout.addLayout(button_layout)
+        layout_1.addWidget(self.setting_group)
+        layout_1.addWidget(self.device_group)
+        layout_1.addWidget(self.power_states_group)
+        layout_1.addWidget(self.test_case_group)
+        layout_1.addWidget(QLabel("Test Progress:"))
+        layout_1.addWidget(self.log_output)
+        layout_1.addWidget(QLabel("Error Message:"))
+        layout_1.addWidget(self.error_message)
+        layout_1.addLayout(button_layout)
 
-        self.setLayout(layout)
+        layout_2.addWidget(self.task_schedule_group)
+
+        layout_main.addLayout(layout_1)
+        layout_main.addLayout(layout_2)
+
+        self.setLayout(layout_main)
 
     def task_schedule_setting(self, name:str):
         match name:
@@ -251,13 +296,21 @@ class BTTestApp(QWidget):
                 # power states:
                 if self.power_states_clicking: 
                     self.task_schedule.append(self.power_states_clicking)
-                    new_row = [QStandardItem(self.power_states_clicking), QStandardItem("")]
+                    item_case = QStandardItem(self.power_states_clicking)
+                    item_case.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+                    state = QStandardItem("")
+                    state.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+                    new_row = [item_case, state]
                     self.task_schedule_model.appendRow(new_row)
             case "tc_add":
                 # power states:
                 if self.test_case_clicking:
                     self.task_schedule.append(self.test_case_clicking)
-                    new_row = [QStandardItem(self.test_case_clicking), QStandardItem("")]
+                    item_case = QStandardItem(self.test_case_clicking)
+                    item_case.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+                    state = QStandardItem("")
+                    state.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+                    new_row = [item_case, state]
                     self.task_schedule_model.appendRow(new_row)
             case "delet": 
                 row_count = self.task_schedule_model.rowCount()
@@ -272,10 +325,8 @@ class BTTestApp(QWidget):
     def save_report(self, test_cycle:int, test_fail_times:int):
         #save_report and recover ui
         test_process.save_report(self.b_config,test_cycle,test_fail_times,self.error_message.toPlainText())
-        self.btn_start.setText("Start")
-        self.enable_all_item()
-       
-
+        
+     
     def test_case_setting(self, test_case:str):
         #setting the test case
         self.test_case_clicking = test_case
@@ -356,8 +407,7 @@ class BTTestApp(QWidget):
             self.log_signal.log.emit("Test Finish! generate final report...")
             self.log_signal.save_report.emit(test_cycle+1,test_fail_times)
             self.log_signal.log.emit("Final report is ready!")
-
-            
+            self.log_signal.recover.emit()
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
@@ -367,13 +417,15 @@ class BTTestApp(QWidget):
             self.test_thread.start()
             self.save_config()
             self.btn_start.setText('Stop')
+            self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
             self.disable_all_item()
 
         elif self.btn_start.text() == "Stop":
             self.thread_stop_flag = True
             self.log_to_ui("Test terminate!")
-            self.btn_start.setText('Start')
-            self.enable_all_item()
+            self.btn_start.setText('waiting...')
+            self.btn_start.setDisabled(True)
+            self.btn_quit.setDisabled(True)
 
     def disable_all_item(self):
         self.power_states_group.setDisabled(True)
@@ -381,12 +433,17 @@ class BTTestApp(QWidget):
         self.device_group.setDisabled(True)
         self.test_case_group.setDisabled(True)
         self.task_schedule_group.setDisabled(True)
+
     def enable_all_item(self):
         self.power_states_group.setDisabled(False)
         self.setting_group.setDisabled(False)
         self.device_group.setDisabled(False)
         self.test_case_group.setDisabled(False)
         self.task_schedule_group.setDisabled(False)
+        self.btn_quit.setDisabled(False)
+        self.btn_start.setDisabled(False)
+        self.btn_start.setText("Start")
+        self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
 
 
     def bt_device_check(self):
@@ -409,7 +466,13 @@ class BTTestApp(QWidget):
         self.task_schedule = self.b_config.task_schedule.split(',')
         for test_item in self.task_schedule:
             if test_item:
-                new_row = [QStandardItem(test_item), QStandardItem("")]
+                item_case = QStandardItem(test_item)
+                item_case.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+
+                state = QStandardItem("")
+                state.setFont(QFont("Arial", 12, QFont.Bold))   # Bold font
+
+                new_row = [item_case, state]
                 self.task_schedule_model.appendRow(new_row)
 
     
@@ -429,6 +492,7 @@ class BTTestApp(QWidget):
                 item.setForeground(QBrush(QColor("red")))
             elif text == 'running...':
                 item.setForeground(QBrush(QColor("black")))
+
 
     def update_process(self, cycles:int, fail_times:int):
         self.lab_test_process.setText(f"Test Cycles: {cycles}            Pass: {cycles-fail_times}         Fail: {fail_times}")
