@@ -32,6 +32,11 @@ class YoutubeControl:
         """
         webbrowser.open(self.link)
         time.sleep(5)
+        keyboard = Controller()
+        keyboard.tap(Key.end)
+        time.sleep(1)
+        keyboard.tap("0")
+        time.sleep(5)
         return True
 
     @staticmethod

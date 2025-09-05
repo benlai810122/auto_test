@@ -25465,3 +25465,20 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-09-05 16:11:46,780 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:11:46.780884] End Youtube playing
 2025-09-05 16:11:46,780 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:11:46.780884] Test Finish! generate final report...
 2025-09-05 16:11:46,800 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:11:46.800107] Final report is ready!
+2025-09-05 16:32:28,625 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:32:28.625005] serial port detected: COM4
+2025-09-05 16:32:34,297 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:32:34.296989] Start testing...
+2025-09-05 16:32:39,307 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:32:39.307797] test case: Environment_init
+2025-09-05 16:32:39,307 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:32:39.307797] Start Youtube...
+2025-09-05 16:32:55,512 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:32:55.511453] test case: Mouse_function
+2025-09-05 16:33:02,593 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:02.592680] BLE mouse function pass!
+2025-09-05 16:33:12,662 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:12.661891] test case: Environment_restore
+2025-09-05 16:33:13,209 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:13.209537] End Youtube playing
+2025-09-05 16:33:18,223 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:18.223441] test case: Environment_init
+2025-09-05 16:33:18,223 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:18.223441] Start Youtube...
+2025-09-05 16:33:34,389 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:34.389764] test case: Mouse_function
+2025-09-05 16:33:36,430 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:36.430185] BLE mouse function pass!
+2025-09-05 16:33:42,717 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:42.717809] Test terminate!
+2025-09-05 16:33:46,552 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:46.552488] test case: Environment_restore
+2025-09-05 16:33:47,068 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:47.068261] End Youtube playing
+2025-09-05 16:33:47,070 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:47.068261] Test Finish! generate final report...
+2025-09-05 16:33:47,095 [INFO] <ui_main.py> log_to_ui() [2025-09-05 16:33:47.095423] Final report is ready!
