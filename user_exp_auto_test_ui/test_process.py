@@ -24,6 +24,8 @@ from utils import log  as logger
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from youtube_control import YoutubeControl
+import pygetwindow as gw
+
 
 
 class Power_States(Enum):
@@ -321,6 +323,14 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
             youtubeControl = YoutubeControl(link="https://www.youtube.com/watch?v=w9k7eWD0ik8" )
             youtubeControl.play()
 
+    #make sure the main ui will be on the top of the screen
+    window:gw.Win32Window
+    windows =  gw.getWindowsWithTitle("User Experience Auto Test")
+    window = windows[0]
+    window.minimize()
+    window.restore()
+    window.moveTo(0,0)
+
     return True
 
 
@@ -387,7 +397,9 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
     counter = 0
     pygame.init()
     screen_width, screen_height = pyautogui.size()
-    pygame.display.set_mode((screen_width, screen_width))
+    pygame.display.set_mode((screen_width, screen_height))
+
+
     #control mouse clicking
     ser.write(command+b'\n')
     #start cehcking mouse click
@@ -405,7 +417,6 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
                 log_callback("BLE keyboard function pass!")
                 pygame.quit()
                 return True
-                
 
         counter+=1
         time.sleep(1)
@@ -787,12 +798,15 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
 
     
 if __name__ == "__main__":
+    '''
     b_config  = Basic_Config()
     def log_callback(meg:str):
         print(meg)
         logger.info(meg)
     test_case = 'keyboard_function'
     run_test(test_case,b_config,log_callback=log_callback)
+    '''
+    print(gw.getAllTitles())
 
 
 
