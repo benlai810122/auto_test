@@ -135,7 +135,7 @@ class AdvanceSetting(QWidget):
         #output_source : 2
         self.combo_output_source = QComboBox()
         self.combo_output_source.addItems(["Teams", "Local","Teams_Local","Youtube"])
-        functional_laylout.addRow("Output Source:",self.combo_output_source)
+        functional_laylout.addRow("Environment Source:",self.combo_output_source)
 
         #output_source_play_time_s
         ospts_layout = QHBoxLayout()
@@ -164,7 +164,7 @@ class AdvanceSetting(QWidget):
      
         functional_group.setLayout(functional_laylout)
         
-        self.btn_confirm = QPushButton("Confirm")
+        self.btn_confirm = QPushButton("Save")
         self.btn_confirm.clicked.connect(self.send_setting)
         
 
@@ -185,7 +185,7 @@ class AdvanceSetting(QWidget):
         self.slider_wuts.setValue(self.b_config.wake_up_time_s)
         # ---functional setting ---
         self.led_team_url.setText(self.b_config.teams_url)
-        self.combo_output_source.setCurrentIndex(self.b_config.output_source)
+        self.combo_output_source.setCurrentIndex(self.b_config.ENV_source)
         self.combo_headset_setting.setCurrentIndex(self.b_config.headset_setting)
      
         
@@ -219,7 +219,7 @@ class AdvanceSetting(QWidget):
         data.wake_up_time_s = self.slider_wuts.value()
         # ---functional setting ---
         data.teams_url = self.led_team_url.text()
-        data.output_source = self.combo_output_source.currentIndex()
+        data.ENV_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
         data.output_source_play_time_s = self.slider_ospts.value()
        

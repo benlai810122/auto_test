@@ -35,7 +35,7 @@ class Headset(Enum):
     idle = 0
     turn_on_off = 1
 
-class SoundOuput(Enum):
+class ENV(Enum):
     Teams = 0
     Local = 1
     Teams_Local = 2
@@ -49,12 +49,13 @@ class Test_case(Enum):
     keyboard_function = 'keyboard_function'
     keyboard_latency = 'keyboard_latency'
     Mouse_random = 'Mouse_random'
-    Mouse_Headset_output = 'Mouse + Headset_output'
     Headset_init = 'Headset_init'
     Headset_input = 'Headset_input'
     Headset_output = 'Headset_output'
     Headset_del = 'Headset_del'
     Mouse_latency = 'Mouse_latency'
+    Environment_init = "Environment_init"
+    Environment_restore = "Environment_restore"
 
 
 #Arduino cmd setting
@@ -79,7 +80,7 @@ class Basic_Config:
     timeout_s:int = 5
     sleep_time_s:int = 30
     wake_up_time_s:int = 60
-    output_source:int = SoundOuput.Local.value
+    ENV_source:int = ENV.Local.value
     headset_setting:int = Headset.idle.value
     test_retry_times:int = 3
     continue_fail_limit:int = 5
@@ -87,7 +88,7 @@ class Basic_Config:
     task_schedule:str = "MS,Idle,headset_output"
     test_times:int = 100
     com:str = ""
-    youtube_link:str = "https://www.youtube.com/watch?v=CxwJrzEdw1U"
+    youtube_link:str = "https://www.youtube.com/watch?v=w9k7eWD0ik8"
     mouse_latency_threshold:int = 80
     keyboard_latency_threshold:int = 100    
 
@@ -276,12 +277,12 @@ def get_arduino_port(port:str, log_callback)->str:
     return serial_port
 
 
-def output_test_init(output_source:SoundOuput,t_control:MeetingControl,v_control:VPTControl,log_callback)->bool:
+def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_callback)->bool:
     '''
     doing some pre init before test the headset output function , like open teams or local music
     '''
-    match output_source:
-        case SoundOuput.Teams.value:
+    match ENV_source:
+        case ENV.Teams.value:
             # open the teams call and join the meeting 
             res = open_teams_call_and_join_meeting(t_control=t_control)
             if not res:
@@ -297,12 +298,12 @@ def output_test_init(output_source:SoundOuput,t_control:MeetingControl,v_control
                 return False
             log_callback("VPT teams robot join the meeting...")
 
-        case SoundOuput.Local.value:
+        case ENV.Local.value:
             log_callback("Start playing the local music...")
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
             videoControl.play()
 
-        case SoundOuput.Teams_Local.value:
+        case ENV.Teams_Local.value:
              # open the teams call and join the meeting 
             res = open_teams_call_and_join_meeting(t_control=t_control)
             if not res:
@@ -315,44 +316,30 @@ def output_test_init(output_source:SoundOuput,t_control:MeetingControl,v_control
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
             videoControl.play()
 
-        case SoundOuput.Youtube.value:
+        case ENV.Youtube.value:
             log_callback("Start Youtube...")
-            youtubeControl = YoutubeControl(link= "https://www.youtube.com/watch?v=CxwJrzEdw1U" )
+            youtubeControl = YoutubeControl(link="https://www.youtube.com/watch?v=w9k7eWD0ik8" )
             youtubeControl.play()
 
     return True
 
 
-def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback,mouse_function_detect=None):
+def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback):
     log_callback('Start headset output function test...')
     test_time = 0
-    t_control = MeetingControl(meeting_link=b_config.teams_url,teams_path="\\teams_call\\")
-    v_control = VPTControl()
-    res_mouse = True
     res_output = False
+
+    for _ in range(50):
+        pyautogui.press("volumeup")
+
     while not res_output:
-        # doing output test init and headset output function check
-        if output_test_init(output_source=b_config.output_source,t_control=t_control
-                            ,v_control=v_control,log_callback=log_callback):
-            #start play sound before detect
-            time.sleep(b_config.output_source_play_time_s)
-
-            if mouse_function_detect:
-                res_mouse = mouse_function_detect(ser,CMD_mouse_random_clicking,5,log_callback)
-                if not res_mouse:
-                    log_callback('Mouse function have some issue when audio playing!')
-                    log_callback('Dump WRT log...')
-                    WRTController.dump_wrt_log()
-
-            #voice detect
-            res_output = voice_detect(ser = ser, command=CMD_voice_detect)
-            output_test_del(output_source=b_config.output_source, log_callback=log_callback)
-            if not res_output:
-                log_callback('headset output test fail, retry again!')
-
-        else:
-            output_test_del(output_source=b_config.output_source, log_callback=log_callback)
-            log_callback('***Headset output test init have some issue!***')
+        #start play sound before detect
+        time.sleep(b_config.output_source_play_time_s)
+        #voice detect
+        res_output = voice_detect(ser = ser, command=CMD_voice_detect)
+        
+        if not res_output:
+            log_callback('headset output test fail, retry again!')
         if test_time>b_config.test_retry_times:
             log_callback('***Headset output function have some issue!***')
             log_callback('Dump WRT log...')
@@ -360,32 +347,32 @@ def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback,mou
             return False
         test_time+=1
     log_callback("Headset output function test finish")
-    return res_mouse and res_output
+    return res_output
     
         
-def output_test_del(output_source:SoundOuput,log_callback)->bool:
+def env_restore(env_source:ENV,log_callback)->bool:
     '''
     doing some del before test the headset output function , like close teams or local music
     '''
-    match output_source:
+    match env_source:
 
-        case SoundOuput.Teams.value:
+        case ENV.Teams.value:
             #close the teams call and vpt robot
             close_teams_call_and_vpt()
             log_callback("End the teams meeting and VPT robot")
           
-        case SoundOuput.Local.value:
+        case ENV.Local.value:
             #close the media player
             VideoControl.stop_play()
             log_callback('End local music playing')
 
-        case SoundOuput.Teams_Local.value:
+        case ENV.Teams_Local.value:
             MeetingControl.close_teams()
             log_callback("End the teams meeting")
             VideoControl.stop_play()
             log_callback('End local music playing')
 
-        case SoundOuput.Youtube.value:
+        case ENV.Youtube.value:
             YoutubeControl.Close()
             log_callback('End Youtube playing')
             
@@ -399,7 +386,8 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
     """
     counter = 0
     pygame.init()
-    pygame.display.set_mode((2560, 1600))
+    screen_width, screen_height = pyautogui.size()
+    pygame.display.set_mode((screen_width, screen_width))
     #control mouse clicking
     ser.write(command+b'\n')
     #start cehcking mouse click
@@ -700,11 +688,6 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
 
             time.sleep(5)
            
-        case Test_case.Mouse_Headset_output.value:
-            # mouse function test
-            res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback,mouse_function_detect=mouse_random_click)
-            time.sleep(5)
-        
         
         case Test_case.Headset_init.value:
             # headset init
@@ -752,6 +735,16 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
 
         case Test_case.keyboard_latency.value:
             res = keyboard_latency(ser=ser, threshold=100, timeout_s=b_config.timeout_s, log_callback=log_callback)
+
+
+        case Test_case.Environment_init.value:
+            t_control = MeetingControl(meeting_link=b_config.teams_url,teams_path="\\teams_call\\")
+            v_control = VPTControl()
+            res = env_init(ENV_source=b_config.ENV_source,t_control=t_control
+                            ,v_control=v_control,log_callback=log_callback)
+        
+        case Test_case.Environment_restore.value:
+            res = env_restore(env_source=b_config.ENV_source, log_callback=log_callback)
 
 
         case 'test':

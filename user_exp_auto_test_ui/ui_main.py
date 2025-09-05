@@ -45,7 +45,7 @@ class BTTestApp(QWidget):
         super().__init__()
         self.b_config = b_config
         self.setWindowTitle("User Experience Auto Test")
-        self.setGeometry(100, 100, 1200, 1000)
+        self.setGeometry(100, 100, 1400, 1000)
         self.init_ui()
         self.bt_device_check()
         self.serial_port_check()
@@ -58,7 +58,6 @@ class BTTestApp(QWidget):
         self.log_signal.save_report.connect(self.save_report)
         self.log_signal.recover.connect(self.enable_all_item)
     
-
     def init_ui(self):
         layout_main = QHBoxLayout()
         layout_1 = QVBoxLayout()
@@ -122,16 +121,17 @@ class BTTestApp(QWidget):
         func_level_1 =  QHBoxLayout()
         self.ck_btn_mouse = QRadioButton("Mouse Function")
         self.ck_btn_m_random = QRadioButton("Mouse Random")
-        self.ck_btn_m_h_function = QRadioButton("Mouse + Headset_output")
         self.ck_btn_ml = QRadioButton("Mouse Latency")
+        self.empty1_4 = QLabel("")
+     
         self.ck_btn_mouse.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_function.value))
         self.ck_btn_m_random.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_random.value))
-        self.ck_btn_m_h_function.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_Headset_output.value))
         self.ck_btn_ml.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_latency.value))
         func_level_1.addWidget(self.ck_btn_mouse)
         func_level_1.addWidget(self.ck_btn_m_random)
-        func_level_1.addWidget(self.ck_btn_m_h_function)
         func_level_1.addWidget(self.ck_btn_ml)
+        func_level_1.addWidget(self.empty1_4)
+      
 
         func_level_2 =  QHBoxLayout()
         self.ck_btn_h_input = QRadioButton("Headset Input")
@@ -150,14 +150,27 @@ class BTTestApp(QWidget):
         func_level_3 =  QHBoxLayout()
         self.ck_btn_k_function = QRadioButton("Keyboard Function")
         self.ck_btn_kl = QRadioButton("Keyboard Latency")
-        self.emtpy1 = QLabel("")
-        self.emtpy2 = QLabel("")
+        self.emtpy3_3 = QLabel("")
+        self.emtpy3_4 = QLabel("")
         self.ck_btn_k_function.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_function.value))
         self.ck_btn_kl.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_latency.value))
         func_level_3.addWidget(self.ck_btn_k_function)
         func_level_3.addWidget(self.ck_btn_kl)
-        func_level_3.addWidget(self.emtpy1)
-        func_level_3.addWidget(self.emtpy2)
+        func_level_3.addWidget(self.emtpy3_3)
+        func_level_3.addWidget(self.emtpy3_4)
+
+
+        func_level_4 =  QHBoxLayout()
+        self.ck_btn_env_init = QRadioButton("Environment Init")
+        self.ck_btn_env_restore = QRadioButton("Environment Restore")
+        self.emtpy4_3 = QLabel("")
+        self.emtpy4_4 = QLabel("")
+        self.ck_btn_env_init.clicked.connect(partial(self.test_case_setting,Test_case.Environment_init.value))
+        self.ck_btn_env_restore.clicked.connect(partial(self.test_case_setting,Test_case.Environment_restore.value))
+        func_level_4.addWidget(self.ck_btn_env_init)
+        func_level_4.addWidget(self.ck_btn_env_restore)
+        func_level_4.addWidget(self.emtpy4_3)
+        func_level_4.addWidget(self.emtpy4_4)
 
 
         self.btn_tc_add = QPushButton("Add")
@@ -167,6 +180,7 @@ class BTTestApp(QWidget):
         test_layout.addLayout(func_level_1)
         test_layout.addLayout(func_level_2)
         test_layout.addLayout(func_level_3)
+        test_layout.addLayout(func_level_4)
 
         test_layout.addWidget(self.btn_tc_add)
         self.test_case_group.setLayout(test_layout)

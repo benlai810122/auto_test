@@ -1,17 +1,17 @@
+ENV_source: 3
 com: COM4
 continue_fail_limit: 5
 headset: None
 headset_setting: 0
 keyboard_latency_threshold: 100
 mouse_latency_threshold: 80
-output_source: 2
 output_source_play_time_s: 20
 sleep_time_s: 120
 target_port_desc: USB-SERIAL CH340
-task_schedule: Idle,keyboard_latency
+task_schedule: Environment_init,Idle,Headset_output,Environment_restore
 teams_url: https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d
 test_retry_times: 3
 test_times: 3
 timeout_s: 15
-wake_up_time_s: 5
+wake_up_time_s: 10
 youtube_link: https://www.youtube.com/watch?v=CxwJrzEdw1U

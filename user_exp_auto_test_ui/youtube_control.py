@@ -2,14 +2,16 @@
 This file contains the class related to Youtube video control
 before using the automatic power consumption run Youtube tast case
 please set the youtube and msedge according to the oojar document
-then download "Enhancer for YouTube" to set deafult video quality 
-to 2160p 
+then download "Enhancer for YouTube" to set deafult video quality
+to 2160p
 """
 
 import time
 from utils import Utils
-from os import startfile,path
+from os import startfile, path
 import webbrowser
+from pynput.keyboard import Key, Controller
+import pyautogui
 
 class YoutubeControl:
     """
@@ -24,13 +26,13 @@ class YoutubeControl:
         """
         self.link = link
 
-    def play(self):
+    def play(self) -> bool:
         """
-        open the specific youtube link and play video
+        open the specific youtube link and play youtube video
         """
-        #using the Window msedge to open the link (oojar required)
-        webbrowser.get("open -a C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe %s")
         webbrowser.open(self.link)
+        time.sleep(5)
+        return True
 
     @staticmethod
     def Close():
@@ -38,12 +40,12 @@ class YoutubeControl:
         Close the msedge
         """
         Utils.taskkill("msedge")
+        Utils.taskkill("chrome")
 
 
 # for testing
 if __name__ == "__main__":
-    youtubeControl = YoutubeControl(link = "https://www.youtube.com/watch?v=CxwJrzEdw1U" )
+    youtubeControl = YoutubeControl(link="https://www.youtube.com/watch?v=CxwJrzEdw1U")
     youtubeControl.play()
-    time.sleep(10)
+    time.sleep(5)
     youtubeControl.Close()
-    
