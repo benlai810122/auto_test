@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QComboBox, QCheckBox,QLineEdit, QTableView,QSlider,
-    QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QGroupBox, QFormLayout,QRadioButton
+    QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QGroupBox, QFormLayout,QRadioButton,QGraphicsDropShadowEffect
+    
 )
 from PyQt5.QtGui import QStandardItemModel, QStandardItem,QTextCursor, QColor, QBrush, QFont
 from PyQt5.QtWidgets import QStyle
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer,QPropertyAnimation
 from PyQt5.QtCore import pyqtSignal ,QObject
 import sys
 import test_process
@@ -21,6 +22,7 @@ import copy
 import yaml
 from dataclasses import asdict
 from datetime import datetime
+import latency_analyze as la
 
 
 
@@ -30,8 +32,11 @@ class LogSignal(QObject):
     cell = pyqtSignal(int,int,str)
     process = pyqtSignal(int,int)
     save_report = pyqtSignal(int,int)
-    recover = pyqtSignal()
+    enable = pyqtSignal()
+    set_stutas = pyqtSignal(int,int)
 
+    
+    
 class BTTestApp(QWidget):
     
     b_config:Basic_Config = None
@@ -56,9 +61,16 @@ class BTTestApp(QWidget):
         self.log_signal.error.connect(self.error_to_ui)
         self.log_signal.process.connect(self.update_process)
         self.log_signal.save_report.connect(self.save_report)
-        self.log_signal.recover.connect(self.enable_all_item)
+        self.log_signal.enable.connect(self.enable_all_item)
+        self.log_signal.set_stutas.connect(self.set_stutas)
     
     def init_ui(self):
+
+        def make_title(text):
+            label = QLabel(text)
+            label.setStyleSheet("font-size: 16px; font-weight: bold;")
+            return label
+         
         layout_main = QHBoxLayout()
         layout_1 = QVBoxLayout()
         layout_2 = QVBoxLayout()
@@ -91,6 +103,9 @@ class BTTestApp(QWidget):
         device_layout.addRow("Headset:", self.led_headset)
         device_layout.addRow("Mouse:", self.led_mouse)
         self.device_group.setLayout(device_layout)
+
+
+        
 
         # --- Power states Selection ---
         self.power_states_group = QGroupBox("DUT Power States")
@@ -185,6 +200,11 @@ class BTTestApp(QWidget):
         test_layout.addWidget(self.btn_tc_add)
         self.test_case_group.setLayout(test_layout)
 
+
+        #--- state label --- 
+        self.status_label = StatusLabel()
+
+
         # --- Task schedule table ---
         self.task_schedule_group = QGroupBox("Task schedule")
         task_schedule_layout = QVBoxLayout()
@@ -256,6 +276,37 @@ class BTTestApp(QWidget):
         task_schedule_layout.addWidget(table_view)
         task_schedule_layout.addWidget(self.btn_delet)
         self.task_schedule_group.setLayout(task_schedule_layout)
+     
+        # --- summary ---
+        self.summary_group = QGroupBox("Summary")
+        layout = QFormLayout()
+        self.label_total = QLabel("0 / 0")
+        self.label_pass = QLabel("0")
+        self.label_fail = QLabel("0")
+        self.label_first_fail = QLabel("-")
+        self.label_keyboard_latency = QLabel("-")
+        self.label_mouse_latency = QLabel("-")
+
+         # Apply styles
+        self.label_total.setStyleSheet("font-size: 18px; font-weight: bold;")
+        self.label_pass.setStyleSheet("font-size: 18px; font-weight: bold; color: green;")
+        self.label_fail.setStyleSheet("font-size: 18px; font-weight: bold; color: red;")
+        self.label_first_fail.setStyleSheet("font-size: 16px; color: blue;")
+        self.label_keyboard_latency.setStyleSheet("font-size: 16px;")
+        self.label_mouse_latency.setStyleSheet("font-size: 16px;")
+
+
+        layout.addRow(make_title("Total Tests:"), self.label_total)
+        layout.addRow(make_title("✅ Pass:"), self.label_pass)
+        layout.addRow(make_title("❌ Fail:"), self.label_fail)
+        layout.addRow(make_title("Earliest Fail Time:"), self.label_first_fail)
+        layout.addRow(make_title("Keyboard average Latency:"), self.label_keyboard_latency)
+        layout.addRow(make_title("Mouse average Latency:"), self.label_mouse_latency)
+
+        self.summary_group.setLayout(layout)
+
+
+
 
         # --- Log Output ---
 
@@ -286,6 +337,8 @@ class BTTestApp(QWidget):
         button_layout.addWidget(self.btn_start)
         button_layout.addWidget(self.btn_quit)
 
+
+
         # --- Combine All Layouts ---
         layout_1.addWidget(self.setting_group)
         layout_1.addWidget(self.device_group)
@@ -297,12 +350,15 @@ class BTTestApp(QWidget):
         layout_1.addWidget(self.error_message)
         layout_1.addLayout(button_layout)
 
+        layout_2.addWidget(self.status_label)
         layout_2.addWidget(self.task_schedule_group)
+        layout_2.addWidget(self.summary_group)
 
         layout_main.addLayout(layout_1)
         layout_main.addLayout(layout_2)
-
         self.setLayout(layout_main)
+
+   
 
     def task_schedule_setting(self, name:str):
         match name:
@@ -337,10 +393,53 @@ class BTTestApp(QWidget):
         self.power_states_clicking = power_states
     
     def save_report(self, test_cycle:int, test_fail_times:int):
-        #save_report and recover ui
+        #save_report after test finish
         test_process.save_report(self.b_config,test_cycle,test_fail_times,self.error_message.toPlainText())
         
-     
+    def set_stutas(self, test_cycle:int, test_fail_times:int):
+        #set the ui state after test finish
+        #status label
+        if test_fail_times:
+            self.status_label.set_state('FAIL')
+        else:
+            self.status_label.set_state('PASS')
+        
+        #summary group
+        total_test_time = f"{test_cycle}/{self.b_config.test_times} cycles"
+        pass_times = f"{test_cycle-test_fail_times}"
+        fail_times = f"{test_fail_times}"
+
+        message = self.error_message.toPlainText()  # get all text
+        lines = message.splitlines()           # split into lines
+        first_fail_message = lines[0] if lines else ""  # safe check
+
+        message = self.log_output.toPlainText()
+        mouse_aver = la.latency_analyze('mouse',message)
+        keyboard_aver = la.latency_analyze('keyboard',message)
+
+        
+        self.label_total.setText(total_test_time)
+        self.label_pass.setText(pass_times)
+        self.label_fail.setText(fail_times)
+        self.label_first_fail.setText(first_fail_message)
+        if keyboard_aver:
+            self.label_keyboard_latency.setText(f'{keyboard_aver} ms')
+        else:
+            self.label_keyboard_latency.setText('-')
+
+        if mouse_aver:
+            self.label_mouse_latency.setText(f'{mouse_aver} ms')
+        else:
+            self.label_mouse_latency.setText('-')
+        
+
+
+
+        
+
+
+        
+
     def test_case_setting(self, test_case:str):
         #setting the test case
         self.test_case_clicking = test_case
@@ -421,7 +520,9 @@ class BTTestApp(QWidget):
             self.log_signal.log.emit("Test Finish! generate final report...")
             self.log_signal.save_report.emit(test_cycle+1,test_fail_times)
             self.log_signal.log.emit("Final report is ready!")
-            self.log_signal.recover.emit()
+            self.log_signal.set_stutas.emit(test_cycle+1,test_fail_times)
+            self.log_signal.enable.emit()
+            
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
@@ -433,27 +534,27 @@ class BTTestApp(QWidget):
             self.btn_start.setText('Stop')
             self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
             self.disable_all_item()
-
+            self.status_label.set_state('RUNNING')
+           
         elif self.btn_start.text() == "Stop":
             self.thread_stop_flag = True
             self.log_to_ui("Test terminate!")
             self.btn_start.setText('waiting...')
             self.btn_start.setDisabled(True)
             self.btn_quit.setDisabled(True)
+            self.status_label.set_state('WAITING')
 
     def disable_all_item(self):
         self.power_states_group.setDisabled(True)
         self.setting_group.setDisabled(True)
         self.device_group.setDisabled(True)
         self.test_case_group.setDisabled(True)
-        self.task_schedule_group.setDisabled(True)
 
     def enable_all_item(self):
         self.power_states_group.setDisabled(False)
         self.setting_group.setDisabled(False)
         self.device_group.setDisabled(False)
         self.test_case_group.setDisabled(False)
-        self.task_schedule_group.setDisabled(False)
         self.btn_quit.setDisabled(False)
         self.btn_start.setDisabled(False)
         self.btn_start.setText("Start")
@@ -531,6 +632,80 @@ class BTTestApp(QWidget):
         with open("config_basic.yaml", "w") as f:
             yaml.dump(config_dict, f)
         print("Configuration saved to yaml")
+
+    
+
+
+class StatusLabel(QLabel):
+    
+    def __init__(self, text="Intel"):
+        super().__init__(text)
+        self.setAlignment(Qt.AlignCenter)
+        self.setFixedHeight(100)
+
+        # Font
+        font = QFont("Arial", 36, QFont.Bold)
+        self.setFont(font)
+
+        # Default style
+        self.setStyleSheet("QLabel { color: white; background-color: blue; border-radius: 12px; }")
+
+        # Drop shadow
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(25)
+        shadow.setOffset(0, 0)
+        shadow.setColor(QColor(0, 0, 0, 180))
+        self.setGraphicsEffect(shadow)
+
+        # Timer for blinking
+        self.blink_timer = QTimer(self)
+        self.blink_timer.timeout.connect(self._toggle_blink)
+        self.blink_state = True
+
+    def set_state(self, state):
+        """Set status text and style"""
+        styles = {
+            "RUNNING": ("RUNNING", "orange"),
+            "WAITING": ("WAITING", "gray"),
+            "STOP": ("STOP", "black"),
+            "PASS": ("PASS", "green"),
+            "FAIL": ("FAIL", "red"),
+        }
+        text, color = styles.get(state, ("UNKNOWN", "blue"))
+        self.setText(text)
+        self.setStyleSheet(f"""
+            QLabel {{
+                color: white;
+                background-color: {color};
+                border-radius: 12px;
+            }}
+        """)
+
+        # Start flashing if FAIL
+        if state == "RUNNING":
+            self.blink_timer.start(500)  # Blink every 500ms
+        else:
+            self.blink_timer.stop()
+    flag = True
+    def _toggle_blink(self):
+        """Toggle visibility for blinking effect"""
+        if self.flag:
+             self.setStyleSheet(f"""
+                QLabel {{
+                color: white;
+                background-color: gold;
+                border-radius: 12px;
+            }}
+        """)
+        else: 
+             self.setStyleSheet(f"""
+                QLabel {{
+                color: white;
+                background-color: orange;
+                border-radius: 12px;
+            }}
+        """)
+        self.flag = not self.flag
 
             
 
