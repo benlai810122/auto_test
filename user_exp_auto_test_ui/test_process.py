@@ -39,9 +39,11 @@ class Headset(Enum):
 
 class ENV(Enum):
     Teams = 0
-    Local = 1
-    Teams_Local = 2
-    Youtube = 3
+    Local_audio = 1
+    Local_video = 2
+    Teams_Local = 3
+    Youtube = 4
+
 
 class Test_case(Enum):
     Idle = 'Idle'
@@ -82,7 +84,7 @@ class Basic_Config:
     timeout_s:int = 5
     sleep_time_s:int = 30
     wake_up_time_s:int = 60
-    ENV_source:int = ENV.Local.value
+    ENV_source:int = ENV.Local_audio.value
     headset_setting:int = Headset.idle.value
     test_retry_times:int = 3
     continue_fail_limit:int = 5
@@ -299,12 +301,15 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
                 close_teams_call_and_vpt()
                 return False
             log_callback("VPT teams robot join the meeting...")
-
-        case ENV.Local.value:
+            time.sleep(10)
+        case ENV.Local_audio.value:
             log_callback("Start playing the local music...")
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
             videoControl.play()
-
+        case ENV.Local_video.value:
+            log_callback("Start playing the local music...")
+            videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp4'))
+            videoControl.play()
         case ENV.Teams_Local.value:
              # open the teams call and join the meeting 
             res = open_teams_call_and_join_meeting(t_control=t_control)
@@ -315,9 +320,8 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
             log_callback("Start the teams meeting...")
             # start playing local music after joining the teams call meeting
             log_callback("Start playing the local music...")
-            videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
+            videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp4'))
             videoControl.play()
-
         case ENV.Youtube.value:
             log_callback("Start Youtube...")
             youtubeControl = YoutubeControl(link="https://www.youtube.com/watch?v=w9k7eWD0ik8" )
@@ -334,13 +338,14 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
     return True
 
 
-def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback):
+def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->bool:
     log_callback('Start headset output function test...')
     test_time = 0
     res_output = False
 
     for _ in range(50):
         pyautogui.press("volumeup")
+        time.sleep(0.1)
 
     while not res_output:
         #start play sound before detect
@@ -359,7 +364,26 @@ def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback):
     log_callback("Headset output function test finish")
     return res_output
     
-        
+
+def headset_input_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->bool:
+    log_callback('Start headset input function test...')
+    #headset input function test
+    test_time = 0
+    res_input = False
+    while not res_input:
+        ad_Controller = AudioDetectController(headset= b_config.headset, threshold=150)
+        buzzer_buzzing(ser=ser,command=CMD_buzzer)
+        res_input = ad_Controller.audio_detect()
+        if test_time > b_config.test_retry_times:
+            log_callback('***Headset input function have some issue!***')
+            WRTController.dump_wrt_log()
+            break
+        test_time+=1
+    log_callback("Headset input function test finish")
+    time.sleep(5)
+    return res_input
+
+
 def env_restore(env_source:ENV,log_callback)->bool:
     '''
     doing some del before test the headset output function , like close teams or local music
@@ -371,10 +395,15 @@ def env_restore(env_source:ENV,log_callback)->bool:
             close_teams_call_and_vpt()
             log_callback("End the teams meeting and VPT robot")
           
-        case ENV.Local.value:
+        case ENV.Local_audio.value:
             #close the media player
             VideoControl.stop_play()
             log_callback('End local music playing')
+        
+        case ENV.Local_video.value:
+            #close the media player
+            VideoControl.stop_play()
+            log_callback('End local video playing')
 
         case ENV.Teams_Local.value:
             MeetingControl.close_teams()
@@ -713,21 +742,8 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             time.sleep(5)
 
         case Test_case.Headset_input.value:
-            log_callback('Start headset input function test...')
-            #headset input function test
-            test_time = 0
-            while not res:
-                ad_Controller = AudioDetectController(headset= b_config.headset, threshold=150)
-                buzzer_buzzing(ser=ser,command=CMD_buzzer)
-                res = ad_Controller.audio_detect()
-                if test_time > b_config.test_retry_times:
-                    log_callback('***Headset input function have some issue!***')
-                    WRTController.dump_wrt_log()
-                    break
-                test_time+=1
-            log_callback("Headset input function test finish")
-            time.sleep(5)
-        
+           
+            res = headset_input_test(b_config=b_config,ser=ser,log_callback=log_callback)
     
         case Test_case.Headset_output.value:
             res = headset_output_test(b_config=b_config,ser=ser,log_callback=log_callback)

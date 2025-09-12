@@ -70,6 +70,11 @@ class BTTestApp(QWidget):
             label = QLabel(text)
             label.setStyleSheet("font-size: 16px; font-weight: bold;")
             return label
+        
+        def make_group_title(text):
+            label = QLabel(text)
+            label.setStyleSheet("font-size: 18px; font-weight: bold;")
+            return label
          
         layout_main = QHBoxLayout()
         layout_1 = QVBoxLayout()
@@ -344,9 +349,9 @@ class BTTestApp(QWidget):
         layout_1.addWidget(self.device_group)
         layout_1.addWidget(self.power_states_group)
         layout_1.addWidget(self.test_case_group)
-        layout_1.addWidget(QLabel("Test Progress:"))
+        layout_1.addWidget(make_title("Test Progress:"))
         layout_1.addWidget(self.log_output)
-        layout_1.addWidget(QLabel("Error Message:"))
+        layout_1.addWidget(make_title("Error Message:"))
         layout_1.addWidget(self.error_message)
         layout_1.addLayout(button_layout)
 
@@ -431,13 +436,6 @@ class BTTestApp(QWidget):
             self.label_mouse_latency.setText(f'{mouse_aver} ms')
         else:
             self.label_mouse_latency.setText('-')
-        
-
-
-
-        
-
-
         
 
     def test_case_setting(self, test_case:str):

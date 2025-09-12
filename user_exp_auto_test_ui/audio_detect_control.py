@@ -3,7 +3,6 @@ import numpy as np
 import time
 from utils import log as logger
 
-
 class AudioDetectController:
     '''
     audio detecter
@@ -83,7 +82,7 @@ class AudioDetectController:
 
 
 if __name__ == '__main__':
-    headset = "LE-Zone"
+    headset = "WL5024"
     ad_Controller = AudioDetectController(headset= headset, threshold=500)
     if ad_Controller.audio_detect():
         print('sound detected!')

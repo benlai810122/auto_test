@@ -1,6 +1,5 @@
 import re
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 def latency_analyze(target:str,log_text:str)->float:
