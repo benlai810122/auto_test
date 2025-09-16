@@ -45,19 +45,19 @@ class ENV(Enum):
 
 class Test_case(Enum):
     Idle = 'Idle'
-    MS = 'MS'
-    S4 = 'S4'
-    Mouse_function = 'Mouse_function'
-    keyboard_function = 'keyboard_function'
-    keyboard_latency = 'keyboard_latency'
-    Mouse_random = 'Mouse_random'
-    Headset_init = 'Headset_init'
-    Headset_input = 'Headset_input'
-    Headset_output = 'Headset_output'
-    Headset_del = 'Headset_del'
-    Mouse_latency = 'Mouse_latency'
-    Environment_init = "Environment_init"
-    Environment_restore = "Environment_restore"
+    MS = 'Modern_Standby'
+    S4 = 'Hibernation'
+    Mouse_function = 'Mouse_Function_Check'
+    keyboard_function = 'Keyboard_Function_Check'
+    keyboard_latency = 'Keyboard_Latency_Test'
+    Mouse_random = 'Mouse_Random_Click'
+    Headset_init = 'Headset_Initialization'
+    Headset_input = 'Headset_Mic_Check'
+    Headset_output = 'Headset_Output_Check'
+    Headset_del = 'Headset_Restore'
+    Mouse_latency = 'Mouse_Latency_Test'
+    Environment_init = "Environment_Initialization"
+    Environment_restore = "Environment_Restore"
 
 #Arduino cmd setting
 CMD_servo = str.encode("0")
@@ -271,9 +271,9 @@ def get_arduino_port(port:str, log_callback)->str:
     serial_port = ""
     try:
         serial_port = arduino_board_check(target_port_desc=port)
-        log_callback(f"serial port detected: {serial_port}")
+        log_callback(f"serial port detected: {serial_port}",False)
     except Exception as e:
-        log_callback("please insert the arduino board!")
+        log_callback("please insert the arduino board!",False)
 
     return serial_port
 
@@ -287,43 +287,43 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
             # open the teams call and join the meeting 
             res = open_teams_call_and_join_meeting(t_control=t_control)
             if not res:
-                log_callback('Can not join the Teams call meeting!')
+                log_callback('Can not join the Teams call meeting!',False)
                 close_teams_call_and_vpt()
                 return False
-            log_callback("Start the teams meeting...")
+            log_callback("Start the teams meeting...",False)
             # teams call robot join
             res = v_control.vpt_bot_join()
             if not res:
-                log_callback('Can not execute VPT successfully')
+                log_callback('Can not execute VPT successfully',False)
                 close_teams_call_and_vpt()
                 return False
-            log_callback("VPT teams robot join the meeting...")
+            log_callback("VPT teams robot join the meeting...",False)
             time.sleep(10)
         case ENV.Local_audio.value:
-            log_callback("Start playing the local music...")
+            log_callback("Start playing the local music...",False)
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp3'))
             videoControl.play()
         case ENV.Local_video.value:
-            log_callback("Start playing the local music...")
+            log_callback("Start playing the local music...",False)
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp4'))
             videoControl.play()
         case ENV.Teams_Local.value:
              # open the teams call and join the meeting 
             res = open_teams_call_and_join_meeting(t_control=t_control)
             if not res:
-                log_callback('Can not join the Teams call meeting!')
+                log_callback('Can not join the Teams call meeting!',False)
                 close_teams_call_and_vpt()
                 return False
-            log_callback("Start the teams meeting...")
+            log_callback("Start the teams meeting...",False)
             # start playing local music after joining the teams call meeting
-            log_callback("Start playing the local music...")
+            log_callback("Start playing the local music...",False)
             videoControl = VideoControl(path=os.path.join('\\','local_music','test.mp4'))
             videoControl.play()
         case ENV.Youtube.value:
-            log_callback("Start Youtube...")
+            log_callback("Start Youtube...",False)
             youtubeControl = YoutubeControl(link="https://www.youtube.com/watch?v=w9k7eWD0ik8" )
             youtubeControl.play()
-
+    time.sleep(5)
     #make sure the main ui will be on the top of the screen
     window:gw.Win32Window
     windows =  gw.getWindowsWithTitle("User Experience Auto Test")
@@ -336,7 +336,7 @@ def env_init(ENV_source:ENV,t_control:MeetingControl,v_control:VPTControl,log_ca
 
 
 def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->bool:
-    log_callback('Start headset output function test...')
+    log_callback('Start headset output function test...',False)
     test_time = 0
     res_output = False
 
@@ -351,19 +351,19 @@ def headset_output_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->b
         res_output = voice_detect(ser = ser, command=CMD_voice_detect)
         
         if not res_output:
-            log_callback('headset output test fail, retry again!')
+            log_callback('headset output test fail, retry again!',False)
         if test_time>b_config.test_retry_times:
-            log_callback('***Headset output function have some issue!***')
-            log_callback('Dump WRT log...')
+            log_callback('***Headset output function have some issue!***',False)
+            log_callback('Dump WRT log...',False)
             WRTController.dump_wrt_log()
             return False
         test_time+=1
-    log_callback("Headset output function test finish")
+    log_callback("Headset output function test finish",False)
     return res_output
     
 
 def headset_input_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->bool:
-    log_callback('Start headset input function test...')
+    log_callback('Start headset input function test...',False)
     #headset input function test
     test_time = 0
     res_input = False
@@ -372,11 +372,11 @@ def headset_input_test(b_config:Basic_Config,ser:serial.Serial,log_callback)->bo
         buzzer_buzzing(ser=ser,command=CMD_buzzer)
         res_input = ad_Controller.audio_detect()
         if test_time > b_config.test_retry_times:
-            log_callback('***Headset input function have some issue!***')
+            log_callback('***Headset input function have some issue!***',False)
             WRTController.dump_wrt_log()
             break
         test_time+=1
-    log_callback("Headset input function test finish")
+    log_callback("Headset input function test finish",False)
     time.sleep(5)
     return res_input
 
@@ -390,27 +390,27 @@ def env_restore(env_source:ENV,log_callback)->bool:
         case ENV.Teams.value:
             #close the teams call and vpt robot
             close_teams_call_and_vpt()
-            log_callback("End the teams meeting and VPT robot")
+            log_callback("End the teams meeting and VPT robot",False)
           
         case ENV.Local_audio.value:
             #close the media player
             VideoControl.stop_play()
-            log_callback('End local music playing')
+            log_callback('End local music playing',False)
         
         case ENV.Local_video.value:
             #close the media player
             VideoControl.stop_play()
-            log_callback('End local video playing')
+            log_callback('End local video playing',False)
 
         case ENV.Teams_Local.value:
             MeetingControl.close_teams()
-            log_callback("End the teams meeting")
+            log_callback("End the teams meeting",False)
             VideoControl.stop_play()
-            log_callback('End local music playing')
+            log_callback('End local music playing',False)
 
         case ENV.Youtube.value:
             YoutubeControl.Close()
-            log_callback('End Youtube playing')
+            log_callback('End Youtube playing',False)
             
     return True
 
@@ -432,15 +432,15 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
     while counter < timeout_s:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                log_callback("mouse function test have unexpected issue!")
+                log_callback("mouse function test have unexpected issue!",False)
                 pygame.quit()
                 return False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                log_callback("BLE mouse function pass!") 
+                log_callback("BLE mouse function pass!",False) 
                 pygame.quit()
                 return True
             elif event.type == pygame.KEYDOWN:
-                log_callback("BLE keyboard function pass!")
+                log_callback("BLE keyboard function pass!",False)
                 pygame.quit()
                 return True
 
@@ -450,12 +450,12 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
     return False
 
 def mouse_random_click(ser:serial.Serial, command:bytes, timeout_s:int,log_callback)->bool:
-    log_callback("mouse random click start!")
+    log_callback("mouse random click start!",False)
     #control mouse randomly clicking
     ser.write(command+b'\n')
     #waiting for the mouse click end
     ser.read()
-    log_callback("mouse random click finish!")
+    log_callback("mouse random click finish!",False)
     return True
 
 
@@ -569,11 +569,11 @@ def mouse_latency(ser:serial.Serial, threshold:int, timeout_s:int,log_callback =
             latency_list.remove(min_val)
             latency_list.remove(max_val)
     else:
-        log_callback("mouse latency Insuffcient sampling!")
+        log_callback("mouse latency Insuffcient sampling!",False)
         return False
 
     average_latency = sum(latency_list)/len(latency_list)
-    log_callback(f"mouse average clicking latency:{average_latency:.3f} ms")
+    log_callback(f"mouse average clicking latency:{average_latency:.3f} ms",False)
     
     return True if average_latency <= threshold else False
 
@@ -610,11 +610,11 @@ def keyboard_latency(ser:serial.Serial, threshold:int, timeout_s:int,log_callbac
             latency_list.remove(min_val)
             latency_list.remove(max_val)
     else:
-        log_callback("keyboard latency Insuffcient sampling!")
+        log_callback("keyboard latency Insuffcient sampling!",False)
         return False
 
     average_latency = sum(latency_list)/len(latency_list)
-    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms")
+    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms",False)
     
     return True if average_latency <= threshold else False
 
@@ -648,7 +648,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
 
     #do nothing if test_case = Idle
     if test_case == Test_case.Idle.value:
-        log_callback(f"waiting for {b_config.wake_up_time_s} sec...")
+        log_callback(f"waiting for {b_config.wake_up_time_s} sec...",False)
         time.sleep(b_config.wake_up_time_s)
         return True
 
@@ -657,7 +657,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
         try:
             g_COM_PORT = get_arduino_port(port=b_config.target_port_desc,log_callback=log_callback)
         except:
-            log_callback('Can not find the arduino board!')
+            log_callback('Can not find the arduino board!',False)
             return False
     
     try:
@@ -665,14 +665,14 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             ser = serial.Serial(g_COM_PORT, 115200, timeout=30)
             time.sleep(5)
         else:
-            log_callback(f'Cant not find the serial device')
+            log_callback(f'Cant not find the serial device',False)
             return False
         
     except Exception as ex:
-        log_callback(f'Serial port connection error:{ex}')
+        log_callback(f'Serial port connection error:{ex}',False)
         return False
 
-    log_callback(f'test case: {test_case}')
+    log_callback(f'test case: {test_case}',False)
 
     match test_case:
         
@@ -682,14 +682,14 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
                     #sleep_time_s=b_config.sleep_time_s,ser=ser)
         
         case Test_case.MS.value:
-            log_callback(f"go to MS states for {b_config.sleep_time_s} sec...")
+            log_callback(f"go to MS states for {b_config.sleep_time_s} sec...",False)
             dut_states_init(power_states=Power_States.go_to_s3, wake_up_time_s=b_config.wake_up_time_s,
                     sleep_time_s=b_config.sleep_time_s,ser=ser)
             #make sure the laptop go to MS states
             time.sleep(5)
             
         case Test_case.S4.value:
-            log_callback(f"go to s4 states for {b_config.sleep_time_s} sec...")
+            log_callback(f"go to s4 states for {b_config.sleep_time_s} sec...",False)
             dut_states_init(power_states=Power_States.go_to_s4, wake_up_time_s=b_config.wake_up_time_s,
                     sleep_time_s=b_config.sleep_time_s,ser=ser)
                         
@@ -698,8 +698,8 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             res = mouse_keyboard_function_detect(ser = ser, command= CMD_mouse_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
             if not res:
-                log_callback('mouse function test fail!')
-                log_callback('dump wrt log...')
+                log_callback('mouse function test fail!',False)
+                log_callback('dump wrt log...',False)
                 WRTController.dump_wrt_log()
 
             time.sleep(5)
@@ -709,8 +709,8 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             res = mouse_keyboard_function_detect(ser = ser, command= CMD_keyboard_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
             if not res:
-                log_callback('keyboard function test fail!')
-                log_callback('dump wrt log...')
+                log_callback('keyboard function test fail!',False)
+                log_callback('dump wrt log...',False)
                 WRTController.dump_wrt_log()
             time.sleep(5)
      
@@ -719,8 +719,8 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             res = mouse_random_click(ser = ser, command= CMD_mouse_random_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
             if not res:
-                log_callback('mouse function test fail!')
-                log_callback('dump wrt log...')
+                log_callback('mouse function test fail!',False)
+                log_callback('dump wrt log...',False)
                 WRTController.dump_wrt_log()
 
             time.sleep(5)
@@ -731,11 +731,11 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             res = headset_init(headset= b_config.headset, headset_states=b_config.headset_setting,
                                  timeout_s= b_config.timeout_s, ser = ser, command= CMD_servo)
             if not res:
-                log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!')
-                log_callback('dump wrt log...')
+                log_callback('Can not turn on the Headset or headset can not connect to the dut, stop testing!',False)
+                log_callback('dump wrt log...',False)
                 WRTController.dump_wrt_log()
             else:
-                log_callback("Turn on the headset successfully, connected")
+                log_callback("Turn on the headset successfully, connected",False)
             time.sleep(5)
 
         case Test_case.Headset_input.value:
@@ -749,9 +749,9 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             res = headset_del(headset = b_config.headset,headset_states=b_config.headset_setting,
                                timeout_s=b_config.timeout_s, ser = ser, command= CMD_servo)
             if not res:
-                log_callback('Can not turn off the Headset, stop test!')
+                log_callback('Can not turn off the Headset, stop test!',False)
             else:
-                log_callback("Headset turn off successfully, disconneted")
+                log_callback("Headset turn off successfully, disconneted",False)
 
         case Test_case.Mouse_latency.value:
             res = mouse_latency(ser=ser, threshold=80, timeout_s=b_config.timeout_s, log_callback=log_callback)
@@ -776,7 +776,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
 
         
         case _:
-            log_callback("Not match any test case, please check!")
+            log_callback("Not match any test case, please check!",False)
             res = False
         
     

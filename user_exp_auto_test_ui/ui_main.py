@@ -27,7 +27,7 @@ import latency_analyze as la
 
 
 class LogSignal(QObject):
-    log = pyqtSignal(str)
+    log = pyqtSignal(str,bool)
     error = pyqtSignal(str)
     cell = pyqtSignal(int,int,str)
     process = pyqtSignal(int,int)
@@ -50,7 +50,7 @@ class BTTestApp(QWidget):
         super().__init__()
         self.b_config = b_config
         self.setWindowTitle("Intel User Experience Auto Test")
-        self.setGeometry(100, 100, 1400, 1000)
+        self.setGeometry(100, 100, 1600, 1200)
         self.init_ui()
         self.bt_device_check()
         self.serial_port_check()
@@ -113,8 +113,8 @@ class BTTestApp(QWidget):
         self.setting_group = QGroupBox("Setting")
         setting_layout = QHBoxLayout()
         self.btn_ardu_check = QPushButton("Arduino Check")
-        self.btn_bt_check = QPushButton("BT Device Check")
-        self.btn_advance_setting = QPushButton("Advance Setting")
+        self.btn_bt_check = QPushButton("Peripheral Check")
+        self.btn_advance_setting = QPushButton("Advanced Setting")
         self.btn_ardu_check.clicked.connect(self.serial_port_check)
         self.btn_bt_check.clicked.connect(self.bt_device_check)
         self.btn_advance_setting.clicked.connect(self.advance_setting)
@@ -150,8 +150,8 @@ class BTTestApp(QWidget):
 
         layout_P_1 = QHBoxLayout()
         self.rbtn_idle = QRadioButton("IDLE")
-        self.rbtn_ms = QRadioButton("MS")
-        self.rbtn_s4 = QRadioButton("S4")
+        self.rbtn_ms = QRadioButton("Modern Standby (MS)")
+        self.rbtn_s4 = QRadioButton("Hibernation (S4)")
         self.btn_ps_add = QPushButton("Add")
 
         self.rbtn_idle.clicked.connect(partial(self.power_states_setting, Test_case.Idle.value))
@@ -174,9 +174,9 @@ class BTTestApp(QWidget):
 
 
         func_level_1 =  QHBoxLayout()
-        self.ck_btn_mouse = QRadioButton("Mouse Function")
-        self.ck_btn_m_random = QRadioButton("Mouse Random")
-        self.ck_btn_ml = QRadioButton("Mouse Latency")
+        self.ck_btn_mouse = QRadioButton("Mouse Function Check")
+        self.ck_btn_m_random = QRadioButton("Mouse Random Click")
+        self.ck_btn_ml = QRadioButton("Mouse Latency Test")
         self.empty1_4 = QLabel("")
      
         self.ck_btn_mouse.clicked.connect(partial(self.test_case_setting,Test_case.Mouse_function.value))
@@ -189,10 +189,10 @@ class BTTestApp(QWidget):
       
 
         func_level_2 =  QHBoxLayout()
-        self.ck_btn_h_input = QRadioButton("Headset Input")
-        self.ck_btn_h_output = QRadioButton("Headset Output")
-        self.ck_btn_h_init = QRadioButton("Headset Init")
-        self.ck_btn_h_del = QRadioButton("Headset Del")
+        self.ck_btn_h_input = QRadioButton("Headset Mic Check")
+        self.ck_btn_h_output = QRadioButton("Headset Output Check")
+        self.ck_btn_h_init = QRadioButton("Headset Initialization")
+        self.ck_btn_h_del = QRadioButton("Headset Restore")
         self.ck_btn_h_input.clicked.connect(partial(self.test_case_setting,Test_case.Headset_input.value))
         self.ck_btn_h_output.clicked.connect(partial(self.test_case_setting,Test_case.Headset_output.value))
         self.ck_btn_h_init.clicked.connect(partial(self.test_case_setting,Test_case.Headset_init.value))
@@ -203,8 +203,8 @@ class BTTestApp(QWidget):
         func_level_2.addWidget(self.ck_btn_h_del)
 
         func_level_3 =  QHBoxLayout()
-        self.ck_btn_k_function = QRadioButton("Keyboard Function")
-        self.ck_btn_kl = QRadioButton("Keyboard Latency")
+        self.ck_btn_k_function = QRadioButton("Keyboard Function Check")
+        self.ck_btn_kl = QRadioButton("Keyboard Latency Test")
         self.emtpy3_3 = QLabel("")
         self.emtpy3_4 = QLabel("")
         self.ck_btn_k_function.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_function.value))
@@ -216,7 +216,7 @@ class BTTestApp(QWidget):
 
 
         func_level_4 =  QHBoxLayout()
-        self.ck_btn_env_init = QRadioButton("Environment Init")
+        self.ck_btn_env_init = QRadioButton("Environment Initialization")
         self.ck_btn_env_restore = QRadioButton("Environment Restore")
         self.emtpy4_3 = QLabel("")
         self.emtpy4_4 = QLabel("")
@@ -288,7 +288,7 @@ class BTTestApp(QWidget):
 
         table_view = QTableView()
         table_view.setModel(self.task_schedule_model)
-        table_view.setColumnWidth(0,350)
+        table_view.setColumnWidth(0,400)
 
         table_view.setAlternatingRowColors(True)
         table_view.setShowGrid(False)
@@ -467,12 +467,15 @@ class BTTestApp(QWidget):
         #setting the test case
         self.test_case_clicking = test_case
 
-    def log_to_ui(self,msg:str):
+    def log_to_ui(self,msg:str,is_bold:bool=False):
         # Run test logic and log output to UI and log file
         #current_text = self.log_output.toPlainText()
         #updated_text = f"{msg}\n{current_text}"
         current_time = datetime.now()
-        msg = f"[{current_time}] {msg}"
+        if is_bold: 
+            msg = f'<span style="font-weight:bold; color:navy;">[{current_time}] {msg}</span>'
+        else:
+            msg = f'<span style="font-weight:normal; color:black;">[{current_time}] {msg}</span>'
         self.log_output.append(msg)
         self.log_output.moveCursor(QTextCursor.End)
         logger.info(msg)
@@ -492,7 +495,7 @@ class BTTestApp(QWidget):
     def run_test(self):
         #run the main test process
         def _run_test_process_in_background():
-            self.log_signal.log.emit("Start testing...")
+            self.log_signal.log.emit("Start testing...",False)
             test_fail_times = 0
             test_cycle = 0
             self.log_signal.process.emit(0,0)
@@ -536,13 +539,13 @@ class BTTestApp(QWidget):
                 
                 # if out of continue fail range, stop testing
                 if test_fail_continue_times >= self.b_config.continue_fail_limit:
-                        self.log_signal.log.emit("Stop testing!")
-                        self.log_signal.error.emit("out of maxium continue fail range, stop testing!")
+                        self.log_signal.log.emit("Stop testing!",True)
+                        self.log_signal.error.emit("out of maxium continue fail range, stop testing!",True)
                         break
                 
-            self.log_signal.log.emit("Test Finish! generate final report...")
+            self.log_signal.log.emit("Test Finish! generate final report...",True)
             self.log_signal.save_report.emit(test_cycle+1,test_fail_times)
-            self.log_signal.log.emit("Final report is ready!")
+            self.log_signal.log.emit("Final report is ready and dump to report folder!",True)
             self.log_signal.set_stutas.emit(test_cycle+1,test_fail_times)
             self.log_signal.enable.emit()
             
@@ -572,6 +575,7 @@ class BTTestApp(QWidget):
         self.setting_group.setDisabled(True)
         self.device_group.setDisabled(True)
         self.test_case_group.setDisabled(True)
+        self.task_schedule_group.setDisabled(True)
 
     def enable_all_item(self):
         self.power_states_group.setDisabled(False)
@@ -580,6 +584,7 @@ class BTTestApp(QWidget):
         self.test_case_group.setDisabled(False)
         self.btn_quit.setDisabled(False)
         self.btn_start.setDisabled(False)
+        self.task_schedule_group.setDisabled(False)
         self.btn_start.setText("Start")
         self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
 

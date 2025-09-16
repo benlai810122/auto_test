@@ -26186,3 +26186,325 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-09-15 17:49:40,767 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:49:40.766232] please insert the arduino board!
 2025-09-15 17:57:59,100 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:57:59.100149] please insert the arduino board!
 2025-09-15 18:01:26,515 [INFO] <ui_main.py> log_to_ui() [2025-09-15 18:01:26.515216] please insert the arduino board!
+2025-09-16 11:48:49,089 [INFO] <ui_main.py> log_to_ui() [2025-09-16 11:48:49.089314] serial port detected: COM5
+2025-09-16 11:53:01,924 [INFO] <ui_main.py> log_to_ui() [2025-09-16 11:53:01.924766] serial port detected: COM5
+2025-09-16 11:56:31,764 [INFO] <ui_main.py> log_to_ui() [2025-09-16 11:56:31.764563] serial port detected: COM5
+2025-09-16 11:59:47,220 [INFO] <ui_main.py> log_to_ui() [2025-09-16 11:59:47.219782] serial port detected: COM5
+2025-09-16 12:02:26,989 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:02:26.988879] serial port detected: COM5
+2025-09-16 12:07:12,885 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:07:12.885624] serial port detected: COM5
+2025-09-16 12:08:42,388 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:08:42.388472] serial port detected: COM5
+2025-09-16 12:10:44,949 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:10:44.949430] Start testing...
+2025-09-16 12:10:49,954 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:10:49.953814] test case: 
+2025-09-16 12:10:49,957 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:10:49.955498] Not match any test case, please check!
+2025-09-16 12:10:49,963 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 12:10:49.958675] test case:  item:1 cycles:0
+2025-09-16 12:10:54,973 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:10:54.971805] test case: Modern_Standby
+2025-09-16 12:10:54,974 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:10:54.974090] go to MS states for 20 sec...
+2025-09-16 12:11:03,948 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:11:03.947383] waiting for 10 sec...
+2025-09-16 12:11:13,408 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:11:13.407363] Test terminate!
+2025-09-16 12:11:13,947 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:11:13.947534] Test Finish! generate final report...
+2025-09-16 12:11:13,970 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:11:13.970591] Final report is ready!
+2025-09-16 12:17:02,748 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:17:02.747839] serial port detected: COM5
+2025-09-16 12:17:27,265 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:17:27.264912] serial port detected: COM5
+2025-09-16 12:18:05,250 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:18:05.249985] Start testing...
+2025-09-16 12:18:10,254 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:18:10.253394] test case: 
+2025-09-16 12:18:10,256 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:18:10.255055] Not match any test case, please check!
+2025-09-16 12:18:10,263 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 12:18:10.257719] test case:  item:1 cycles:0
+2025-09-16 12:18:15,269 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:18:15.268809] test case: Mouse_Latency_Test
+2025-09-16 12:18:18,992 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:18:18.991876] Test terminate!
+2025-09-16 12:19:00,929 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:19:00.929813] serial port detected: COM5
+2025-09-16 12:19:11,008 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:19:11.007511] Start testing...
+2025-09-16 12:19:16,013 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:19:16.012350] test case: Mouse_Latency_Test
+2025-09-16 12:19:53,711 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:19:53.711368] Test terminate!
+2025-09-16 12:20:11,433 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:20:11.431342] mouse average clicking latency:59.456 ms
+2025-09-16 12:20:11,435 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:20:11.434881] Test Finish! generate final report...
+2025-09-16 12:20:11,455 [INFO] <ui_main.py> log_to_ui() [2025-09-16 12:20:11.455332] Final report is ready!
+2025-09-16 13:42:52,465 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:42:52.465799] Start testing...
+2025-09-16 13:42:57,470 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:42:57.469587] test case: Modern_Standby
+2025-09-16 13:42:57,473 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:42:57.472767] go to MS states for 20 sec...
+2025-09-16 13:43:17,726 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:43:17.725855] waiting for 10 sec...
+2025-09-16 13:43:32,736 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:43:32.735752] test case: Environment_Initialization
+2025-09-16 13:44:09,801 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:09.800549] Start the teams meeting...
+2025-09-16 13:44:09,803 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:09.802361] Start playing the local music...
+2025-09-16 13:44:14,880 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:14.880020] test case: Headset_Mic_Check
+2025-09-16 13:44:14,887 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:14.886467] Start headset input function test...
+2025-09-16 13:44:15,412 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:15.411975] Headset input function test finish
+2025-09-16 13:44:25,426 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:25.424799] test case: Headset_Output_Check
+2025-09-16 13:44:25,428 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:44:25.427201] Start headset output function test...
+2025-09-16 13:45:05,598 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:45:05.597204] Headset output function test finish
+2025-09-16 13:45:10,619 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:45:10.618303] test case: Mouse_Latency_Test
+2025-09-16 13:46:06,698 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:46:06.694648] mouse average clicking latency:66.569 ms
+2025-09-16 13:46:11,721 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:46:11.719147] test case: Keyboard_Latency_Test
+2025-09-16 13:47:08,070 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:08.067612] keyboard average clicking latency:84.107 ms
+2025-09-16 13:47:13,102 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:13.100495] test case: Environment_Restore
+2025-09-16 13:47:13,440 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:13.437871] End the teams meeting
+2025-09-16 13:47:13,852 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:13.850553] End local music playing
+2025-09-16 13:47:13,859 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:13.857442] Test Finish! generate final report...
+2025-09-16 13:47:13,889 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:47:13.889216] Final report is ready!
+2025-09-16 13:58:26,439 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:58:26.439229] serial port detected: COM5
+2025-09-16 13:59:40,966 [INFO] <ui_main.py> log_to_ui() [2025-09-16 13:59:40.966528] serial port detected: COM5
+2025-09-16 14:00:12,176 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:00:12.175645] Start testing...
+2025-09-16 14:00:17,184 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:00:17.182160] test case: Modern_Standby
+2025-09-16 14:00:17,185 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:00:17.184781] go to MS states for 20 sec...
+2025-09-16 14:00:37,419 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:00:37.417308] waiting for 10 sec...
+2025-09-16 14:00:52,428 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:00:52.426605] test case: Environment_Initialization
+2025-09-16 14:01:30,406 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:30.405273] Start the teams meeting...
+2025-09-16 14:01:30,409 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:30.408045] Start playing the local music...
+2025-09-16 14:01:40,480 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:40.479450] test case: Headset_Mic_Check
+2025-09-16 14:01:40,483 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:40.482349] Start headset input function test...
+2025-09-16 14:01:40,787 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:40.786745] Headset input function test finish
+2025-09-16 14:01:50,814 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:50.812782] test case: Headset_Output_Check
+2025-09-16 14:01:50,815 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:01:50.815174] Start headset output function test...
+2025-09-16 14:02:30,970 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:02:30.968729] Headset output function test finish
+2025-09-16 14:02:35,992 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:02:35.991389] test case: Mouse_Latency_Test
+2025-09-16 14:03:33,331 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:03:33.329917] mouse average clicking latency:62.374 ms
+2025-09-16 14:03:38,362 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:03:38.360855] test case: Keyboard_Latency_Test
+2025-09-16 14:04:34,576 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:34.574897] keyboard average clicking latency:74.631 ms
+2025-09-16 14:04:39,586 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:39.584646] test case: Environment_Restore
+2025-09-16 14:04:39,925 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:39.923053] End the teams meeting
+2025-09-16 14:04:40,353 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:40.353349] End local music playing
+2025-09-16 14:04:40,362 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:40.359082] Test Finish! generate final report...
+2025-09-16 14:04:40,382 [INFO] <ui_main.py> log_to_ui() [2025-09-16 14:04:40.381982] Final report is ready!
+2025-09-16 15:06:04,143 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:06:04.143276] serial port detected: COM5
+2025-09-16 15:19:47,028 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:19:47.028279] [2025-09-16 15:19:47.028279] serial port detected: COM5
+2025-09-16 15:23:59,994 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:23:59.993819] [2025-09-16 15:23:59.993819] serial port detected: COM5
+2025-09-16 15:24:01,790 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:24:01.786960] <b>[2025-09-16 15:24:01.786960] Start testing...</b>
+2025-09-16 15:58:44,485 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:58:44.485491] serial port detected: COM5
+2025-09-16 15:58:52,321 [INFO] <ui_main.py> log_to_ui() <b>[2025-09-16 15:58:52.318805] Start testing...</b>
+2025-09-16 15:58:57,326 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:58:57.325319] test case: Modern_Standby
+2025-09-16 15:58:57,328 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:58:57.327661] go to MS states for 20 sec...
+2025-09-16 15:59:17,582 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:59:17.582264] waiting for 10 sec...
+2025-09-16 15:59:32,598 [INFO] <ui_main.py> log_to_ui() [2025-09-16 15:59:32.595987] test case: Environment_Initialization
+2025-09-16 16:00:09,936 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:09.934610] Start the teams meeting...
+2025-09-16 16:00:09,939 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:09.938397] Start playing the local music...
+2025-09-16 16:00:20,024 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:20.021488] test case: Headset_Mic_Check
+2025-09-16 16:00:20,028 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:20.026926] Start headset input function test...
+2025-09-16 16:00:20,339 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:20.338538] Headset input function test finish
+2025-09-16 16:00:30,360 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:30.359358] test case: Headset_Output_Check
+2025-09-16 16:00:30,363 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:00:30.361914] Start headset output function test...
+2025-09-16 16:01:10,539 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:01:10.538197] Headset output function test finish
+2025-09-16 16:01:15,556 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:01:15.555002] test case: Mouse_Latency_Test
+2025-09-16 16:02:11,519 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:02:11.518414] mouse average clicking latency:57.362 ms
+2025-09-16 16:02:16,541 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:02:16.540301] test case: Keyboard_Latency_Test
+2025-09-16 16:03:12,745 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:03:12.742539] keyboard average clicking latency:85.817 ms
+2025-09-16 16:03:17,770 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:03:17.768542] test case: Environment_Restore
+2025-09-16 16:03:18,157 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:03:18.153741] End the teams meeting
+2025-09-16 16:03:18,584 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:03:18.584314] End local music playing
+2025-09-16 16:03:18,587 [INFO] <ui_main.py> log_to_ui() <b>[2025-09-16 16:03:18.587076] Test Finish! generate final report...</b>
+2025-09-16 16:03:18,605 [INFO] <ui_main.py> log_to_ui() <b>[2025-09-16 16:03:18.604880] Final report is ready and dump to report folder!</b>
+2025-09-16 16:09:06,383 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:06.382884] serial port detected: COM5
+2025-09-16 16:09:11,582 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:11.581874] Start testing...
+2025-09-16 16:09:16,588 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:16.586965] test case: Modern_Standby
+2025-09-16 16:09:16,590 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:16.590055] go to MS states for 20 sec...
+2025-09-16 16:09:36,858 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:36.856830] waiting for 10 sec...
+2025-09-16 16:09:51,866 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:09:51.865769] test case: Environment_Initialization
+2025-09-16 16:10:29,195 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:29.192969] Start the teams meeting...
+2025-09-16 16:10:29,198 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:29.196351] Start playing the local music...
+2025-09-16 16:10:39,296 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:39.294680] test case: Headset_Mic_Check
+2025-09-16 16:10:39,299 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:39.297873] Start headset input function test...
+2025-09-16 16:10:39,604 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:39.603744] Headset input function test finish
+2025-09-16 16:10:49,623 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:49.621615] test case: Headset_Output_Check
+2025-09-16 16:10:49,628 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:10:49.626632] Start headset output function test...
+2025-09-16 16:11:29,775 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:11:29.773598] Headset output function test finish
+2025-09-16 16:11:34,795 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:11:34.792930] test case: Mouse_Latency_Test
+2025-09-16 16:12:30,740 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:12:30.739331] mouse average clicking latency:54.753 ms
+2025-09-16 16:12:35,754 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:12:35.752864] test case: Keyboard_Latency_Test
+2025-09-16 16:13:31,992 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:13:31.990544] keyboard average clicking latency:78.970 ms
+2025-09-16 16:13:37,021 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:13:37.020116] test case: Environment_Restore
+2025-09-16 16:13:37,411 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:13:37.410860] End the teams meeting
+2025-09-16 16:13:37,781 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:13:37.779697] End local music playing
+2025-09-16 16:13:37,786 [INFO] <ui_main.py> log_to_ui() <b>[2025-09-16 16:13:37.782479] Test Finish! generate final report...</b>
+2025-09-16 16:13:37,798 [INFO] <ui_main.py> log_to_ui() <b>[2025-09-16 16:13:37.797487] Final report is ready and dump to report folder!</b>
+2025-09-16 16:27:10,094 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:10.094623] please insert the arduino board!
+2025-09-16 16:27:17,454 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:17.454507] Start testing...
+2025-09-16 16:27:17,463 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:17.463770] please insert the arduino board!
+2025-09-16 16:27:47,647 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:47.645658] Cant not find the serial device
+2025-09-16 16:27:47,654 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 16:27:47.648849] test case: Modern_Standby item:1 cycles:0
+2025-09-16 16:27:47,655 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:47.655282] waiting for 10 sec...
+2025-09-16 16:27:57,652 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:27:57.651527] please insert the arduino board!
+2025-09-16 16:28:27,818 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:28:27.817683] Cant not find the serial device
+2025-09-16 16:28:27,822 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 16:28:27.820457] test case: Environment_Initialization item:3 cycles:0
+2025-09-16 16:28:27,832 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:28:27.831976] please insert the arduino board!
+2025-09-16 16:28:42,757 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:28:42.757472] Test terminate!
+2025-09-16 16:28:58,011 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:28:58.010091] Cant not find the serial device
+2025-09-16 16:28:58,012 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 16:28:58.011702] test case: Headset_Mic_Check item:4 cycles:0
+2025-09-16 16:28:58,019 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:28:58.013423] Test Finish! generate final report...</span>
+2025-09-16 16:28:58,047 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:28:58.046431] Final report is ready and dump to report folder!</span>
+2025-09-16 16:29:44,300 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:29:44.300315] Start testing...
+2025-09-16 16:29:44,309 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:29:44.309592] serial port detected: COM5
+2025-09-16 16:29:49,311 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:29:49.309626] test case: Modern_Standby
+2025-09-16 16:29:49,312 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:29:49.312093] go to MS states for 20 sec...
+2025-09-16 16:30:06,997 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:06.996141] waiting for 10 sec...
+2025-09-16 16:30:17,005 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:17.004524] serial port detected: COM5
+2025-09-16 16:30:22,013 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:22.012666] test case: Environment_Initialization
+2025-09-16 16:30:40,444 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:40.444078] Test terminate!
+2025-09-16 16:30:59,050 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:59.050046] Start the teams meeting...
+2025-09-16 16:30:59,051 [INFO] <ui_main.py> log_to_ui() [2025-09-16 16:30:59.050869] Start playing the local music...
+2025-09-16 16:31:04,107 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:31:04.106681] Test Finish! generate final report...</span>
+2025-09-16 16:31:04,124 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:31:04.123864] Final report is ready and dump to report folder!</span>
+2025-09-16 16:34:10,061 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:34:10.060543] serial port detected: COM5</span>
+2025-09-16 16:35:03,598 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:35:03.597567] Start testing...</span>
+2025-09-16 16:35:08,605 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:35:08.604090] test case: Modern_Standby</span>
+2025-09-16 16:35:08,606 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:35:08.605979] go to MS states for 20 sec...</span>
+2025-09-16 16:35:28,924 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:35:28.923640] waiting for 10 sec...</span>
+2025-09-16 16:35:43,931 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:35:43.930395] test case: Environment_Initialization</span>
+2025-09-16 16:36:21,065 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:21.064959] Start the teams meeting...</span>
+2025-09-16 16:36:21,066 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:21.066212] Start playing the local music...</span>
+2025-09-16 16:36:31,121 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:31.120429] test case: Headset_Mic_Check</span>
+2025-09-16 16:36:31,122 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:31.122078] Start headset input function test...</span>
+2025-09-16 16:36:31,387 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:31.385665] Headset input function test finish</span>
+2025-09-16 16:36:41,408 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:41.404959] test case: Headset_Output_Check</span>
+2025-09-16 16:36:41,412 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:36:41.410767] Start headset output function test...</span>
+2025-09-16 16:37:21,564 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:37:21.562839] Headset output function test finish</span>
+2025-09-16 16:37:26,583 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:37:26.580989] test case: Mouse_Latency_Test</span>
+2025-09-16 16:38:22,239 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:38:22.237738] mouse average clicking latency:55.330 ms</span>
+2025-09-16 16:38:27,266 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:38:27.265060] test case: Keyboard_Latency_Test</span>
+2025-09-16 16:39:23,322 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:23.321091] keyboard average clicking latency:71.044 ms</span>
+2025-09-16 16:39:28,345 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:28.344063] test case: Environment_Restore</span>
+2025-09-16 16:39:28,726 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:28.722960] End the teams meeting</span>
+2025-09-16 16:39:29,195 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:29.194069] End local music playing</span>
+2025-09-16 16:39:29,202 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:39:29.196840] Test Finish! generate final report...</span>
+2025-09-16 16:39:29,224 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:39:29.221838] Final report is ready and dump to report folder!</span>
+2025-09-16 16:39:51,229 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:51.228805] Start testing...</span>
+2025-09-16 16:39:56,234 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:56.233708] test case: Modern_Standby</span>
+2025-09-16 16:39:56,235 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:39:56.235412] go to MS states for 20 sec...</span>
+2025-09-16 16:40:16,474 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:40:16.473377] waiting for 10 sec...</span>
+2025-09-16 16:40:31,483 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:40:31.481253] test case: Environment_Initialization</span>
+2025-09-16 16:41:03,548 [INFO] <teams_meeting_control.py> join_meeting() teams call configure error: Can't find the join meeting button.
+2025-09-16 16:41:03,554 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:03.553411] Can not join the Teams call meeting!</span>
+2025-09-16 16:41:10,830 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 16:41:10.826563] test case: Environment_Initialization item:3 cycles:0
+2025-09-16 16:41:15,836 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:15.835478] test case: Headset_Mic_Check</span>
+2025-09-16 16:41:15,838 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:15.837639] Start headset input function test...</span>
+2025-09-16 16:41:25,739 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:25.739402] Headset input function test finish</span>
+2025-09-16 16:41:35,750 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:35.749522] test case: Headset_Output_Check</span>
+2025-09-16 16:41:35,751 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:41:35.751250] Start headset output function test...</span>
+2025-09-16 16:42:15,850 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:42:15.849541] headset output test fail, retry again!</span>
+2025-09-16 16:42:45,865 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:42:45.864561] headset output test fail, retry again!</span>
+2025-09-16 16:43:07,601 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:07.601435] Test terminate!</span>
+2025-09-16 16:43:15,879 [INFO] <wrt_controller.py> dump_wrt_log() Starting 'cde dump_collect' to gather WRT logs.
+2025-09-16 16:43:15,881 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:15.880141] headset output test fail, retry again!</span>
+2025-09-16 16:43:15,883 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:15.882210] ***Headset output function have some issue!***</span>
+2025-09-16 16:43:15,884 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:15.884086] Dump WRT log...</span>
+2025-09-16 16:43:15,916 [ERROR] <wrt_controller.py> dump_wrt_log() 'dump_collect' command failed: The system cannot find the path specified.
+2025-09-16 16:43:15,918 [ERROR] <ui_main.py> error_to_ui() [2025-09-16 16:43:15.917492] test case: Headset_Output_Check item:5 cycles:0
+2025-09-16 16:43:15,919 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:43:15.918717] Test Finish! generate final report...</span>
+2025-09-16 16:43:15,937 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:43:15.936201] Final report is ready and dump to report folder!</span>
+2025-09-16 16:43:19,822 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:19.822706] Start testing...</span>
+2025-09-16 16:43:24,828 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:24.827449] test case: Modern_Standby</span>
+2025-09-16 16:43:24,829 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:24.828780] go to MS states for 20 sec...</span>
+2025-09-16 16:43:45,096 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:43:45.095549] waiting for 10 sec...</span>
+2025-09-16 16:44:00,105 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:00.104623] test case: Environment_Initialization</span>
+2025-09-16 16:44:37,393 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:37.392908] Start the teams meeting...</span>
+2025-09-16 16:44:37,394 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:37.394207] Start playing the local music...</span>
+2025-09-16 16:44:47,452 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:47.451136] test case: Headset_Mic_Check</span>
+2025-09-16 16:44:47,454 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:47.453430] Start headset input function test...</span>
+2025-09-16 16:44:47,689 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:47.688622] Headset input function test finish</span>
+2025-09-16 16:44:57,703 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:57.702290] test case: Headset_Output_Check</span>
+2025-09-16 16:44:57,704 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:44:57.704195] Start headset output function test...</span>
+2025-09-16 16:45:37,826 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:45:37.825131] Headset output function test finish</span>
+2025-09-16 16:45:42,844 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:45:42.842099] test case: Mouse_Latency_Test</span>
+2025-09-16 16:46:39,054 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:46:39.053010] mouse average clicking latency:73.010 ms</span>
+2025-09-16 16:46:44,075 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:46:44.073913] test case: Keyboard_Latency_Test</span>
+2025-09-16 16:47:40,277 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:47:40.276173] keyboard average clicking latency:76.248 ms</span>
+2025-09-16 16:47:45,296 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:47:45.294687] test case: Environment_Restore</span>
+2025-09-16 16:47:45,648 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:47:45.647240] End the teams meeting</span>
+2025-09-16 16:47:46,079 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:47:46.077506] End local music playing</span>
+2025-09-16 16:47:46,088 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:47:46.084040] Test Finish! generate final report...</span>
+2025-09-16 16:47:46,102 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 16:47:46.100341] Final report is ready and dump to report folder!</span>
+2025-09-16 16:47:58,493 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:47:58.493121] Start testing...</span>
+2025-09-16 16:48:03,499 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:48:03.498457] test case: Modern_Standby</span>
+2025-09-16 16:48:03,500 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:48:03.500127] go to MS states for 20 sec...</span>
+2025-09-16 16:48:23,772 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:48:23.772038] waiting for 10 sec...</span>
+2025-09-16 16:48:38,782 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:48:38.780902] test case: Environment_Initialization</span>
+2025-09-16 16:49:16,105 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:16.104406] Start the teams meeting...</span>
+2025-09-16 16:49:16,106 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:16.105823] Start playing the local music...</span>
+2025-09-16 16:49:26,185 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:26.183814] test case: Headset_Mic_Check</span>
+2025-09-16 16:49:26,188 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:26.187270] Start headset input function test...</span>
+2025-09-16 16:49:26,444 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:26.443145] Headset input function test finish</span>
+2025-09-16 16:49:36,455 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:36.454696] test case: Headset_Output_Check</span>
+2025-09-16 16:49:36,458 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:49:36.456865] Start headset output function test...</span>
+2025-09-16 16:50:16,581 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:50:16.579708] Headset output function test finish</span>
+2025-09-16 16:50:21,632 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:50:21.631163] test case: Mouse_Latency_Test</span>
+2025-09-16 16:51:17,649 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:51:17.647511] mouse average clicking latency:58.741 ms</span>
+2025-09-16 16:51:22,684 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:51:22.682908] test case: Keyboard_Latency_Test</span>
+2025-09-16 16:52:19,039 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:19.037368] keyboard average clicking latency:84.571 ms</span>
+2025-09-16 16:52:24,066 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:24.063917] test case: Environment_Restore</span>
+2025-09-16 16:52:24,477 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:24.475834] End the teams meeting</span>
+2025-09-16 16:52:24,910 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:24.908300] End local music playing</span>
+2025-09-16 16:52:29,922 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:29.921459] test case: Modern_Standby</span>
+2025-09-16 16:52:29,924 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:29.924003] go to MS states for 20 sec...</span>
+2025-09-16 16:52:50,171 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:52:50.170316] waiting for 10 sec...</span>
+2025-09-16 16:53:05,179 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:05.178624] test case: Environment_Initialization</span>
+2025-09-16 16:53:42,404 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:42.404075] Start the teams meeting...</span>
+2025-09-16 16:53:42,406 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:42.405194] Start playing the local music...</span>
+2025-09-16 16:53:52,493 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:52.491688] test case: Headset_Mic_Check</span>
+2025-09-16 16:53:52,496 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:52.495134] Start headset input function test...</span>
+2025-09-16 16:53:52,717 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:53:52.716455] Headset input function test finish</span>
+2025-09-16 16:54:02,729 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:54:02.726835] test case: Headset_Output_Check</span>
+2025-09-16 16:54:02,732 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:54:02.730637] Start headset output function test...</span>
+2025-09-16 16:54:42,892 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:54:42.890411] Headset output function test finish</span>
+2025-09-16 16:54:47,914 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:54:47.913115] test case: Mouse_Latency_Test</span>
+2025-09-16 16:55:44,056 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:55:44.055293] mouse average clicking latency:62.829 ms</span>
+2025-09-16 16:55:49,076 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:55:49.075296] test case: Keyboard_Latency_Test</span>
+2025-09-16 16:56:45,096 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:45.095266] keyboard average clicking latency:70.436 ms</span>
+2025-09-16 16:56:50,112 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:50.109601] test case: Environment_Restore</span>
+2025-09-16 16:56:50,477 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:50.476764] End the teams meeting</span>
+2025-09-16 16:56:50,907 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:50.906137] End local music playing</span>
+2025-09-16 16:56:55,920 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:55.918704] test case: Modern_Standby</span>
+2025-09-16 16:56:55,923 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:56:55.922361] go to MS states for 20 sec...</span>
+2025-09-16 16:57:16,194 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:57:16.193619] waiting for 10 sec...</span>
+2025-09-16 16:57:31,203 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:57:31.203060] test case: Environment_Initialization</span>
+2025-09-16 16:58:08,506 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:08.506361] Start the teams meeting...</span>
+2025-09-16 16:58:08,509 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:08.507723] Start playing the local music...</span>
+2025-09-16 16:58:18,589 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:18.589455] test case: Headset_Mic_Check</span>
+2025-09-16 16:58:18,590 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:18.590349] Start headset input function test...</span>
+2025-09-16 16:58:19,624 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:19.623551] Headset input function test finish</span>
+2025-09-16 16:58:29,639 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:29.637614] test case: Headset_Output_Check</span>
+2025-09-16 16:58:29,641 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:58:29.640507] Start headset output function test...</span>
+2025-09-16 16:59:09,723 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:59:09.722646] Headset output function test finish</span>
+2025-09-16 16:59:14,732 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 16:59:14.731575] test case: Mouse_Latency_Test</span>
+2025-09-16 17:00:10,798 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:00:10.796460] mouse average clicking latency:59.797 ms</span>
+2025-09-16 17:00:15,820 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:00:15.816580] test case: Keyboard_Latency_Test</span>
+2025-09-16 17:01:11,644 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:11.642366] keyboard average clicking latency:66.084 ms</span>
+2025-09-16 17:01:16,663 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:16.661760] test case: Environment_Restore</span>
+2025-09-16 17:01:17,069 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:17.067759] End the teams meeting</span>
+2025-09-16 17:01:17,436 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:17.434735] End local music playing</span>
+2025-09-16 17:01:22,442 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:22.440773] test case: Modern_Standby</span>
+2025-09-16 17:01:22,444 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:22.443359] go to MS states for 20 sec...</span>
+2025-09-16 17:01:42,685 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:42.683050] waiting for 10 sec...</span>
+2025-09-16 17:01:57,694 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:01:57.692953] test case: Environment_Initialization</span>
+2025-09-16 17:02:34,964 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:34.962780] Start the teams meeting...</span>
+2025-09-16 17:02:34,969 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:34.967028] Start playing the local music...</span>
+2025-09-16 17:02:45,041 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:45.040771] test case: Headset_Mic_Check</span>
+2025-09-16 17:02:45,043 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:45.042591] Start headset input function test...</span>
+2025-09-16 17:02:45,266 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:45.265450] Headset input function test finish</span>
+2025-09-16 17:02:55,292 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:55.289356] test case: Headset_Output_Check</span>
+2025-09-16 17:02:55,295 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:02:55.294073] Start headset output function test...</span>
+2025-09-16 17:03:35,450 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:03:35.448417] Headset output function test finish</span>
+2025-09-16 17:03:40,490 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:03:40.485916] test case: Mouse_Latency_Test</span>
+2025-09-16 17:04:36,342 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:04:36.340007] mouse average clicking latency:55.842 ms</span>
+2025-09-16 17:04:41,372 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:04:41.368816] test case: Keyboard_Latency_Test</span>
+2025-09-16 17:05:37,462 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:37.460549] keyboard average clicking latency:72.851 ms</span>
+2025-09-16 17:05:42,486 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:42.485227] test case: Environment_Restore</span>
+2025-09-16 17:05:42,857 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:42.855155] End the teams meeting</span>
+2025-09-16 17:05:43,316 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:43.314420] End local music playing</span>
+2025-09-16 17:05:48,328 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:48.327637] test case: Modern_Standby</span>
+2025-09-16 17:05:48,329 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:05:48.328395] go to MS states for 20 sec...</span>
+2025-09-16 17:06:08,555 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:06:08.552693] waiting for 10 sec...</span>
+2025-09-16 17:06:23,563 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:06:23.562734] test case: Environment_Initialization</span>
+2025-09-16 17:07:00,817 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:00.816868] Start the teams meeting...</span>
+2025-09-16 17:07:00,820 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:00.818546] Start playing the local music...</span>
+2025-09-16 17:07:10,908 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:10.907220] test case: Headset_Mic_Check</span>
+2025-09-16 17:07:10,910 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:10.909394] Start headset input function test...</span>
+2025-09-16 17:07:11,117 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:11.116724] Headset input function test finish</span>
+2025-09-16 17:07:21,137 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:21.135256] test case: Headset_Output_Check</span>
+2025-09-16 17:07:21,140 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:07:21.138101] Start headset output function test...</span>
+2025-09-16 17:08:01,300 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:08:01.298766] Headset output function test finish</span>
+2025-09-16 17:08:06,327 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:08:06.323171] test case: Mouse_Latency_Test</span>
+2025-09-16 17:09:02,247 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:09:02.245385] mouse average clicking latency:65.729 ms</span>
+2025-09-16 17:09:07,266 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:09:07.264421] test case: Keyboard_Latency_Test</span>
+2025-09-16 17:10:03,187 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:10:03.184994] keyboard average clicking latency:70.501 ms</span>
+2025-09-16 17:10:08,221 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:10:08.219973] test case: Environment_Restore</span>
+2025-09-16 17:10:08,612 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:10:08.609882] End the teams meeting</span>
+2025-09-16 17:10:09,051 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-16 17:10:09.050210] End local music playing</span>
+2025-09-16 17:10:09,064 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 17:10:09.060481] Test Finish! generate final report...</span>
+2025-09-16 17:10:09,103 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-16 17:10:09.102177] Final report is ready and dump to report folder!</span>
