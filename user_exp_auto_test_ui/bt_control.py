@@ -5,6 +5,7 @@ This file contains the class related to bluetooth devices controlling
 from utils import Utils
 import os
 import re
+import wmi
 
 
 class BluetoothControl:
@@ -56,7 +57,7 @@ class BluetoothControl:
     @staticmethod
     def find_headset() -> str:
         """
-        responsible to check the connecting status of specific bluetooth device
+        responsible to find the connected headset 
         """
         cmd = (
             f"Get-PnpDevice -class AudioEndpoint |Select FriendlyName, Status |Select-string -Pattern headset"
@@ -66,8 +67,17 @@ class BluetoothControl:
         device = re.findall(r"(?<=FriendlyName=Headset \()(?!(?:.*Hands\-Free|.*Microsoft))(.*?)(?=\); Status=OK)", result)
         return device[0] if device else "None"
     
-    
-    
+    @staticmethod
+    def find_mouse_keyboard(type:str) -> str:
+        """
+        responsible to find the connected mouse or keyboard 
+        """
+        c = wmi.WMI()
+        for device in c.Win32_PnPEntity():
+            if type in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
+                return device.Name
+        
+        return 'None'
 
 
 if __name__ == "__main__":

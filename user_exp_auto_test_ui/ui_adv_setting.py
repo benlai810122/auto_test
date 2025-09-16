@@ -22,6 +22,32 @@ class AdvanceSetting(QWidget):
         self.ui_renew()
  
     def init_ui(self):
+
+        self.setStyleSheet("""
+            QGroupBox {
+                font-size: 18px;
+                font-weight: bold;
+                color: navy;
+                border: 2px solid #4CAF50;
+                border-radius: 10px;
+                margin-top: 10px;
+                background-color: #F0F8FF;
+                padding: 10px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                subcontrol-position: top center;
+                padding: 5px;
+            }
+        """)
+
+        def make_title(text):
+            label = QLabel(text)
+            label.setStyleSheet("font-size: 16px; font-weight: bold;")
+            return label
+
+
+
         layout = QVBoxLayout()
 
         # --- system setting ---
@@ -47,7 +73,7 @@ class AdvanceSetting(QWidget):
 
         #continue_fail_limit
         cfl_layout = QHBoxLayout()
-        self.label_cfl = QLabel('Set Maximum Consecutive Failures:')
+        self.label_cfl = QLabel('Maximum Consecutive Failures:')
         self.value_cfl = QLabel('5')  # Default value
         self.value_cfl.setAlignment(Qt.AlignCenter)
         self.value_cfl.setStyleSheet('font-size: 16px;')
@@ -64,7 +90,7 @@ class AdvanceSetting(QWidget):
 
         #test_retry_times
         trt_layout = QHBoxLayout()
-        self.label_trt = QLabel('Set retry times:')
+        self.label_trt = QLabel('Retry Times:')
         self.value_trt = QLabel('3')  # Default value
         self.value_trt.setAlignment(Qt.AlignCenter)
         self.value_trt.setStyleSheet('font-size: 16px;')
@@ -89,7 +115,7 @@ class AdvanceSetting(QWidget):
         power_state_laylout = QVBoxLayout()
         #sleep_time_s
         sts_layout = QHBoxLayout()
-        self.label_sts = QLabel('sleep time (s):')
+        self.label_sts = QLabel('Sleep Time (s):')
         self.value_sts = QLabel('180')  # Default value
         self.value_sts.setAlignment(Qt.AlignCenter)
         self.value_sts.setStyleSheet('font-size: 16px;')
@@ -106,7 +132,7 @@ class AdvanceSetting(QWidget):
 
         #wake_up_time_s
         wuts_layout = QHBoxLayout()
-        self.label_wuts = QLabel('wake up time (s):')
+        self.label_wuts = QLabel('Idle Time (s):')
         self.value_wuts = QLabel('60')  # Default value
         self.value_wuts.setAlignment(Qt.AlignCenter)
         self.value_wuts.setStyleSheet('font-size: 16px;')

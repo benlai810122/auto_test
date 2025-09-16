@@ -49,7 +49,7 @@ class BTTestApp(QWidget):
     def __init__(self, b_config:Basic_Config):
         super().__init__()
         self.b_config = b_config
-        self.setWindowTitle("User Experience Auto Test")
+        self.setWindowTitle("Intel User Experience Auto Test")
         self.setGeometry(100, 100, 1400, 1000)
         self.init_ui()
         self.bt_device_check()
@@ -63,19 +63,48 @@ class BTTestApp(QWidget):
         self.log_signal.save_report.connect(self.save_report)
         self.log_signal.enable.connect(self.enable_all_item)
         self.log_signal.set_stutas.connect(self.set_stutas)
+
     
     def init_ui(self):
+
+        self.setStyleSheet("""
+            QGroupBox {
+                font-size: 18px;
+                font-weight: bold;
+                color: navy;
+                border: 2px solid #4CAF50;
+                border-radius: 10px;
+                margin-top: 10px;
+                background-color: #F0F8FF;
+                padding: 10px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                subcontrol-position: top center;
+                padding: 5px;
+            }
+            QTableView {
+                gridline-color: #555;
+                background-color: #f9f9f9;
+                alternate-background-color: #eaeaea;
+                border: 1px solid #ccc;
+                font-family: Segoe UI;
+                font-size: 11pt;
+            }
+            QHeaderView::section {
+                background-color: #444;
+                color: white;
+                padding: 4px;
+                border: 1px solid #333;
+                font-weight: bold;
+            }
+        """)
 
         def make_title(text):
             label = QLabel(text)
             label.setStyleSheet("font-size: 16px; font-weight: bold;")
             return label
         
-        def make_group_title(text):
-            label = QLabel(text)
-            label.setStyleSheet("font-size: 18px; font-weight: bold;")
-            return label
-         
         layout_main = QHBoxLayout()
         layout_1 = QVBoxLayout()
         layout_2 = QVBoxLayout()
@@ -96,7 +125,7 @@ class BTTestApp(QWidget):
 
 
         # --- Device Selection ---
-        self.device_group = QGroupBox("Device Selection")
+        self.device_group = QGroupBox("Device")
         device_layout = QFormLayout()
 
         self.led_headset = QLineEdit()
@@ -105,17 +134,21 @@ class BTTestApp(QWidget):
         self.led_mouse = QLineEdit()
         self.led_mouse.setReadOnly(True)
 
-        device_layout.addRow("Headset:", self.led_headset)
-        device_layout.addRow("Mouse:", self.led_mouse)
+        self.led_keyboard = QLineEdit()
+        self.led_keyboard.setReadOnly(True)
+
+        device_layout.addRow(make_title("Headset:"), self.led_headset)
+        device_layout.addRow(make_title("Mouse:"), self.led_mouse)
+        device_layout.addRow(make_title("Keyboard:"), self.led_keyboard)
         self.device_group.setLayout(device_layout)
 
 
-        
-
         # --- Power states Selection ---
         self.power_states_group = QGroupBox("DUT Power States")
-        power_states_layout = QHBoxLayout()
+        power_states_layout = QVBoxLayout()
 
+
+        layout_P_1 = QHBoxLayout()
         self.rbtn_idle = QRadioButton("IDLE")
         self.rbtn_ms = QRadioButton("MS")
         self.rbtn_s4 = QRadioButton("S4")
@@ -127,9 +160,11 @@ class BTTestApp(QWidget):
         self.btn_ps_add.clicked.connect(partial(self.task_schedule_setting,"ps_add"))
         self.btn_ps_add.setMaximumWidth(100)
 
-        power_states_layout.addWidget(self.rbtn_idle)
-        power_states_layout.addWidget(self.rbtn_ms)
-        power_states_layout.addWidget(self.rbtn_s4)
+        layout_P_1.addWidget(self.rbtn_idle)
+        layout_P_1.addWidget(self.rbtn_ms)
+        layout_P_1.addWidget(self.rbtn_s4)
+
+        power_states_layout.addLayout(layout_P_1)
         power_states_layout.addWidget(self.btn_ps_add)
         self.power_states_group.setLayout(power_states_layout)
 
@@ -201,7 +236,6 @@ class BTTestApp(QWidget):
         test_layout.addLayout(func_level_2)
         test_layout.addLayout(func_level_3)
         test_layout.addLayout(func_level_4)
-
         test_layout.addWidget(self.btn_tc_add)
         self.test_case_group.setLayout(test_layout)
 
@@ -256,24 +290,6 @@ class BTTestApp(QWidget):
         table_view.setModel(self.task_schedule_model)
         table_view.setColumnWidth(0,350)
 
-
-        table_view.setStyleSheet("""
-            QTableView {
-                gridline-color: #555;
-                background-color: #f9f9f9;
-                alternate-background-color: #eaeaea;
-                border: 1px solid #ccc;
-                font-family: Segoe UI;
-                font-size: 11pt;
-            }
-            QHeaderView::section {
-                background-color: #444;
-                color: white;
-                padding: 4px;
-                border: 1px solid #333;
-                font-weight: bold;
-            }
-        """)
         table_view.setAlternatingRowColors(True)
         table_view.setShowGrid(False)
         task_schedule_layout.addLayout(task_setting_laylout)
@@ -314,20 +330,32 @@ class BTTestApp(QWidget):
 
 
         # --- Log Output ---
+        
+        self.log_group = QGroupBox("Message")
+        group_layout = QVBoxLayout()
 
+
+        #log box
+        self.log_title = make_title('Test Process:')
         self.log_output = QTextEdit()
         self.log_output.setReadOnly(True)
-        #.log_output.setMaximumHeight(150)
         font = QFont("Arial", 10)  # font family, size
         self.log_output.setFont(font)
 
-        # --- Error message ---
+        # Error message
+        self.error_message_title = make_title('Error Message:')
         self.error_message = QTextEdit()
         self.error_message.setReadOnly(True)
         self.error_message.setMaximumHeight(150)
         self.error_message.setTextColor(QColor("red"))
         font = QFont("Arial", 12)  # font family, size
         self.error_message.setFont(font)
+
+        group_layout.addWidget(self.log_title)
+        group_layout.addWidget(self.log_output)
+        group_layout.addWidget(self.error_message_title)
+        group_layout.addWidget(self.error_message)
+        self.log_group.setLayout(group_layout)
 
 
         # --- Control Buttons ---
@@ -345,17 +373,14 @@ class BTTestApp(QWidget):
 
 
         # --- Combine All Layouts ---
-        layout_1.addWidget(self.setting_group)
+        layout_1.addWidget(self.status_label)
         layout_1.addWidget(self.device_group)
         layout_1.addWidget(self.power_states_group)
         layout_1.addWidget(self.test_case_group)
-        layout_1.addWidget(make_title("Test Progress:"))
-        layout_1.addWidget(self.log_output)
-        layout_1.addWidget(make_title("Error Message:"))
-        layout_1.addWidget(self.error_message)
+        layout_1.addWidget(self.log_group)
         layout_1.addLayout(button_layout)
 
-        layout_2.addWidget(self.status_label)
+        layout_2.addWidget(self.setting_group)
         layout_2.addWidget(self.task_schedule_group)
         layout_2.addWidget(self.summary_group)
 
@@ -562,7 +587,11 @@ class BTTestApp(QWidget):
     def bt_device_check(self):
         #checking the bt device existed, like headset, mouse
         headset = BluetoothControl.find_headset()
+        mouse = BluetoothControl.find_mouse_keyboard('Mouse')
+        keyboard = BluetoothControl.find_mouse_keyboard('Keyboard')
         self.led_headset.setText(headset)
+        self.led_mouse.setText(mouse)
+        self.led_keyboard.setText(keyboard)
         self.b_config.headset = headset
 
     def advance_setting(self):
@@ -646,7 +675,7 @@ class StatusLabel(QLabel):
         self.setFont(font)
 
         # Default style
-        self.setStyleSheet("QLabel { color: white; background-color: blue; border-radius: 12px; }")
+        self.setStyleSheet("QLabel { color: white; background-color: navy; border-radius: 12px; }")
 
         # Drop shadow
         shadow = QGraphicsDropShadowEffect(self)

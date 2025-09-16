@@ -27,7 +27,6 @@ from youtube_control import YoutubeControl
 import pygetwindow as gw
 
 
-
 class Power_States(Enum):
     idle = 0
     go_to_s3 = 1
@@ -44,7 +43,6 @@ class ENV(Enum):
     Teams_Local = 3
     Youtube = 4
 
-
 class Test_case(Enum):
     Idle = 'Idle'
     MS = 'MS'
@@ -60,7 +58,6 @@ class Test_case(Enum):
     Mouse_latency = 'Mouse_latency'
     Environment_init = "Environment_init"
     Environment_restore = "Environment_restore"
-
 
 #Arduino cmd setting
 CMD_servo = str.encode("0")

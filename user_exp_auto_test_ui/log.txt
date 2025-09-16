@@ -26167,3 +26167,22 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-09-12 11:13:34,374 [INFO] <ui_main.py> log_to_ui() [2025-09-12 11:13:34.373632] serial port detected: COM5
 2025-09-12 11:14:29,397 [INFO] <ui_main.py> log_to_ui() [2025-09-12 11:14:29.397705] serial port detected: COM5
 2025-09-12 11:16:51,469 [INFO] <ui_main.py> log_to_ui() [2025-09-12 11:16:51.469137] serial port detected: COM5
+2025-09-12 17:09:03,172 [INFO] <ui_main.py> log_to_ui() [2025-09-12 17:09:03.171560] please insert the arduino board!
+2025-09-12 17:16:21,388 [INFO] <ui_main.py> log_to_ui() [2025-09-12 17:16:21.388032] please insert the arduino board!
+2025-09-12 17:32:37,782 [INFO] <ui_main.py> log_to_ui() [2025-09-12 17:32:37.782424] please insert the arduino board!
+2025-09-15 15:31:57,645 [INFO] <ui_main.py> log_to_ui() [2025-09-15 15:31:57.641446] please insert the arduino board!
+2025-09-15 16:53:58,018 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:53:58.018180] please insert the arduino board!
+2025-09-15 16:54:21,814 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:54:21.814813] please insert the arduino board!
+2025-09-15 16:55:58,371 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:55:58.371924] please insert the arduino board!
+2025-09-15 16:56:45,937 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:56:45.937455] please insert the arduino board!
+2025-09-15 16:58:01,274 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:58:01.274380] please insert the arduino board!
+2025-09-15 16:58:23,431 [INFO] <ui_main.py> log_to_ui() [2025-09-15 16:58:23.431311] please insert the arduino board!
+2025-09-15 17:03:01,840 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:03:01.840012] please insert the arduino board!
+2025-09-15 17:17:18,326 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:17:18.324975] please insert the arduino board!
+2025-09-15 17:37:43,607 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:37:43.607035] please insert the arduino board!
+2025-09-15 17:39:14,446 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:39:14.444579] please insert the arduino board!
+2025-09-15 17:48:06,549 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:48:06.549771] please insert the arduino board!
+2025-09-15 17:49:40,754 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:49:40.754740] Start testing...
+2025-09-15 17:49:40,767 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:49:40.766232] please insert the arduino board!
+2025-09-15 17:57:59,100 [INFO] <ui_main.py> log_to_ui() [2025-09-15 17:57:59.100149] please insert the arduino board!
+2025-09-15 18:01:26,515 [INFO] <ui_main.py> log_to_ui() [2025-09-15 18:01:26.515216] please insert the arduino board!
