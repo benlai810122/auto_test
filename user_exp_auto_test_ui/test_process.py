@@ -50,6 +50,7 @@ class Test_case(Enum):
     Mouse_function = 'Mouse_Function_Check'
     keyboard_function = 'Keyboard_Function_Check'
     keyboard_latency = 'Keyboard_Latency_Test'
+    Keyboard_random = 'Keyboard_Random_Click'
     Mouse_random = 'Mouse_Random_Click'
     Headset_init = 'Headset_Initialization'
     Headset_input = 'Headset_Mic_Check'
@@ -69,6 +70,7 @@ CMD_mouse_random_clicking = str.encode("5")
 CMD_keyboard_clicking = str.encode("6")
 CMD_mouse_latency = str.encode("7")
 CMD_keyboard_latency = str.encode("8")
+CMD_keyboard_random_clicking = str.encode("9")
 CMD_test= str.encode("f")
 g_COM_PORT = ""
 
@@ -449,13 +451,21 @@ def mouse_keyboard_function_detect(ser:serial.Serial, command:bytes, timeout_s:i
     pygame.quit()
     return False
 
-def mouse_random_click(ser:serial.Serial, command:bytes, timeout_s:int,log_callback)->bool:
-    log_callback("mouse random click start!",False)
+def mouse_keyboard_random_click(ser:serial.Serial, command:bytes, timeout_s:int,log_callback)->bool:
+    if command == CMD_mouse_random_clicking:
+        log_callback("mouse random click start!",False)
+    else:
+        log_callback("keyboard random click start!",False)
+
     #control mouse randomly clicking
     ser.write(command+b'\n')
     #waiting for the mouse click end
     ser.read()
-    log_callback("mouse random click finish!",False)
+
+    if command == CMD_keyboard_random_clicking:
+        log_callback("mouse random click finish!",False)
+    else:
+        log_callback("keyboard random click finish!",False)
     return True
 
 
@@ -631,7 +641,6 @@ def serial_test(ser:serial.Serial):
 
 def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
     """_summary_
-
     Args:
         test_case (str): test case
         b_config (Basic_Config): the configation of the test
@@ -686,7 +695,7 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             dut_states_init(power_states=Power_States.go_to_s3, wake_up_time_s=b_config.wake_up_time_s,
                     sleep_time_s=b_config.sleep_time_s,ser=ser)
             #make sure the laptop go to MS states
-            time.sleep(5)
+            time.sleep(10)
             
         case Test_case.S4.value:
             log_callback(f"go to s4 states for {b_config.sleep_time_s} sec...",False)
@@ -715,14 +724,25 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
             time.sleep(5)
      
         case Test_case.Mouse_random.value:
-            # mouse function test
-            res = mouse_random_click(ser = ser, command= CMD_mouse_random_clicking,
+            # move to safe place
+            pyautogui.click(x=10,y=10)
+            # mouse random click 
+            res = mouse_keyboard_random_click(ser = ser, command= CMD_mouse_random_clicking,
                                                timeout_s=b_config.timeout_s,log_callback=log_callback)
             if not res:
-                log_callback('mouse function test fail!',False)
+                log_callback('mouse random test fail!',False)
                 log_callback('dump wrt log...',False)
                 WRTController.dump_wrt_log()
+            time.sleep(5)
 
+        case Test_case.Keyboard_random.value:
+            # mouse function test
+            res = mouse_keyboard_random_click(ser = ser, command= CMD_keyboard_random_clicking,
+                                               timeout_s=b_config.timeout_s,log_callback=log_callback)
+            if not res:
+                log_callback('keyboard random test fail!',False)
+                log_callback('dump wrt log...',False)
+                WRTController.dump_wrt_log()
             time.sleep(5)
            
         
@@ -754,6 +774,8 @@ def run_test(test_case:str, b_config:Basic_Config, log_callback)->bool:
                 log_callback("Headset turn off successfully, disconneted",False)
 
         case Test_case.Mouse_latency.value:
+            # move to safe place
+            pyautogui.click(x=10,y=10)
             res = mouse_latency(ser=ser, threshold=80, timeout_s=b_config.timeout_s, log_callback=log_callback)
 
 

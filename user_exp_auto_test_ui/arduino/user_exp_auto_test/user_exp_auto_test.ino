@@ -163,6 +163,21 @@ void test_start()
     counter++;
   }
 
+  //CMD_mouse_random_clicking (for mouse random clicking test)
+  else if (mode =='9')
+  {
+    int counter = 0;
+    while(counter<random_click_times)
+    {
+      mouse_click(myservo_keyboard,0,50,500);
+      counter++;
+      int index = random(4);
+      int delay_time = delay_time_array[index];
+      delay(delay_time);
+    }
+    Serial.write("c");
+  }
+
   else if (mode =='f')
   {
     Serial.write("c");

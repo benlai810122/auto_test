@@ -204,14 +204,16 @@ class BTTestApp(QWidget):
 
         func_level_3 =  QHBoxLayout()
         self.ck_btn_k_function = QRadioButton("Keyboard Function Check")
+        self.ck_btn_kr = QRadioButton("Keyboard Random Click")
         self.ck_btn_kl = QRadioButton("Keyboard Latency Test")
-        self.emtpy3_3 = QLabel("")
+
         self.emtpy3_4 = QLabel("")
         self.ck_btn_k_function.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_function.value))
+        self.ck_btn_kr.clicked.connect(partial(self.test_case_setting,Test_case.Keyboard_random.value))
         self.ck_btn_kl.clicked.connect(partial(self.test_case_setting,Test_case.keyboard_latency.value))
         func_level_3.addWidget(self.ck_btn_k_function)
+        func_level_3.addWidget(self.ck_btn_kr)
         func_level_3.addWidget(self.ck_btn_kl)
-        func_level_3.addWidget(self.emtpy3_3)
         func_level_3.addWidget(self.emtpy3_4)
 
 
@@ -540,7 +542,7 @@ class BTTestApp(QWidget):
                 # if out of continue fail range, stop testing
                 if test_fail_continue_times >= self.b_config.continue_fail_limit:
                         self.log_signal.log.emit("Stop testing!",True)
-                        self.log_signal.error.emit("out of maxium continue fail range, stop testing!",True)
+                        self.log_signal.error.emit("out of maxium continue fail range, stop testing!")
                         break
                 
             self.log_signal.log.emit("Test Finish! generate final report...",True)

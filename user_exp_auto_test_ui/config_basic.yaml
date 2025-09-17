@@ -11,7 +11,7 @@ target_port_desc: USB-SERIAL CH340
 task_schedule: Modern_Standby,Idle,Environment_Initialization,Headset_Mic_Check,Headset_Output_Check,Mouse_Latency_Test,Keyboard_Latency_Test,Environment_Restore
 teams_url: https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d
 test_retry_times: 1
-test_times: 5
+test_times: 1
 timeout_s: 15
 wake_up_time_s: 10
 youtube_link: https://www.youtube.com/watch?v=CxwJrzEdw1U
