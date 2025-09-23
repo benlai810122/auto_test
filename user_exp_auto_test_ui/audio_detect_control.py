@@ -21,7 +21,7 @@ class AudioDetectController:
         init and set the local video path
         """
         self.__headset_name = headset
-        self.__chunk_size = chunk_size  
+        self.__chunk_size = chunk_size
         self.__threshold = threshold
         self.__timeout = timeout
   

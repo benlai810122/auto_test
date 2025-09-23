@@ -26852,3 +26852,8 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-09-17 15:40:24,656 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-17 15:40:24.654594] End local music playing</span>
 2025-09-17 15:40:24,659 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-17 15:40:24.657362] Test Finish! generate final report...</span>
 2025-09-17 15:40:24,681 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-09-17 15:40:24.679967] Final report is ready and dump to report folder!</span>
+2025-09-17 16:36:02,469 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-17 16:36:02.463453] please insert the arduino board!</span>
+2025-09-18 14:06:25,225 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-18 14:06:25.210666] please insert the arduino board!</span>
+2025-09-22 17:58:29,410 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-22 17:58:29.409650] please insert the arduino board!</span>
+2025-09-22 17:59:46,058 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-22 17:59:46.058270] please insert the arduino board!</span>
+2025-09-23 10:54:29,490 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-23 10:54:29.490622] please insert the arduino board!</span>

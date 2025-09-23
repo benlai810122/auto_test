@@ -23,6 +23,7 @@ import yaml
 from dataclasses import asdict
 from datetime import datetime
 import latency_analyze as la
+from ui_database_setting import DataBase_Data_setting
 
 
 
@@ -115,12 +116,16 @@ class BTTestApp(QWidget):
         self.btn_ardu_check = QPushButton("Arduino Check")
         self.btn_bt_check = QPushButton("Peripheral Check")
         self.btn_advance_setting = QPushButton("Advanced Setting")
+        self.btn_database_setting = QPushButton("Database Setting")
+
         self.btn_ardu_check.clicked.connect(self.serial_port_check)
         self.btn_bt_check.clicked.connect(self.bt_device_check)
         self.btn_advance_setting.clicked.connect(self.advance_setting)
+        self.btn_database_setting.clicked.connect(self.database_setting)
         setting_layout.addWidget(self.btn_ardu_check)
         setting_layout.addWidget(self.btn_bt_check)
         setting_layout.addWidget(self.btn_advance_setting)
+        setting_layout.addWidget(self.btn_database_setting)
         self.setting_group.setLayout(setting_layout)
 
 
@@ -147,7 +152,6 @@ class BTTestApp(QWidget):
         self.power_states_group = QGroupBox("DUT Power States")
         power_states_layout = QVBoxLayout()
 
-
         layout_P_1 = QHBoxLayout()
         self.rbtn_idle = QRadioButton("IDLE")
         self.rbtn_ms = QRadioButton("Modern Standby (MS)")
@@ -171,7 +175,6 @@ class BTTestApp(QWidget):
         # --- Test Case Selection ---
         self.test_case_group = QGroupBox("Test Case Selection")
         test_layout = QVBoxLayout()
-
 
         func_level_1 =  QHBoxLayout()
         self.ck_btn_mouse = QRadioButton("Mouse Function Check")
@@ -604,6 +607,11 @@ class BTTestApp(QWidget):
     def advance_setting(self):
         self.settings_window = AdvanceSetting(self.b_config)
         self.settings_window.setting_changed.connect(self.apply_setting)
+        self.settings_window.show()
+
+    def database_setting(self):
+        self.settings_window = DataBase_Data_setting(excel_path='database_data.xlsx')
+        #self.settings_window.setting_changed.connect(self.apply_setting)
         self.settings_window.show()
 
     def apply_setting(self, basic_config:Basic_Config):

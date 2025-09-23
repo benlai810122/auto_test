@@ -163,7 +163,7 @@ void test_start()
     counter++;
   }
 
-  //CMD_mouse_random_clicking (for mouse random clicking test)
+  //CMD_keyboard_random_clicking (for keyboard random clicking test)
   else if (mode =='9')
   {
     int counter = 0;

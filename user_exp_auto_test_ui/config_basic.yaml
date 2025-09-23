@@ -1,7 +1,7 @@
 ENV_source: 3
-com: COM5
+com: ''
 continue_fail_limit: 1
-headset: 2- Dell WL5024 Headset
+headset: None
 headset_setting: 0
 keyboard_latency_threshold: 100
 mouse_latency_threshold: 80
