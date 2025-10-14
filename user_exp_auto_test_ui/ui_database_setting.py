@@ -1,23 +1,51 @@
 import sys
 import pandas as pd
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QFormLayout, QLabel,QGroupBox,
-    QLineEdit, QDateEdit, QComboBox, QSpinBox, QPushButton, QMessageBox
+    QApplication,
+    QWidget,
+    QFormLayout,
+    QLabel,
+    QGroupBox,
+    QLineEdit,
+    QDateEdit,
+    QComboBox,
+    QSpinBox,
+    QPushButton,
+    QMessageBox,
+    QScrollArea,
 )
 from PyQt5.QtCore import QDate
+from database_manager import Database_data
+import database_manager
+from PyQt5.QtCore import pyqtSignal
+import requests
 
 
 class DataBase_Data_setting(QWidget):
-    def __init__(self, excel_path):
+    setting_changed = pyqtSignal(object)
+    def __init__(self, excel_path, database_data: Database_data):
         super().__init__()
+        self.database_data = database_data
+        self.init_ui(excel_path)
+        self.ui_renew(self.database_data)
+
+    def init_ui(self, excel_path):
         self.setWindowTitle("Database Setting Form")
         self.resize(600, 500)
         group = QGroupBox()
         layout = QFormLayout()
         layout_form = QFormLayout()
+
+        # Scroll area wrapper
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+
+        # Container widget inside scroll
+        container = QWidget()
+        self.form_layout = QFormLayout(container)
+
         # Load Excel
         df = pd.read_excel(excel_path, sheet_name=0)
-
         self.setStyleSheet(
             """
             QGroupBox {
@@ -37,7 +65,8 @@ class DataBase_Data_setting(QWidget):
             }
           
             """
-                           )
+        )
+
         def make_title(text):
             label = QLabel(text)
             label.setStyleSheet("font-size: 16px; font-weight: bold;")
@@ -45,25 +74,28 @@ class DataBase_Data_setting(QWidget):
 
         # Store widgets
         self.widgets = {}
+        self.codes = []
         for _, row in df.iterrows():
             field = str(row["Name"])
-            example = str(row["example"]) if not pd.isna(row["example"]) else ""
-            required = str(row["Required fields"]).strip().lower() == "o"
-            choices = str(row["possible selection"]) if not pd.isna(row["possible selection"]) else ""
-            generate_ui = str(row["generate UI"]).strip().upper()
+            code = str(row["DB_CODE"])
+            example = str(row["Example"]) if not pd.isna(row["Example"]) else ""
+            required = str(row["Required Fields"]).strip().lower() == "o"
+            choices = (
+                str(row["Possible Selection"])
+                if not pd.isna(row["Possible Selection"])
+                else ""
+            )
+            generate_ui = str(row["Generate UI"]).strip().upper()
 
             if generate_ui == "X":
                 continue  # skip this field
 
             label_text = field + (" *" if required else "")
             # Pick widget type
-            if "date" in field.lower():
-                widget = QDateEdit()
-                widget.setCalendarPopup(True)
-                widget.setDate(QDate.currentDate())
-            elif choices and choices != "nan":
+            if choices and choices != "nan":
                 widget = QComboBox()
                 widget.addItems([c.strip() for c in choices.split(",")])
+                widget.setEditable(True)
             elif example.isdigit():
                 widget = QSpinBox()
                 widget.setMaximum(999999)  # set some reasonable max
@@ -73,35 +105,55 @@ class DataBase_Data_setting(QWidget):
                 if example:
                     widget.setPlaceholderText(example)
 
-            self.widgets[field] = widget
+            self.widgets[code] = widget
+            self.codes.append(code)
             layout.addRow(make_title(label_text), widget)
+
+        print(self.widgets)
 
         # Save button
         save_button = QPushButton("Save")
         save_button.clicked.connect(self.save_data)
         layout.addRow(save_button)
         group.setLayout(layout)
-        layout_form.addWidget(group)
+        self.form_layout.addWidget(group)
+
+        # Put form inside scroll
+        scroll.setWidget(container)
+
+        layout_form.addWidget(scroll)
         self.setLayout(layout_form)
 
-    def save_data(self):
-        """Collect all form values into a dict"""
-        data = {}
-        for field, widget in self.widgets.items():
-            if isinstance(widget, QLineEdit):
-                data[field] = widget.text()
-            elif isinstance(widget, QComboBox):
-                data[field] = widget.currentText()
-            elif isinstance(widget, QDateEdit):
-                data[field] = widget.date().toString("yyyy-MM-dd")
-            elif isinstance(widget, QSpinBox):
-                data[field] = widget.value()
+    def ui_renew(self, database_data: Database_data):
+        # showing the UI status according to the last time status
+        for code in self.codes:
+            if type(self.widgets[code]) == QComboBox:
+                self.widgets[code].setEditText(getattr(database_data, code))
+            elif type(self.widgets[code]) == QSpinBox:
+                value = int(getattr(database_data, code))
+                self.widgets[code].setValue(value)
+            else:
+                self.widgets[code].setText(getattr(database_data, code))
 
-        QMessageBox.information(self, "Saved Data", str(data))
+    def save_data(self):
+        for code in self.codes:
+            if type(self.widgets[code]) == QComboBox:
+                value = self.widgets[code].currentText()
+                setattr(self.database_data, code, value)
+            elif type(self.widgets[code]) == QSpinBox:
+                value = self.widgets[code].value()
+                setattr(self.database_data, code, value)
+            else:
+                value = self.widgets[code].text()
+                setattr(self.database_data, code, value)
+
+        self.setting_changed.emit(self.database_data)
+        self.close()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DataBase_Data_setting("database_data.xlsx")  # <--- your file path
+    data = database_manager.load_database_data("database_data.yaml")
+    window = DataBase_Data_setting("database_data.xlsx", data)  # <--- your file path
     window.show()
     sys.exit(app.exec_())

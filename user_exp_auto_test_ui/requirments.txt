@@ -13,3 +13,4 @@ PyYAML
 openpyxl
 pyaudio
 pandas
+wmi

@@ -8,7 +8,6 @@ from PyQt5.QtCore import pyqtSignal
 from functools import partial
 import sys
 
-
 class AdvanceSetting(QWidget):
     b_config:Basic_Config = None
     # Signal will send any Python object, including class instances
@@ -188,12 +187,10 @@ class AdvanceSetting(QWidget):
         functional_laylout.addRow("Headset Setting :",self.combo_headset_setting)
         
      
-        functional_group.setLayout(functional_laylout)
-        
+        functional_group.setLayout(functional_laylout) 
         self.btn_confirm = QPushButton("Save")
         self.btn_confirm.clicked.connect(self.send_setting)
         
-
         layout.addWidget(system_group)
         layout.addWidget(power_state_group)
         layout.addWidget(functional_group)
@@ -247,15 +244,12 @@ class AdvanceSetting(QWidget):
         data.teams_url = self.led_team_url.text()
         data.ENV_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
-        data.output_source_play_time_s = self.slider_ospts.value()
-       
-
+        data.output_source_play_time_s = self.slider_ospts.value() 
+        
         self.setting_changed.emit(data)
         self.close()
 
-
-
-
+ 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = AdvanceSetting()

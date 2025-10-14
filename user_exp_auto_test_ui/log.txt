@@ -26857,3 +26857,44 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-09-22 17:58:29,410 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-22 17:58:29.409650] please insert the arduino board!</span>
 2025-09-22 17:59:46,058 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-22 17:59:46.058270] please insert the arduino board!</span>
 2025-09-23 10:54:29,490 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-23 10:54:29.490622] please insert the arduino board!</span>
+2025-09-23 15:29:48,059 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-09-23 15:29:48.059123] please insert the arduino board!</span>
+2025-10-02 17:46:57,888 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-02 17:46:57.887860] please insert the arduino board!</span>
+2025-10-02 17:55:27,497 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-02 17:55:27.497343] please insert the arduino board!</span>
+2025-10-07 11:53:45,589 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 11:53:45.588951] please insert the arduino board!</span>
+2025-10-07 11:54:29,406 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 11:54:29.405798] please insert the arduino board!</span>
+2025-10-07 14:00:00,404 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 14:00:00.404515] please insert the arduino board!</span>
+2025-10-07 14:00:34,812 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 14:00:34.811929] please insert the arduino board!</span>
+2025-10-07 15:08:03,715 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 15:08:03.715605] please insert the arduino board!</span>
+2025-10-07 15:22:26,741 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 15:22:26.741086] please insert the arduino board!</span>
+2025-10-07 15:27:23,655 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 15:27:23.654900] please insert the arduino board!</span>
+2025-10-07 15:28:25,761 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-07 15:28:25.761195] please insert the arduino board!</span>
+2025-10-09 11:23:40,467 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-09 11:23:40.466743] please insert the arduino board!</span>
+2025-10-13 15:14:56,303 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 15:14:56.303477] please insert the arduino board!</span>
+2025-10-13 17:33:31,336 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:33:31.336388] please insert the arduino board!</span>
+2025-10-13 17:34:54,763 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:34:54.762332] Start testing...</span>
+2025-10-13 17:34:54,777 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:34:54.777064] please insert the arduino board!</span>
+2025-10-13 17:35:25,044 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:35:25.043118] Cant not find the serial device</span>
+2025-10-13 17:35:25,054 [ERROR] <ui_main.py> error_to_ui() [2025-10-13 17:35:25.045853] test case: Mouse_Function_Check item:1 cycles:0
+2025-10-13 17:35:25,076 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:35:25.075695] please insert the arduino board!</span>
+2025-10-13 17:35:55,398 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:35:55.396896] Cant not find the serial device</span>
+2025-10-13 17:35:55,399 [ERROR] <ui_main.py> error_to_ui() [2025-10-13 17:35:55.398623] test case: Mouse_Random_Click item:2 cycles:0
+2025-10-13 17:35:55,404 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:35:55.403451] please insert the arduino board!</span>
+2025-10-13 17:36:25,773 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:36:25.771424] Cant not find the serial device</span>
+2025-10-13 17:36:25,777 [ERROR] <ui_main.py> error_to_ui() [2025-10-13 17:36:25.774830] test case: Mouse_Latency_Test item:3 cycles:0
+2025-10-13 17:36:25,784 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-13 17:36:25.778915] Stop testing!</span>
+2025-10-13 17:36:25,786 [ERROR] <ui_main.py> error_to_ui() [2025-10-13 17:36:25.785269] out of maxium continue fail range, stop testing!
+2025-10-13 17:36:25,789 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-13 17:36:25.787389] Test Finish! generate final report...</span>
+2025-10-13 17:41:55,166 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:41:55.166526] please insert the arduino board!</span>
+2025-10-13 17:42:47,419 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:42:47.419508] please insert the arduino board!</span>
+2025-10-13 17:43:19,763 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:43:19.762871] please insert the arduino board!</span>
+2025-10-13 17:45:42,362 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:45:42.362325] please insert the arduino board!</span>
+2025-10-13 17:50:46,596 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:50:46.595576] Start testing...</span>
+2025-10-13 17:50:46,608 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:50:46.608341] please insert the arduino board!</span>
+2025-10-13 17:50:59,298 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:50:59.297702] Test terminate!</span>
+2025-10-13 17:51:16,846 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:51:16.845450] Cant not find the serial device</span>
+2025-10-13 17:51:16,849 [ERROR] <ui_main.py> error_to_ui() [2025-10-13 17:51:16.847306] test case: Mouse_Function_Check item:1 cycles:0
+2025-10-13 17:51:16,854 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-13 17:51:16.850178] Test Finish! generate final report...</span>
+2025-10-13 17:51:16,872 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-13 17:51:16.870624] Final report is ready and dump to report folder!</span>
+2025-10-13 17:51:19,624 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:51:19.624417] please insert the arduino board!</span>
+2025-10-13 17:51:24,446 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:51:24.445768] please insert the arduino board!</span>
+2025-10-13 17:52:52,622 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:52:52.621899] serial port detected: COM5</span>
