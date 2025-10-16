@@ -26898,3 +26898,137 @@ TypeError: keyboard_latency.<locals>.on_press() takes 0 positional arguments but
 2025-10-13 17:51:19,624 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:51:19.624417] please insert the arduino board!</span>
 2025-10-13 17:51:24,446 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:51:24.445768] please insert the arduino board!</span>
 2025-10-13 17:52:52,622 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-13 17:52:52.621899] serial port detected: COM5</span>
+2025-10-14 13:53:43,359 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:53:43.359312] serial port detected: COM4</span>
+2025-10-14 13:53:54,171 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:53:54.170685] Start testing...</span>
+2025-10-14 13:53:59,179 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:53:59.176956] test case: Mouse_Function_Check</span>
+2025-10-14 13:54:02,384 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:54:02.382225] BLE mouse function pass!</span>
+2025-10-14 13:54:12,468 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:54:12.467023] test case: Mouse_Random_Click</span>
+2025-10-14 13:54:12,589 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:54:12.586086] mouse random click start!</span>
+2025-10-14 13:54:42,601 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:54:42.599452] keyboard random click finish!</span>
+2025-10-14 13:54:52,617 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 13:54:52.615565] test case: Mouse_Latency_Test</span>
+2025-10-14 13:54:52,746 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 13:54:55,895 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 13:54:59,368 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 13:55:02,440 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 13:55:05,587 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 13:55:08,595 [ERROR] <__init__.py> inner() Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 386, in _handler
+    converted = self._convert(code, msg, lpdata)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 401, in _convert
+    raise NotImplementedError()
+NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\__init__.py", line 229, in inner
+    return f(self, *args, **kwargs)
+  File "C:\Users\benlaix\AppData\Roaming\Python\Python313\site-packages\pynput\_util\win32.py", line 390, in _handler
+    self._handle(code, msg, lpdata)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: '_thread._ThreadHandle' object is not callable
+2025-10-14 15:17:38,302 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 15:17:38.301634] serial port detected: COM4</span>
+2025-10-14 15:17:51,416 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 15:17:51.415808] Start testing...</span>
+2025-10-14 15:17:56,422 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 15:17:56.421076] test case: Modern_Standby</span>
+2025-10-14 15:17:56,533 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-14 15:17:56.531862] go to MS states for 20 sec...</span>
+2025-10-14 15:18:08,056 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-14 15:18:08.053194] Test Finish! generate final report...</span>
+2025-10-14 15:18:08,082 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-14 15:18:08.079859] Final report is ready and dump to report folder!</span>
+2025-10-15 11:51:53,552 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 11:51:53.552216] please insert the arduino board!</span>
+2025-10-15 11:51:59,651 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 11:51:59.651235] Start testing...</span>
+2025-10-15 11:51:59,669 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 11:51:59.668721] please insert the arduino board!</span>
+2025-10-15 11:52:29,902 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 11:52:29.899840] Cant not find the serial device</span>
+2025-10-15 11:52:29,904 [ERROR] <ui_main.py> error_to_ui() [2025-10-15 11:52:29.902759] test case: Modern_Standby item:1 cycles:0
+2025-10-15 11:52:29,909 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-15 11:52:29.907171] Stop testing!</span>
+2025-10-15 11:52:29,911 [ERROR] <ui_main.py> error_to_ui() [2025-10-15 11:52:29.909802] out of maxium continue fail range, stop testing!
+2025-10-15 11:52:29,913 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-15 11:52:29.911514] Test Finish! generate final report...</span>
+2025-10-15 11:52:29,937 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-15 11:52:29.935626] Final report is ready and dump to report folder!</span>
+2025-10-15 13:38:28,621 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:38:28.620612] serial port detected: COM5</span>
+2025-10-15 13:38:36,683 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:38:36.682657] Start testing...</span>
+2025-10-15 13:38:41,689 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:38:41.687994] test case: Modern_Standby</span>
+2025-10-15 13:59:04,160 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:59:04.160323] serial port detected: COM5</span>
+2025-10-15 13:59:14,016 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:59:14.015728] Start testing...</span>
+2025-10-15 13:59:14,017 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-15 13:59:14.017305] waiting for 10 sec...</span>
+2025-10-15 13:59:24,021 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-15 13:59:24.015581] Test Finish! generate final report...</span>
+2025-10-15 13:59:24,046 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-15 13:59:24.043508] Final report is ready and dump to report folder!</span>
+2025-10-16 11:51:47,138 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-16 11:51:47.137495] serial port detected: COM5</span>

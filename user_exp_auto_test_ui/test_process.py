@@ -23,6 +23,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from youtube_control import YoutubeControl
 import pygetwindow as gw
+from database_manager import Database_data
 
 
 class Power_States(Enum):
@@ -107,7 +108,11 @@ def load_basic_config(file_path: str) -> Basic_Config:
 
 
 def save_report(
-    config: Basic_Config, total_cycles: int, fail_times: int, error_message=""
+    config: Basic_Config,
+    data: Database_data,
+    total_cycles: int,
+    fail_times: int,
+    error_message="",
 ):
     wb = Workbook()
     ws = wb.active
@@ -120,26 +125,32 @@ def save_report(
     title_cell.font = Font(size=16, bold=True)
     title_cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    # Config Section
-    ws.append([])
-    ws.append(["Configuration Settings"])
-    ws["A3"].font = Font(size=14, bold=True)
-
-    row_start = ws.max_row + 1
-    for key, value in asdict(config).items():
-        if isinstance(value, Enum):
-            value = value.name
-        ws.append([key, str(value)])
-
     # Summary Section
     ws.append([])
     ws.append(["Test Summary"])
-    ws["A{}".format(ws.max_row)].font = Font(size=14, bold=True)
-
+    ws["A3"].font = Font(size=14, bold=True)
     ws.append(["Total Test Cycles", total_cycles])
     ws.append(["Pass Times", (total_cycles - fail_times)])
     ws.append(["Fail Times", fail_times])
     ws.append(["Error Message", error_message])
+
+    # Config Section
+    ws.append([])
+    ws.append(["Configuration Settings"])
+    ws["A9"].font = Font(size=14, bold=True)
+    row_start = 10
+    for key, value in asdict(config).items():
+        if isinstance(value, Enum):
+            value = value.name
+        ws.append([key, str(value)])
+        row_start += 1
+
+    # Database Section
+    ws.append([])
+    ws.append(["Database data"])
+    ws["A{}".format(row_start + 1)].font = Font(size=14, bold=True)
+    for key, value in asdict(data).items():
+        ws.append([key, str(value)])
 
     # Make it look cleaner
     for col in ["A", "B"]:
@@ -696,10 +707,11 @@ def serial_test(ser: serial.Serial):
         end = time.perf_counter()
         print(f"serial port trans time {(end - start)/2:.6f} seconds")
 
+
 def mouse_move_to_safe_place():
-    #move mouse to safe place (top-right) before clicking
+    # move mouse to safe place (top-right) before clicking
     screen_width, screen_height = pyautogui.size()
-    pyautogui.click(x=screen_width-10, y=10)
+    pyautogui.click(x=screen_width - 10, y=10)
 
 
 def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
@@ -755,6 +767,8 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
         # sleep_time_s=b_config.sleep_time_s,ser=ser)
 
         case Test_case.MS.value:
+            # move to safe place
+            mouse_move_to_safe_place()
             log_callback(f"go to MS states for {b_config.sleep_time_s} sec...", False)
             dut_states_init(
                 power_states=Power_States.go_to_s3,

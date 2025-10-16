@@ -2,35 +2,33 @@ apm: ''
 apm_period: ''
 audio_driver: 23.10.49561.1
 bt_driver: 23.165.0.3
-bt_interface: 'PCIe
-
-  '
+bt_interface: 'PCIe '
 cb_os_waiting_time: ''
 cb_period: ''
-cold_boot: ''
+cold_boot: N
 cpu: LNL
-cycles: ''
-date: ''
+cycles: 1
+date: 2025-10-15 13:59:24.022124
 device1: ''
 device1_brand: ''
-duration: ''
-fail_cycles: ''
+duration: 10
+fail_cycles: 0
 fix_bt_driver: ''
 fix_work_week: ''
-headset: ''
+headset: PLT Focus
 headset_brand: Dell
 headset_bt: ''
 hsd_id: ''
 ips_id: ''
 jira_id: ''
-keyboard: MX 3S
+keyboard: Keyboard_Filter_01
 keyboard_brand: Samsung
 keyboard_bt: ''
 keyboard_click_period: ''
 log_path: ''
 microsoft_teams: ''
-modern_standby: ''
-mouse: ''
+modern_standby: N
+mouse: HP 420/425 Programmable BT Mouse
 mouse_brand: Logitech
 mouse_bt: ''
 mouse_click_period: ''
@@ -47,23 +45,21 @@ platform_bios: 123.123.123
 platform_brand: HP
 platform_phase: PV
 power_type: DC
-result: ''
-s4: ''
+result: Pass
+s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: ''
-serial_num: ''
+scenario: Idle
+serial_num: '12345'
 speaker: ''
 speaker_brand: ''
 speaker_bt: ''
 swift_pair: ''
 urgent_level: P2
-warm_boot: ''
+warm_boot: N
 wb_os_waiting_time: ''
 wb_period: ''
-wifi_driver: '23.140.0.5
-
-  '
+wifi_driver: 23.140.0.5
 wlan: BE211
 wlan_phase: B0
 wrt_preset: Enif

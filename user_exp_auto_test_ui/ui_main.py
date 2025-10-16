@@ -46,7 +46,7 @@ import latency_analyze as la
 from ui_database_setting import DataBase_Data_setting
 import database_manager
 from database_manager import Database_data
-import pyautogui
+import time
 
 
 class LogSignal(QObject):
@@ -54,7 +54,7 @@ class LogSignal(QObject):
     error = pyqtSignal(str)
     cell = pyqtSignal(int, int, str)
     process = pyqtSignal(int, int)
-    save_report = pyqtSignal(int, int)
+    save_report = pyqtSignal(int, int, int)
     enable = pyqtSignal()
     set_stutas = pyqtSignal(int, int)
 
@@ -472,10 +472,22 @@ class BTTestApp(QWidget):
         # setting the power states
         self.power_states_clicking = power_states
 
-    def save_report(self, test_cycle: int, test_fail_times: int):
+    def save_report(self, test_cycle: int, test_fail_times: int, duration: int):
+        # update database data
+        self.database_data.date = datetime.now()
+        self.database_data.scenario = self.b_config.task_schedule
+        self.database_data.fail_cycles = test_fail_times
+        self.database_data.cycles = test_cycle
+        self.database_data.result = "Pass" if not test_fail_times else "Fail"
+        self.database_data.duration = duration
+
         # save_report after test finish
         test_process.save_report(
-            self.b_config, test_cycle, test_fail_times, self.error_message.toPlainText()
+            self.b_config,
+            self.database_data,
+            test_cycle,
+            test_fail_times,
+            self.error_message.toPlainText(),
         )
 
     def set_stutas(self, test_cycle: int, test_fail_times: int):
@@ -512,6 +524,8 @@ class BTTestApp(QWidget):
             self.label_mouse_latency.setText(f"{mouse_aver} ms")
         else:
             self.label_mouse_latency.setText("-")
+
+        #
 
     def test_case_setting(self, test_case: str):
         # setting the test case
@@ -553,6 +567,7 @@ class BTTestApp(QWidget):
             self.log_signal.process.emit(0, 0)
             test_fail_flag = False
             test_fail_continue_times = 0
+            start = time.perf_counter()
             for cycle in range(self.b_config.test_times):
                 row = 0
                 for test_case in self.task_schedule:
@@ -601,8 +616,11 @@ class BTTestApp(QWidget):
                     )
                     break
 
+            end = time.perf_counter()
             self.log_signal.log.emit("Test Finish! generate final report...", True)
-            self.log_signal.save_report.emit(test_cycle + 1, test_fail_times)
+            self.log_signal.save_report.emit(
+                test_cycle + 1, test_fail_times, int(end - start)
+            )
             self.log_signal.log.emit(
                 "Final report is ready and dump to report folder!", True
             )
@@ -656,6 +674,10 @@ class BTTestApp(QWidget):
         self.led_mouse.setText(mouse)
         self.led_keyboard.setText(keyboard)
         self.b_config.headset = headset
+        # database
+        self.database_data.mouse = mouse
+        self.database_data.keyboard = keyboard
+        self.database_data.headset = headset
 
     def advance_setting(self):
         self.settings_window = AdvanceSetting(self.b_config)

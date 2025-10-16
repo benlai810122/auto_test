@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QDate
 from database_manager import Database_data
-import database_manager
+import database_manager as dbm
 from PyQt5.QtCore import pyqtSignal
 import requests
 
@@ -75,6 +75,7 @@ class DataBase_Data_setting(QWidget):
         # Store widgets
         self.widgets = {}
         self.codes = []
+        self.required_datas = []
         for _, row in df.iterrows():
             field = str(row["Name"])
             code = str(row["DB_CODE"])
@@ -90,7 +91,13 @@ class DataBase_Data_setting(QWidget):
             if generate_ui == "X":
                 continue  # skip this field
 
-            label_text = field + (" *" if required else "")
+            if required:
+                label_text = field + " *"
+                self.required_datas.append(code) 
+            else:
+                label_text = field 
+
+
             # Pick widget type
             if choices and choices != "nan":
                 widget = QComboBox()
@@ -136,6 +143,7 @@ class DataBase_Data_setting(QWidget):
                 self.widgets[code].setText(getattr(database_data, code))
 
     def save_data(self):
+        #database_data update
         for code in self.codes:
             if type(self.widgets[code]) == QComboBox:
                 value = self.widgets[code].currentText()
@@ -146,14 +154,18 @@ class DataBase_Data_setting(QWidget):
             else:
                 value = self.widgets[code].text()
                 setattr(self.database_data, code, value)
-
-        self.setting_changed.emit(self.database_data)
-        self.close()
-
+        # check the required item have value
+        if dbm.database_data_checking(self.database_data, self.required_datas):
+            self.setting_changed.emit(self.database_data)
+            self.close()
+        else: 
+            QMessageBox.warning(self,"Warning!","Please fill all required field!")
+    
+   
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    data = database_manager.load_database_data("database_data.yaml")
+    data = dbm.load_database_data("database_data.yaml")
     window = DataBase_Data_setting("database_data.xlsx", data)  # <--- your file path
     window.show()
     sys.exit(app.exec_())
