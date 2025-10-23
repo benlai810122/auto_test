@@ -1,4 +1,4 @@
-apm: ''
+apm: N
 apm_period: ''
 audio_driver: 23.10.49561.1
 bt_driver: 23.165.0.3
@@ -8,25 +8,25 @@ cb_period: ''
 cold_boot: N
 cpu: LNL
 cycles: 1
-date: 2025-10-15 13:59:24.022124
+date: 2025-10-23 11:48:57.189239
 device1: ''
 device1_brand: ''
-duration: 10
-fail_cycles: 0
+duration: 70
+fail_cycles: 1
 fix_bt_driver: ''
 fix_work_week: ''
-headset: PLT Focus
+headset: None
 headset_brand: Dell
 headset_bt: ''
 hsd_id: ''
 ips_id: ''
 jira_id: ''
-keyboard: Keyboard_Filter_01
+keyboard: None
 keyboard_brand: Samsung
 keyboard_bt: ''
 keyboard_click_period: ''
 log_path: ''
-microsoft_teams: ''
+microsoft_teams: N
 modern_standby: N
 mouse: HP 420/425 Programmable BT Mouse
 mouse_brand: Logitech
@@ -36,7 +36,7 @@ ms_os_waiting_time: ''
 ms_period: ''
 msft_teams_version: 25153.1010.3727.5483
 op_name: Leo
-opp: ''
+opp: N
 os_version: '22631.5472'
 phone: ''
 phone_brand: ''
@@ -45,16 +45,16 @@ platform_bios: 123.123.123
 platform_brand: HP
 platform_phase: PV
 power_type: DC
-result: Pass
+result: Fail
 s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: Idle
+scenario: Idle,Mouse_Function_Check
 serial_num: '12345'
 speaker: ''
 speaker_brand: ''
 speaker_bt: ''
-swift_pair: ''
+swift_pair: N
 urgent_level: P2
 warm_boot: N
 wb_os_waiting_time: ''

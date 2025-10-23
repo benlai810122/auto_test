@@ -47,7 +47,7 @@ from ui_database_setting import DataBase_Data_setting
 import database_manager
 from database_manager import Database_data
 import time
-
+import pyautogui
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -73,7 +73,8 @@ class BTTestApp(QWidget):
         self.b_config = b_config
         self.database_data = database_data
         self.setWindowTitle("Intel User Experience Auto Test")
-        self.setGeometry(100, 100, 1600, 1200)
+        screen_width, screen_height = pyautogui.size()
+        self.setGeometry(100, 100, int(screen_width*0.7), int(screen_height*0.7))
         self.init_ui()
         self.bt_device_check()
         self.serial_port_check()
@@ -474,12 +475,13 @@ class BTTestApp(QWidget):
 
     def save_report(self, test_cycle: int, test_fail_times: int, duration: int):
         # update database data
-        self.database_data.date = datetime.now()
         self.database_data.scenario = self.b_config.task_schedule
         self.database_data.fail_cycles = test_fail_times
         self.database_data.cycles = test_cycle
         self.database_data.result = "Pass" if not test_fail_times else "Fail"
         self.database_data.duration = duration
+        self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
+        self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
 
         # save_report after test finish
         test_process.save_report(
@@ -631,12 +633,14 @@ class BTTestApp(QWidget):
             self.thread_stop_flag = False
             self.error_message.setPlainText("")
             self.log_output.setPlainText("")
+            self.database_data.date = datetime.now()
             self.test_thread = threading.Thread(target=_run_test_process_in_background)
             self.test_thread.start()
             self.save_config()
             self.btn_start.setText("Stop")
             self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
             self.disable_all_item()
+            self.b_config.report_path = test_process.create_report_folder()
             self.status_label.set_state("RUNNING")
 
         elif self.btn_start.text() == "Stop":

@@ -99,6 +99,7 @@ class Basic_Config:
     youtube_link: str = "https://www.youtube.com/watch?v=w9k7eWD0ik8"
     mouse_latency_threshold: int = 80
     keyboard_latency_threshold: int = 100
+    report_path:str = ""
 
 
 def load_basic_config(file_path: str) -> Basic_Config:
@@ -107,12 +108,25 @@ def load_basic_config(file_path: str) -> Basic_Config:
     return Basic_Config(**data)
 
 
+def create_report_folder(base_path="report") -> str:
+    # Folder name with current date
+    date_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+    folder_path = os.path.join(base_path, f"Report_{date_str}")
+
+    # Create folder if it doesn't exist
+    os.makedirs(folder_path, exist_ok=True)
+    print(f"Report folder created at: {folder_path}")
+
+    return folder_path
+
+
 def save_report(
     config: Basic_Config,
     data: Database_data,
     total_cycles: int,
     fail_times: int,
     error_message="",
+    
 ):
     wb = Workbook()
     ws = wb.active
@@ -158,7 +172,7 @@ def save_report(
 
     current_time = datetime.now()
     timestamp_str = current_time.strftime("%Y%m%d_%H%M%S")
-    filename = f"report\\test_report_{timestamp_str}.xlsx"
+    filename = os.path.join(config.report_path,f"test_report_{timestamp_str}.xlsx")
 
     wb.save(filename)
     print(f"✅ Report saved as {filename}")
@@ -399,7 +413,7 @@ def headset_output_test(
         if test_time > b_config.test_retry_times:
             log_callback("***Headset output function have some issue!***", False)
             log_callback("Dump WRT log...", False)
-            WRTController.dump_wrt_log()
+            WRTController.dump_wrt_log(log_path=b_config.report_path)
             return False
         test_time += 1
     log_callback("Headset output function test finish", False)
@@ -419,7 +433,8 @@ def headset_input_test(
         res_input = ad_Controller.audio_detect()
         if test_time > b_config.test_retry_times:
             log_callback("***Headset input function have some issue!***", False)
-            WRTController.dump_wrt_log()
+            log_callback("Dump WRT log...", False)
+            WRTController.dump_wrt_log(log_path=b_config.report_path)
             break
         test_time += 1
     log_callback("Headset input function test finish", False)
@@ -801,7 +816,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             if not res:
                 log_callback("mouse function test fail!", False)
                 log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log()
+                WRTController.dump_wrt_log(log_path=b_config.report_path)
 
             time.sleep(5)
 
@@ -816,7 +831,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             if not res:
                 log_callback("keyboard function test fail!", False)
                 log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log()
+                WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
 
         case Test_case.Mouse_random.value:
@@ -832,7 +847,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             if not res:
                 log_callback("mouse random test fail!", False)
                 log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log()
+                WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
 
         case Test_case.Keyboard_random.value:
@@ -846,7 +861,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             if not res:
                 log_callback("keyboard random test fail!", False)
                 log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log()
+                WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
 
         case Test_case.Headset_init.value:
@@ -864,7 +879,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                     False,
                 )
                 log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log()
+                WRTController.dump_wrt_log(log_path=b_config.report_path)
             else:
                 log_callback("Turn on the headset successfully, connected", False)
             time.sleep(5)
