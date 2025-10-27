@@ -57,8 +57,9 @@ void loop() {
 
 void test_start()
 {
-  //CMD_servo (for headset power control)
+  
   int mode = inputBuffer[0];
+  //CMD_servo (for headset power control)
   if (mode == '0')
   {
     mouse_click(myservo_mic_power,0,51,1000);

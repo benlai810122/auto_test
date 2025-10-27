@@ -25,18 +25,17 @@ class WRTController:
             if result.returncode != 0:
                 logger.error(f"'dump_collect' command failed: {result.stderr.strip()}")
                 return
-            print(f"result = {result.stdout}")
-            #copy log to the specific log path
-            pattern = (
-            r"Collected data folder:\s*C:[\\/]+OSData[\\/]+SystemData[\\/]+Temp[\\/]+WRT2G[\\/]+Log[\\/]+"
-            r"([^\\/]+)"
-            )
-            file_name = re.search(pattern, result.stdout).group(1).strip().strip('\'"')
-            dis_path = os.path.join(r"C:\OSData\SystemData\Temp\WRT2G\Log",file_name)
+            
+            log_root = r"C:\OSData\SystemData\Temp\WRT2G\Log"
+            all_dirs = [os.path.join(log_root, d) for d in os.listdir(log_root)
+                    if os.path.isdir(os.path.join(log_root, d))]
+            if not len(all_dirs):
+                logger.error("No additional directories found to copy.")
+                return    
+            dir_path = max(all_dirs, key=os.path.getmtime)
             current_path = os.path.dirname(os.path.abspath(__file__))
-            log_path = os.path.join(current_path,log_path,file_name)
-            print(f"dis_path = {dis_path}, log_path = {log_path}")
-            shutil.copytree(dis_path, log_path)
+            log_path = os.path.join(current_path,log_path,os.path.basename(dir_path))
+            shutil.copytree(dir_path,log_path)
             #generate report
             result = subprocess.run(
                 r'"C:\Program Files\Intel\WRT2\cde.exe" generate_report',
@@ -55,11 +54,11 @@ class WRTController:
                 return
         except Exception as e:
             logger.error(f"Failed to execute command: {e}")
-            return ""
+            return 
         
         logger.info("Command executed successfully. Parsing output...")
 
 
 
 if __name__ == "__main__":
-    WRTController.dump_wrt_log(log_path = "Report_20251016_171311")
+    WRTController.dump_wrt_log(log_path = "report")

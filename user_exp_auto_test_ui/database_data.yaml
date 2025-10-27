@@ -8,10 +8,10 @@ cb_period: ''
 cold_boot: N
 cpu: LNL
 cycles: 1
-date: 2025-10-23 11:48:57.189239
+date: 2025-10-27 17:23:45.767036
 device1: ''
 device1_brand: ''
-duration: 70
+duration: 58
 fail_cycles: 1
 fix_bt_driver: ''
 fix_work_week: ''
@@ -49,7 +49,7 @@ result: Fail
 s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: Idle,Mouse_Function_Check
+scenario: Mouse_Function_Check
 serial_num: '12345'
 speaker: ''
 speaker_brand: ''

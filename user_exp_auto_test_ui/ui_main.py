@@ -705,17 +705,20 @@ class BTTestApp(QWidget):
     def ui_renew(self):
         self.slider_test_times.setValue(self.b_config.test_times)
         # task schedule init
-        self.task_schedule = self.b_config.task_schedule.split(",")
-        for test_item in self.task_schedule:
-            if test_item:
-                item_case = QStandardItem(test_item)
-                item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
+        if self.b_config.task_schedule != "":
+            self.task_schedule = self.b_config.task_schedule.split(",")
+            for test_item in self.task_schedule:
+                if test_item:
+                    item_case = QStandardItem(test_item)
+                    item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
 
-                state = QStandardItem("")
-                state.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
+                    state = QStandardItem("")
+                    state.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
 
-                new_row = [item_case, state]
-                self.task_schedule_model.appendRow(new_row)
+                    new_row = [item_case, state]
+                    self.task_schedule_model.appendRow(new_row)
+        else:
+            self.task_schedule.clear()
 
     def update_slider_value(self, value_name, value):
         match value_name:

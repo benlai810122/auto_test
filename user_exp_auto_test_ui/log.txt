@@ -27151,3 +27151,53 @@ TypeError: '_thread._ThreadHandle' object is not callable
 2025-10-23 14:56:47,633 [ERROR] <ui_main.py> error_to_ui() [2025-10-23 14:56:47.633302] out of maxium continue fail range, stop testing!
 2025-10-23 14:56:47,633 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-23 14:56:47.633302] Test Finish! generate final report...</span>
 2025-10-23 14:56:47,656 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-23 14:56:47.656614] Final report is ready and dump to report folder!</span>
+2025-10-27 13:56:24,950 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:56:24.950651] serial port detected: COM4</span>
+2025-10-27 13:57:01,722 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:57:01.722699] serial port detected: COM4</span>
+2025-10-27 13:57:32,255 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:57:32.255169] serial port detected: COM4</span>
+2025-10-27 13:57:54,083 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:57:54.083924] serial port detected: COM4</span>
+2025-10-27 13:58:06,436 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:58:06.435399] Start testing...</span>
+2025-10-27 13:58:11,447 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:58:11.447406] test case: </span>
+2025-10-27 13:58:11,449 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:58:11.447406] Not match any test case, please check!</span>
+2025-10-27 13:58:11,452 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 13:58:11.449568] test case:  item:1 cycles:0
+2025-10-27 13:58:11,455 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 13:58:11.454489] waiting for 10 sec...</span>
+2025-10-27 13:58:21,449 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 13:58:21.449325] Stop testing!</span>
+2025-10-27 13:58:21,449 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 13:58:21.449325] out of maxium continue fail range, stop testing!
+2025-10-27 13:58:21,453 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 13:58:21.449325] Test Finish! generate final report...</span>
+2025-10-27 13:58:21,488 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 13:58:21.487834] Final report is ready and dump to report folder!</span>
+2025-10-27 14:05:10,198 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 14:05:10.198671] serial port detected: COM4</span>
+2025-10-27 14:05:26,564 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 14:05:26.564518] serial port detected: COM4</span>
+2025-10-27 14:05:32,717 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 14:05:32.716266] Start testing...</span>
+2025-10-27 14:05:32,717 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 14:05:32.717280] waiting for 10 sec...</span>
+2025-10-27 14:05:42,714 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 14:05:42.714584] Test Finish! generate final report...</span>
+2025-10-27 14:05:42,745 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 14:05:42.743956] Final report is ready and dump to report folder!</span>
+2025-10-27 17:13:50,916 [INFO] <wrt_controller.py> dump_wrt_log() Starting 'cde dump_collect' to gather WRT logs.
+2025-10-27 17:14:52,292 [INFO] <wrt_controller.py> dump_wrt_log() Command executed successfully. Parsing output...
+2025-10-27 17:15:24,054 [INFO] <wrt_controller.py> dump_wrt_log() Starting 'cde dump_collect' to gather WRT logs.
+2025-10-27 17:16:04,414 [INFO] <wrt_controller.py> dump_wrt_log() Command executed successfully. Parsing output...
+2025-10-27 17:20:52,263 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:20:52.263602] serial port detected: COM4</span>
+2025-10-27 17:21:02,439 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:21:02.439486] Start testing...</span>
+2025-10-27 17:21:02,450 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:21:02.449693] Serial port connection error:could not open port 'COM4': PermissionError(13, 'Access is denied.', None, 5)</span>
+2025-10-27 17:21:02,452 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:21:02.450695] test case: Mouse_Function_Check item:1 cycles:0
+2025-10-27 17:21:02,456 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:21:02.452860] Stop testing!</span>
+2025-10-27 17:21:02,457 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:21:02.456181] out of maxium continue fail range, stop testing!
+2025-10-27 17:21:02,459 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:21:02.458186] Test Finish! generate final report...</span>
+2025-10-27 17:21:02,482 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:21:02.482353] Final report is ready and dump to report folder!</span>
+2025-10-27 17:22:08,228 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:22:08.228752] serial port detected: COM4</span>
+2025-10-27 17:22:12,213 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:22:12.212358] Start testing...</span>
+2025-10-27 17:22:12,230 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:22:12.230376] Serial port connection error:could not open port 'COM4': PermissionError(13, 'Access is denied.', None, 5)</span>
+2025-10-27 17:22:12,232 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:22:12.231352] test case: Mouse_Function_Check item:1 cycles:0
+2025-10-27 17:22:12,235 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:22:12.233353] Stop testing!</span>
+2025-10-27 17:22:12,236 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:22:12.235359] out of maxium continue fail range, stop testing!
+2025-10-27 17:22:12,237 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:22:12.236355] Test Finish! generate final report...</span>
+2025-10-27 17:22:12,261 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:22:12.260987] Final report is ready and dump to report folder!</span>
+2025-10-27 17:23:45,771 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:23:45.770037] Start testing...</span>
+2025-10-27 17:23:50,774 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:23:50.774933] test case: Mouse_Function_Check</span>
+2025-10-27 17:24:07,179 [INFO] <wrt_controller.py> dump_wrt_log() Starting 'cde dump_collect' to gather WRT logs.
+2025-10-27 17:24:07,208 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:24:07.208017] mouse function test fail!</span>
+2025-10-27 17:24:07,209 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-10-27 17:24:07.209018] dump wrt log...</span>
+2025-10-27 17:24:39,026 [INFO] <wrt_controller.py> dump_wrt_log() Command executed successfully. Parsing output...
+2025-10-27 17:24:44,032 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:24:44.032312] test case: Mouse_Function_Check item:1 cycles:0
+2025-10-27 17:24:44,034 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:24:44.033819] Stop testing!</span>
+2025-10-27 17:24:44,034 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:24:44.034604] out of maxium continue fail range, stop testing!
+2025-10-27 17:24:44,034 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:24:44.034604] Test Finish! generate final report...</span>
+2025-10-27 17:24:44,058 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:24:44.058082] Final report is ready and dump to report folder!</span>
