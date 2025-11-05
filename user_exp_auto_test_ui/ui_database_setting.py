@@ -140,7 +140,14 @@ class DataBase_Data_setting(QWidget):
                 value = int(getattr(database_data, code))
                 self.widgets[code].setValue(value)
             else:
-                self.widgets[code].setText(getattr(database_data, code))
+                if code == 'serial_num':
+                    self.widgets[code].setText(dbm.get_serial_number())
+                    self.widgets[code].setDisabled(True)
+                else:
+                    self.widgets[code].setText(getattr(database_data, code))
+
+        
+        
 
     def save_data(self):
         #database_data update
@@ -160,6 +167,7 @@ class DataBase_Data_setting(QWidget):
             self.close()
         else: 
             QMessageBox.warning(self,"Warning!","Please fill all required field!")
+
     
    
 

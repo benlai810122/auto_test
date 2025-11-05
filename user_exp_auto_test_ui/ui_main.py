@@ -72,7 +72,7 @@ class BTTestApp(QWidget):
         super().__init__()
         self.b_config = b_config
         self.database_data = database_data
-        self.setWindowTitle("Intel User Experience Auto Test")
+        self.setWindowTitle("Intel User Experience Auto Test ver.20251105")
         screen_width, screen_height = pyautogui.size()
         self.setGeometry(100, 100, int(screen_width*0.7), int(screen_height*0.7))
         self.init_ui()

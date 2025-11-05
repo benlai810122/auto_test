@@ -2,8 +2,8 @@
 from dataclasses import dataclass, asdict
 import yaml
 import requests
-
-
+from utils import Utils
+import re
 @dataclass
 class Database_data:
     op_name: str = "Tony"
@@ -95,3 +95,19 @@ def test_create_report(payload)->int:
     print("Response:", response.json())
     assert response.status_code == 200
     return response.json()["id"]
+
+
+def get_serial_number()->str:
+    serial = ""
+    cmd = 'Get-CimInstance Win32_BIOS | Select-Object SerialNumber'
+    result = Utils.run_sync_ps_cmd(cmd)
+    match = re.search(r"SerialNumber\s*-+\s*([A-Z0-9]+)", result)
+    if match:
+        serial = match.group(1)
+    print(f"Serial numble = {serial}")
+    return serial
+
+
+if __name__ == '__main__':
+    get_serial_number()
+

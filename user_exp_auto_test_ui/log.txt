@@ -27201,3 +27201,7 @@ TypeError: '_thread._ThreadHandle' object is not callable
 2025-10-27 17:24:44,034 [ERROR] <ui_main.py> error_to_ui() [2025-10-27 17:24:44.034604] out of maxium continue fail range, stop testing!
 2025-10-27 17:24:44,034 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:24:44.034604] Test Finish! generate final report...</span>
 2025-10-27 17:24:44,058 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-10-27 17:24:44.058082] Final report is ready and dump to report folder!</span>
+2025-11-05 11:33:14,988 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:33:14.986010] please insert the arduino board!</span>
+2025-11-05 11:34:15,014 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:34:15.014796] please insert the arduino board!</span>
+2025-11-05 11:34:23,530 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:34:23.530279] please insert the arduino board!</span>
+2025-11-05 11:36:40,468 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:36:40.468331] please insert the arduino board!</span>

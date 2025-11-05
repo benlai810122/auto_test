@@ -1,5 +1,5 @@
 ENV_source: 3
-com: COM4
+com: ''
 continue_fail_limit: 1
 headset: None
 headset_setting: 0
