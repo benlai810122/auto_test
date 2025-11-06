@@ -125,6 +125,9 @@ def save_report(
     data: Database_data,
     total_cycles: int,
     fail_times: int,
+    mouse_latency:str,
+    keyboard_latency:str,
+    earliest_error:str,
     error_message="",
     
 ):
@@ -146,13 +149,16 @@ def save_report(
     ws.append(["Total Test Cycles", total_cycles])
     ws.append(["Pass Times", (total_cycles - fail_times)])
     ws.append(["Fail Times", fail_times])
+    ws.append(["mouse latency", mouse_latency])
+    ws.append(["kdeyboard latency", keyboard_latency])
+    ws.append(["Earliest errot ", earliest_error])
     ws.append(["Error Message", error_message])
 
     # Config Section
     ws.append([])
     ws.append(["Configuration Settings"])
-    ws["A9"].font = Font(size=14, bold=True)
-    row_start = 10
+    ws["A12"].font = Font(size=14, bold=True)
+    row_start = 13
     for key, value in asdict(config).items():
         if isinstance(value, Enum):
             value = value.name

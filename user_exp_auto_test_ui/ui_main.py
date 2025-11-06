@@ -489,7 +489,10 @@ class BTTestApp(QWidget):
             self.database_data,
             test_cycle,
             test_fail_times,
-            self.error_message.toPlainText(),
+            self.label_mouse_latency.text(),
+            self.label_keyboard_latency.text(),
+            self.label_first_fail.text(),
+            self.error_message.toPlainText()
         )
 
     def set_stutas(self, test_cycle: int, test_fail_times: int):

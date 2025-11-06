@@ -27205,3 +27205,8 @@ TypeError: '_thread._ThreadHandle' object is not callable
 2025-11-05 11:34:15,014 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:34:15.014796] please insert the arduino board!</span>
 2025-11-05 11:34:23,530 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:34:23.530279] please insert the arduino board!</span>
 2025-11-05 11:36:40,468 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-05 11:36:40.468331] please insert the arduino board!</span>
+2025-11-06 15:34:29,062 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-06 15:34:29.062223] please insert the arduino board!</span>
+2025-11-06 15:34:39,528 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-06 15:34:39.528338] Start testing...</span>
+2025-11-06 15:34:39,532 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:normal; color:black;">[2025-11-06 15:34:39.531944] waiting for 10 sec...</span>
+2025-11-06 15:34:49,520 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-11-06 15:34:49.520348] Test Finish! generate final report...</span>
+2025-11-06 15:34:49,555 [INFO] <ui_main.py> log_to_ui() <span style="font-weight:bold; color:navy;">[2025-11-06 15:34:49.553023] Final report is ready and dump to report folder!</span>

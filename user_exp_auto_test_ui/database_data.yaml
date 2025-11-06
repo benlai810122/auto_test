@@ -8,11 +8,11 @@ cb_period: ''
 cold_boot: N
 cpu: LNL
 cycles: 1
-date: 2025-10-27 17:23:45.767036
+date: 2025-11-06 15:34:39.517982
 device1: ''
 device1_brand: ''
-duration: 58
-fail_cycles: 1
+duration: 10
+fail_cycles: 0
 fix_bt_driver: ''
 fix_work_week: ''
 headset: None
@@ -45,12 +45,12 @@ platform_bios: 123.123.123
 platform_brand: HP
 platform_phase: PV
 power_type: DC
-result: Fail
+result: Pass
 s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: Mouse_Function_Check
-serial_num: '12345'
+scenario: Idle
+serial_num: J3F87M3
 speaker: ''
 speaker_brand: ''
 speaker_bt: ''
