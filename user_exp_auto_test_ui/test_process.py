@@ -641,7 +641,7 @@ def mouse_latency(
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) - 0.5 - 0.002
+            g_latency = (end - start) - 0.5 - 0.168 - 0.002
             return False  # stop listener
 
     latency_list = []
@@ -685,7 +685,7 @@ def keyboard_latency(
         global g_latency
         end = time.perf_counter()
         # minus the servo motor moving time
-        g_latency = (end - start) - 0.166 - 0.5
+        g_latency = (end - start) - 0.5 - 0.168 - 0.002
         return False  # stop listener
 
     latency_list = []

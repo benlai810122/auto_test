@@ -6,7 +6,7 @@ headset_setting: 0
 keyboard_latency_threshold: 100
 mouse_latency_threshold: 1000
 output_source_play_time_s: 20
-report_path: report\Report_20251202_105048
+report_path: report\Report_20251202_105731
 sleep_time_s: 20
 target_port_desc: USB-SERIAL CH340
 task_schedule: Mouse_Latency_Test
