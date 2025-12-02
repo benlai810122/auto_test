@@ -1,15 +1,15 @@
 ENV_source: 3
-com: ''
+com: COM5
 continue_fail_limit: 1
 headset: None
 headset_setting: 0
 keyboard_latency_threshold: 100
-mouse_latency_threshold: 80
+mouse_latency_threshold: 1000
 output_source_play_time_s: 20
-report_path: report\Report_20251106_153439
+report_path: report\Report_20251202_105048
 sleep_time_s: 20
 target_port_desc: USB-SERIAL CH340
-task_schedule: Idle
+task_schedule: Mouse_Latency_Test
 teams_url: https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjAxN2ZmNDEtNzgwMy00N2Y3LWJlZWEtYjE0ZDg3ZGY2Njcy%40thread.v2/0?context=%7b%22Tid%22%3a%224d5ee319-c659-429d-bc2f-71fd32fb7d9f%22%2c%22Oid%22%3a%22434e345a-de7c-46e5-ac98-bcc931a80aaa%22%7d
 test_retry_times: 1
 test_times: 1

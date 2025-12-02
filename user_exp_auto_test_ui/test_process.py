@@ -641,7 +641,7 @@ def mouse_latency(
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) - 0.173 - 0.5
+            g_latency = (end - start) - 0.5 - 0.002
             return False  # stop listener
 
     latency_list = []
@@ -920,7 +920,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
 
             res = mouse_latency(
                 ser=ser,
-                threshold=80,
+                threshold=b_config.mouse_latency_threshold,
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
@@ -928,7 +928,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
         case Test_case.keyboard_latency.value:
             res = keyboard_latency(
                 ser=ser,
-                threshold=100,
+                threshold=b_config.keyboard_latency_threshold,
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )

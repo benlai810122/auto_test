@@ -300,7 +300,11 @@ class BTTestApp(QWidget):
         self.task_schedule_group = QGroupBox("Task schedule")
         task_schedule_layout = QVBoxLayout()
 
-        task_setting_laylout = QHBoxLayout()
+        task_test_chose_layout = QVBoxLayout()
+        #test--> times
+        self.ck_btn_times = QRadioButton("")
+        self.ck_btn_times.clicked.connect(self.test_times_hours_chose)
+        task_test_times_laylout = QHBoxLayout()
         self.lab_test_times = QLabel("Test times:")
         self.value_tts = QLabel("1")  # Default value
         self.value_tts.setAlignment(Qt.AlignCenter)
@@ -314,10 +318,36 @@ class BTTestApp(QWidget):
         self.slider_test_times.valueChanged.connect(
             partial(self.update_slider_value, "test_times")
         )
+        task_test_times_laylout.addWidget(self.ck_btn_times)
+        task_test_times_laylout.addWidget(self.lab_test_times)
+        task_test_times_laylout.addWidget(self.slider_test_times)
+        task_test_times_laylout.addWidget(self.value_tts)
+        
+        #test--> hours
+        self.ck_btn_hours = QRadioButton("")
+        self.ck_btn_hours.clicked.connect(self.test_times_hours_chose)
+        task_test_hours_laylout = QHBoxLayout()
+        self.lab_test_hours = QLabel("Test hours:")
+        self.value_ths = QLabel("1")  # Default value
+        self.value_ths.setAlignment(Qt.AlignCenter)
+        self.value_ths.setStyleSheet("font-size: 16px;")
+        self.slider_test_hours = QSlider(Qt.Horizontal)
+        self.slider_test_hours.setMinimum(1)
+        self.slider_test_hours.setMaximum(1000)
+        self.slider_test_hours.setValue(1)
+        self.slider_test_hours.setTickInterval(1)
+        self.slider_test_hours.setTickPosition(QSlider.TicksBelow)
+        self.slider_test_hours.valueChanged.connect(
+            partial(self.update_slider_value, "test_hours")
+        )
+        task_test_hours_laylout.addWidget(self.ck_btn_hours)
+        task_test_hours_laylout.addWidget(self.lab_test_hours)
+        task_test_hours_laylout.addWidget(self.slider_test_hours)
+        task_test_hours_laylout.addWidget(self.value_ths)
 
-        task_setting_laylout.addWidget(self.lab_test_times)
-        task_setting_laylout.addWidget(self.slider_test_times)
-        task_setting_laylout.addWidget(self.value_tts)
+        task_test_chose_layout.addLayout(task_test_times_laylout)
+        task_test_chose_layout.addLayout(task_test_hours_laylout)
+
 
         self.lab_test_process = QLabel(
             "Test Cycles:             Pass:         Fail:    "
@@ -349,7 +379,7 @@ class BTTestApp(QWidget):
 
         table_view.setAlternatingRowColors(True)
         table_view.setShowGrid(False)
-        task_schedule_layout.addLayout(task_setting_laylout)
+        task_schedule_layout.addLayout(task_test_chose_layout)
         task_schedule_layout.addWidget(self.lab_test_process)
         task_schedule_layout.addWidget(table_view)
         task_schedule_layout.addWidget(self.btn_delet)
@@ -469,6 +499,15 @@ class BTTestApp(QWidget):
                     self.task_schedule_model.removeRow(row_count - 1)
                     self.task_schedule.pop()
 
+    def test_times_hours_chose(self):
+        if self.ck_btn_times.isChecked():
+            self.slider_test_hours.setDisabled(True)
+            self.slider_test_times.setDisabled(False)
+        else:
+            self.slider_test_times.setDisabled(True)
+            self.slider_test_hours.setDisabled(False)
+        
+
     def power_states_setting(self, power_states: str):
         # setting the power states
         self.power_states_clicking = power_states
@@ -503,8 +542,8 @@ class BTTestApp(QWidget):
         else:
             self.status_label.set_state("PASS")
 
-        # summary group
-        total_test_time = f"{test_cycle}/{self.b_config.test_times} cycles"
+     
+        total_test_time = f"{test_cycle} cycles"
         pass_times = f"{test_cycle-test_fail_times}"
         fail_times = f"{test_fail_times}"
 
@@ -530,7 +569,7 @@ class BTTestApp(QWidget):
         else:
             self.label_mouse_latency.setText("-")
 
-        #
+      
 
     def test_case_setting(self, test_case: str):
         # setting the test case
@@ -572,8 +611,15 @@ class BTTestApp(QWidget):
             self.log_signal.process.emit(0, 0)
             test_fail_flag = False
             test_fail_continue_times = 0
-            start = time.perf_counter()
-            for cycle in range(self.b_config.test_times):
+            start,process = time.perf_counter(), time.perf_counter()
+            while True:
+                
+                if self.ck_btn_times.isChecked():
+                    if test_cycle >= self.b_config.test_times:
+                        break
+                else:
+                    if int(process - start) >= self.b_config.test_times*3600:
+                        break
                 row = 0
                 for test_case in self.task_schedule:
                     if self.thread_stop_flag:
@@ -586,15 +632,14 @@ class BTTestApp(QWidget):
                         self.log_signal.cell.emit(row, 1, "Pass")
                     else:
                         error_message = (
-                            f"test case: {test_case} item:{row+1} cycles:{cycle}"
+                            f"test case: {test_case} item:{row+1} cycles:{test_cycle}"
                         )
                         self.log_signal.cell.emit(row, 1, "Fail")
                         self.log_signal.error.emit(error_message)
                         test_fail_flag = True
                     row += 1
-
-                test_cycle = cycle
-
+                test_cycle+= 1
+                process = time.perf_counter()
                 if test_fail_flag:
                     test_fail_continue_times += 1
                     test_fail_times += 1
@@ -603,7 +648,7 @@ class BTTestApp(QWidget):
                     test_fail_continue_times = 0
 
                 # update process lab
-                self.log_signal.process.emit(cycle + 1, test_fail_times)
+                self.log_signal.process.emit(test_cycle, test_fail_times)
 
                 # renew the status for another run:
                 for i in range(row):
@@ -622,14 +667,19 @@ class BTTestApp(QWidget):
                     break
 
             end = time.perf_counter()
+            
+            #update UI after test
+            self.log_signal.set_stutas.emit(test_cycle, test_fail_times)
+
+            #dump log aftet test
             self.log_signal.log.emit("Test Finish! generate final report...", True)
             self.log_signal.save_report.emit(
-                test_cycle + 1, test_fail_times, int(end - start)
+                test_cycle, test_fail_times, int(end - start)
             )
             self.log_signal.log.emit(
                 "Final report is ready and dump to report folder!", True
             )
-            self.log_signal.set_stutas.emit(test_cycle + 1, test_fail_times)
+            
             self.log_signal.enable.emit()
 
         if self.btn_start.text() == "Start":
@@ -723,10 +773,16 @@ class BTTestApp(QWidget):
         else:
             self.task_schedule.clear()
 
+        #def setting
+        self.ck_btn_times.click()
+
     def update_slider_value(self, value_name, value):
         match value_name:
             case "test_times":
                 self.value_tts.setText(str(value))
+                self.b_config.test_times = value
+            case "test_hours":
+                self.value_ths.setText(str(value))
                 self.b_config.test_times = value
 
     def update_cell(self, row, col, text):
