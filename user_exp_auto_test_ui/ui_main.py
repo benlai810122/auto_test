@@ -16,6 +16,7 @@ from PyQt5.QtWidgets import (
     QFormLayout,
     QRadioButton,
     QGraphicsDropShadowEffect,
+    QMessageBox
 )
 from PyQt5.QtGui import (
     QStandardItemModel,
@@ -44,10 +45,12 @@ from dataclasses import asdict
 from datetime import datetime
 import latency_analyze as la
 from ui_database_setting import DataBase_Data_setting
-import database_manager
+import database_manager as dbm
 from database_manager import Database_data
 import time
 import pyautogui
+import json
+import system_evt_log_manager as sys_log
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -56,8 +59,7 @@ class LogSignal(QObject):
     process = pyqtSignal(int, int)
     save_report = pyqtSignal(int, int, int)
     enable = pyqtSignal()
-    set_stutas = pyqtSignal(int, int)
-
+    set_stutas = pyqtSignal(int, int, list)
 
 class BTTestApp(QWidget):
 
@@ -344,7 +346,6 @@ class BTTestApp(QWidget):
         task_test_hours_laylout.addWidget(self.lab_test_hours)
         task_test_hours_laylout.addWidget(self.slider_test_hours)
         task_test_hours_laylout.addWidget(self.value_ths)
-
         task_test_chose_layout.addLayout(task_test_times_laylout)
         task_test_chose_layout.addLayout(task_test_hours_laylout)
 
@@ -449,11 +450,16 @@ class BTTestApp(QWidget):
         self.btn_start.clicked.connect(self.run_test)
         self.btn_quit = QPushButton("Quit")
         self.btn_quit.clicked.connect(self.close)
+        self.btn_upload = QPushButton("Upload")
+        self.btn_upload.clicked.connect(self.upload_data)
+        self.btn_upload.setDisabled(True)
 
         self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.btn_quit.setIcon(self.style().standardIcon(QStyle.SP_DialogCloseButton))
+        self.btn_upload.setIcon(self.style().standardIcon(QStyle.SP_ArrowUp))
         button_layout.addWidget(self.btn_start)
         button_layout.addWidget(self.btn_quit)
+        button_layout.addWidget(self.btn_upload)
 
         # --- Combine All Layouts ---
         layout_1.addWidget(self.status_label)
@@ -515,10 +521,10 @@ class BTTestApp(QWidget):
     def save_report(self, test_cycle: int, test_fail_times: int, duration: int):
         # update database data
         self.database_data.scenario = self.b_config.task_schedule
-        self.database_data.fail_cycles = test_fail_times
-        self.database_data.cycles = test_cycle
+        self.database_data.fail_cycles = str(test_fail_times)
+        self.database_data.cycles = str(test_cycle)
         self.database_data.result = "Pass" if not test_fail_times else "Fail"
-        self.database_data.duration = duration
+        self.database_data.duration = str(duration)
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
 
@@ -534,7 +540,7 @@ class BTTestApp(QWidget):
             self.error_message.toPlainText()
         )
 
-    def set_stutas(self, test_cycle: int, test_fail_times: int):
+    def set_stutas(self, test_cycle: int, test_fail_times: int, bt_warning_msg:str):
         # set the ui state after test finish
         # status label
         if test_fail_times:
@@ -554,6 +560,10 @@ class BTTestApp(QWidget):
         message = self.log_output.toPlainText()
         mouse_aver = la.latency_analyze("mouse", message)
         keyboard_aver = la.latency_analyze("keyboard", message)
+
+        # add bt_warning_message (from system event log) to error message box
+        for warn in bt_warning_msg:
+            self.error_message.append(warn)
 
         self.label_total.setText(total_test_time)
         self.label_pass.setText(pass_times)
@@ -667,11 +677,15 @@ class BTTestApp(QWidget):
                     break
 
             end = time.perf_counter()
-            
-            #update UI after test
-            self.log_signal.set_stutas.emit(test_cycle, test_fail_times)
 
-            #dump log aftet test
+            # dump the system event log and analyze
+            sys_log.export_system_log_last_seconds(int(end-start),b_config.report_path)
+            bt_warn_message = sys_log.filter_evtx_by_event_ids(b_config.report_path,sys_log.EVENT_LIST)
+            
+            # update UI after test
+            self.log_signal.set_stutas.emit(test_cycle, test_fail_times,bt_warn_message)
+
+            # dump log aftet test
             self.log_signal.log.emit("Test Finish! generate final report...", True)
             self.log_signal.save_report.emit(
                 test_cycle, test_fail_times, int(end - start)
@@ -679,14 +693,13 @@ class BTTestApp(QWidget):
             self.log_signal.log.emit(
                 "Final report is ready and dump to report folder!", True
             )
-            
             self.log_signal.enable.emit()
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
             self.error_message.setPlainText("")
             self.log_output.setPlainText("")
-            self.database_data.date = datetime.now()
+            self.database_data.date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.test_thread = threading.Thread(target=_run_test_process_in_background)
             self.test_thread.start()
             self.save_config()
@@ -710,6 +723,7 @@ class BTTestApp(QWidget):
         self.device_group.setDisabled(True)
         self.test_case_group.setDisabled(True)
         self.task_schedule_group.setDisabled(True)
+        self.btn_upload.setDisabled(True)
 
     def enable_all_item(self):
         self.power_states_group.setDisabled(False)
@@ -718,6 +732,7 @@ class BTTestApp(QWidget):
         self.test_case_group.setDisabled(False)
         self.btn_quit.setDisabled(False)
         self.btn_start.setDisabled(False)
+        self.btn_upload.setDisabled(False)
         self.task_schedule_group.setDisabled(False)
         self.btn_start.setText("Start")
         self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
@@ -830,9 +845,37 @@ class BTTestApp(QWidget):
             yaml.dump(database_dict, f)
         print("database_data saved to yaml")
 
+    def upload_data(self):
+        #server alive checked
+        if not dbm.server_available_checked(dbm.IP):
+            QMessageBox.warning(self,"Warning!","Server is not available, please check the internet setting!")
+            return
+        
+        #pop out the ensure database data warning window
+        reply = QMessageBox.question(
+        self,
+        "Confirm Upload",
+        "Please make sure all database fields are filled correctly.\n\nDo you want to continue uploading?",
+        QMessageBox.Yes | QMessageBox.No,
+        QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            try: 
+                self.log_to_ui("User confirmed upload")
+                json_data = asdict(self.database_data)
+                report_id = dbm.test_create_report(payload=json_data)
+                self.log_to_ui(msg = f'Data report upload successfully! reportID:{report_id}')
+            except Exception as ex:
+                self.log_to_ui(f"Upload fail! Please connect to the developer")
+            
+        else:
+            self.log_to_ui("User canceled upload")
+
+        #send the data to server with api
+
 
 class StatusLabel(QLabel):
-
     def __init__(self, text="Intel"):
         super().__init__(text)
         self.setAlignment(Qt.AlignCenter)
@@ -915,7 +958,7 @@ class StatusLabel(QLabel):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    database_data = database_manager.load_database_data("database_data.yaml")
+    database_data = dbm.load_database_data("database_data.yaml")
     b_config = test_process.load_basic_config("config_basic.yaml")
     window = BTTestApp(b_config, database_data)
     window.show()

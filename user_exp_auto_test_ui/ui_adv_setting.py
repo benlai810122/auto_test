@@ -72,7 +72,7 @@ class AdvanceSetting(QWidget):
 
         #continue_fail_limit
         cfl_layout = QHBoxLayout()
-        self.label_cfl = QLabel('Maximum Consecutive Failures:')
+        self.label_cfl = QLabel('Maximum Consecutive Failure times:')
         self.value_cfl = QLabel('5')  # Default value
         self.value_cfl.setAlignment(Qt.AlignCenter)
         self.value_cfl.setStyleSheet('font-size: 16px;')
@@ -106,7 +106,7 @@ class AdvanceSetting(QWidget):
 
         system_setting_laylout.addLayout(tos_layout)
         system_setting_laylout.addLayout(cfl_layout)
-        system_setting_laylout.addLayout(trt_layout)
+        #system_setting_laylout.addLayout(trt_layout)
         system_group.setLayout(system_setting_laylout)
 
         # --- power state setting ---
@@ -159,7 +159,7 @@ class AdvanceSetting(QWidget):
         functional_laylout.addRow("Teams meeting URL:",self.led_team_url)
         #output_source : 2
         self.combo_output_source = QComboBox()
-        self.combo_output_source.addItems(["Teams", "Local_audio","Local_video","Teams_Local","Youtube"])
+        self.combo_output_source.addItems(["Teams_bot", "Local_audio","Local_video","Teams_Local_audio","Youtube"])
         functional_laylout.addRow("Environment Source:",self.combo_output_source)
 
         #output_source_play_time_s

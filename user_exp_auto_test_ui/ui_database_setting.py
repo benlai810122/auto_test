@@ -95,8 +95,7 @@ class DataBase_Data_setting(QWidget):
                 label_text = field + " *"
                 self.required_datas.append(code) 
             else:
-                label_text = field 
-
+                label_text = field  
 
             # Pick widget type
             if choices and choices != "nan":
@@ -140,14 +139,35 @@ class DataBase_Data_setting(QWidget):
                 value = int(getattr(database_data, code))
                 self.widgets[code].setValue(value)
             else:
-                if code == 'serial_num':
-                    self.widgets[code].setText(dbm.get_serial_number())
-                    self.widgets[code].setDisabled(True)
-                else:
-                    self.widgets[code].setText(getattr(database_data, code))
+                self.widgets[code].setText(getattr(database_data, code))
 
-        
-        
+        # auto filled the specific fold:
+        driver_info = dbm.get_driver_versions()
+        self.widgets['serial_num'].setText(dbm.get_serial_number())
+        self.widgets['serial_num'].setDisabled(True)
+        self.widgets['os_version'].setText(dbm.get_os_version())
+        self.widgets['os_version'].setDisabled(True)
+        self.widgets['platform_brand'].setText(dbm.get_platform_brand())
+        self.widgets['platform_brand'].setDisabled(True)
+        self.widgets['platform'].setText(dbm.get_platform_name())
+        self.widgets['platform'].setDisabled(True)
+        self.widgets['platform_bios'].setText(dbm.get_bios_version())
+        self.widgets['platform_bios'].setDisabled(True)
+        self.widgets['cpu'].setText(dbm.get_cpu_name())
+        self.widgets['cpu'].setDisabled(True)
+        self.widgets['wlan'].setText(driver_info[dbm.DRIVER_WLAN])
+        self.widgets['wlan'].setDisabled(True)
+        self.widgets['bt_driver'].setText(driver_info[dbm.DRIVER_BT])
+        self.widgets['bt_driver'].setDisabled(True)
+        self.widgets['wifi_driver'].setText(driver_info[dbm.DRIVER_WIFI])
+        self.widgets['wifi_driver'].setDisabled(True)
+        self.widgets['audio_driver'].setText(driver_info[dbm.DRIVER_ISST])
+        self.widgets['audio_driver'].setDisabled(True)
+        self.widgets['msft_teams_version'].setText(dbm.get_teams_version())
+        self.widgets['msft_teams_version'].setDisabled(True)
+    
+
+
 
     def save_data(self):
         #database_data update
@@ -167,6 +187,10 @@ class DataBase_Data_setting(QWidget):
             self.close()
         else: 
             QMessageBox.warning(self,"Warning!","Please fill all required field!")
+    
+    def closeEvent(self, event):
+        self.save_data()
+        event.accept()  # Accept the close event
 
     
    

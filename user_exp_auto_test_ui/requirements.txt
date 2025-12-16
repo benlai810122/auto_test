@@ -15,3 +15,4 @@ pyaudio
 pandas
 wmi
 requests
+python-evtx

@@ -3,7 +3,11 @@ from dataclasses import dataclass, asdict
 import yaml
 import requests
 from utils import Utils
-import re
+import re 
+import subprocess
+import subprocess
+import platform  # For cross-platform compatibility
+
 @dataclass
 class Database_data:
     op_name: str = "Tony"
@@ -72,8 +76,13 @@ class Database_data:
     cycles: str = ""
     duration: str = ""
     log_path: str = ""
-
-BASE_URL = "http://192.168.0.145:8001"
+    sys_event_log: str = ""
+IP = "192.168.70.122"
+BASE_URL = f"http://{IP}:8001"
+DRIVER_BT = "Intel(R) Wireless Bluetooth(R)"
+DRIVER_WIFI = "Intel(R) Wi-Fi"
+DRIVER_ISST = "Smart Sound Technology for Bluetooth"
+DRIVER_WLAN = "wlan"
 
 def load_database_data(file_path: str) -> Database_data:
     #load the database data from yaml file
@@ -90,11 +99,36 @@ def database_data_checking(ori_data:Database_data, nec_data_array:list[str])->bo
     
 def test_create_report(payload)->int:
     #update the data to the database
-    response = requests.post(f"{BASE_URL}/reports", json=payload) 
+    response = requests.post(f"{BASE_URL}/reports/script", json=payload) 
     print("Status:", response.status_code)
     print("Response:", response.json())
     assert response.status_code == 200
     return response.json()["id"]
+
+def server_available_checked(IP:str)->bool:
+    """
+    Pings a host and returns True if the host is up, False otherwise.
+    """
+    # Option for the number of packets: use '-n 1' for Windows or '-c 1' for Linux/macOS
+    param = '-n' if platform.system().lower() == 'windows' else '-c'
+    
+    # Building the command list
+    command = ['ping', param, '1', IP]  # Only send 1 packet and wait a short time
+
+    # Execute the command and check the return code
+    # subprocess.call returns 0 for success
+    try:
+        # We can use subprocess.DEVNULL to suppress the ping output to the console
+        result = subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if result == 0:
+            return True
+        else:
+            return False
+    except FileNotFoundError:
+        print(f"Error: The 'ping' command was not found. Check your system's PATH.")
+        return False
+    
+    return True
 
 
 def get_serial_number()->str:
@@ -107,7 +141,95 @@ def get_serial_number()->str:
     print(f"Serial numble = {serial}")
     return serial
 
+def get_driver_versions():
+    #get wifi, bluetooth and isst driver version, also the wlan
+    output = subprocess.check_output(
+        ["wmic", "path", "Win32_PnPSignedDriver", "get", "DeviceName,DriverVersion"],
+        shell=False
+    ).decode("utf-8", errors="ignore") 
+    results = {}
+    for line in output.splitlines():
+        line = line.strip()
+        if not line or line.startswith("DeviceName"):
+            continue
+        if (DRIVER_BT in line):
+            # split from the right: name .... version
+            parts = line.rsplit(" ", 1)
+            if len(parts) == 2:
+                name, version = parts
+                results[DRIVER_BT] = version.strip()
+        elif (DRIVER_WIFI in line):
+            # split from the right: name .... version
+            parts = line.rsplit(" ", 1)
+            if len(parts) == 2:
+                name, version = parts
+                results[DRIVER_WIFI] = version.strip()
 
+                # also add the wlan
+                match = re.search(r"(AX\d{3}|BE\d{3}|AC\d{4}|AC\d{3}|\b[89]\d{3}\b)", name, re.IGNORECASE)
+                if match:
+                    results[DRIVER_WLAN] = match.group(0).upper()
+        
+        elif (DRIVER_ISST in line):
+            # split from the right: name .... version
+            parts = line.rsplit(" ", 1)
+            if len(parts) == 2:
+                name, version = parts
+                results[DRIVER_ISST] = version.strip()
+
+    return results
+
+def get_bios_version():
+    cmd = ["wmic", "bios", "get", "smbiosbiosversion"]
+    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
+    lines = [line.strip() for line in output.splitlines() if line.strip() and "SMBIOSBIOSVersion" not in line]
+    return lines[0] if lines else None
+
+def get_platform_brand():
+    cmd = ["wmic", "csproduct", "get", "vendor"]
+    output = subprocess.check_output(cmd, shell=False).decode(errors="ignore")
+    lines = [l.strip() for l in output.splitlines() if l.strip() and "Vendor" not in l]
+    return lines[0] if lines else None
+
+def get_platform_name():
+    cmd = ["wmic", "csproduct", "get", "name"]
+    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
+    lines = [l.strip() for l in output.splitlines() if l.strip() and "Name" not in l]
+    return lines[0] if lines else None
+
+def get_os_version():
+    cmd = ["wmic", "os", "get", "version"]
+    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
+    lines = [l.strip() for l in output.splitlines() if l.strip() and "Version" not in l]
+    return lines[0] if lines else None
+
+def get_cpu_name():
+    cmd = ["wmic", "cpu", "get", "name"]
+    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
+    lines = [l.strip() for l in output.splitlines() if l.strip() and "Name" not in l]
+    return lines[0] if lines else None
+
+def get_teams_version():
+    cmd = [
+        "powershell",
+        "(Get-AppxPackage -Name 'MSTeams' | Select-Object -ExpandProperty Version)"
+    ]
+    try:
+        output = subprocess.check_output(cmd, shell=False).decode("utf-8").strip()
+        return output if output else None
+    except:
+        return None
+
+ 
 if __name__ == '__main__':
     get_serial_number()
+    print(get_driver_versions())
+    print(get_bios_version())
+    print(get_platform_brand())
+    print(get_platform_name())
+    print(get_os_version())
+    print(get_cpu_name())
+    print(get_teams_version())
+ 
+ 
 
