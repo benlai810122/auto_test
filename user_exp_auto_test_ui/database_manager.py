@@ -80,6 +80,7 @@ class Database_data:
 IP = "192.168.70.122"
 BASE_URL = f"http://{IP}:8001"
 DRIVER_BT = "Intel(R) Wireless Bluetooth(R)"
+DRIVER_BT_DUAL = "Intel(R) Wireless Dual Bluetooth(R)"
 DRIVER_WIFI = "Intel(R) Wi-Fi"
 DRIVER_ISST = "Smart Sound Technology for Bluetooth"
 DRIVER_WLAN = "wlan"
@@ -158,6 +159,12 @@ def get_driver_versions():
             if len(parts) == 2:
                 name, version = parts
                 results[DRIVER_BT] = version.strip()
+        if (DRIVER_BT_DUAL in line):
+            # split from the right: name .... version
+            parts = line.rsplit(" ", 1)
+            if len(parts) == 2:
+                name, version = parts
+                results[DRIVER_BT_DUAL] = version.strip()
         elif (DRIVER_WIFI in line):
             # split from the right: name .... version
             parts = line.rsplit(" ", 1)
