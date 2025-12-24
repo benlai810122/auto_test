@@ -417,9 +417,9 @@ def headset_output_test(
         if not res_output:
             log_callback("headset output test fail, retry again!", False)
         if test_time > b_config.test_retry_times:
-            log_callback("***Headset output function have some issue!***", False)
-            log_callback("Dump WRT log...", False)
-            WRTController.dump_wrt_log(log_path=b_config.report_path)
+            #log_callback("***Headset output function have some issue!***", False)
+            #log_callback("Dump WRT log...", False)
+            #WRTController.dump_wrt_log(log_path=b_config.report_path)
             return False
         test_time += 1
     log_callback("Headset output function test finish", False)
@@ -438,10 +438,10 @@ def headset_input_test(
         buzzer_buzzing(ser=ser, command=CMD_buzzer)
         res_input = ad_Controller.audio_detect()
         if test_time > b_config.test_retry_times:
-            log_callback("***Headset input function have some issue!***", False)
-            log_callback("Dump WRT log...", False)
-            WRTController.dump_wrt_log(log_path=b_config.report_path)
-            break
+            #log_callback("***Headset input function have some issue!***", False)
+            #log_callback("Dump WRT log...", False)
+            #WRTController.dump_wrt_log(log_path=b_config.report_path)
+            return False
         test_time += 1
     log_callback("Headset input function test finish", False)
     time.sleep(5)
@@ -819,12 +819,14 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
+            '''
             if not res:
                 log_callback("mouse function test fail!", False)
                 log_callback("dump wrt log...", False)
                 WRTController.dump_wrt_log(log_path=b_config.report_path)
-
+             
             time.sleep(5)
+            '''
 
         case Test_case.keyboard_function.value:
             # mouse function test
@@ -834,12 +836,13 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
+            '''
             if not res:
                 log_callback("keyboard function test fail!", False)
                 log_callback("dump wrt log...", False)
                 WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
-
+            ''' 
         case Test_case.Mouse_random.value:
             # move to safe place
             mouse_move_to_safe_place()
@@ -850,11 +853,13 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
+            '''
             if not res:
                 log_callback("mouse random test fail!", False)
                 log_callback("dump wrt log...", False)
                 WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
+            '''
 
         case Test_case.Keyboard_random.value:
             # mouse function test
@@ -864,12 +869,13 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
+            ''' 
             if not res:
                 log_callback("keyboard random test fail!", False)
                 log_callback("dump wrt log...", False)
                 WRTController.dump_wrt_log(log_path=b_config.report_path)
             time.sleep(5)
-
+            '''
         case Test_case.Headset_init.value:
             # headset init
             res = headset_init(
@@ -884,11 +890,11 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
                     "Can not turn on the Headset or headset can not connect to the dut, stop testing!",
                     False,
                 )
-                log_callback("dump wrt log...", False)
-                WRTController.dump_wrt_log(log_path=b_config.report_path)
+                #log_callback("dump wrt log...", False)
+                #WRTController.dump_wrt_log(log_path=b_config.report_path)
             else:
                 log_callback("Turn on the headset successfully, connected", False)
-            time.sleep(5)
+            #time.sleep(5)
 
         case Test_case.Headset_input.value:
 
@@ -963,25 +969,6 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
         pass
 
     return res
-
-    # summary the test result
-    """
-    if b_config.do_mouse_flag: log_callback(f'mouse function: {res_mouse}')
-    if b_config.do_headset_output_flag: log_callback(f'headset output function: {res_output}, init issue:{output_init_flag}')
-    if b_config.do_headset_input_flag: log_callback(f'headset input function: {res_input}')
-    if (res_output or not b_config.do_headset_output_flag) and (res_input or not b_config.do_headset_input_flag) and (res_mouse or not b_config.do_mouse_flag) :
-        test_success_count+=1
-        continue_fail_count = 0
-    else:
-        continue_fail_count+=1
-    test_total_count+=1
-    log_callback(f'successfully test  {test_success_count} times')
-    log_callback(f'Total test  {test_total_count} times')
-    if continue_fail_count >= b_config.continue_fail_limit:
-        log_callback("out of maxium continue fail range, stop testing!")
-        log_callback(f"first issue occuring time: {issue_occuring_time}")
-        break
-     """
 
 
 if __name__ == "__main__":

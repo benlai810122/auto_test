@@ -218,7 +218,6 @@ def filter_evtx_by_event_ids(
                 time_created = (
                     time_el.get("SystemTime") if time_el is not None else ""
                 )
- 
                 msg = (
                     f"{time_created} | EventID={event_id} | Message={EVENT_LIST[event_id]} "
                 )

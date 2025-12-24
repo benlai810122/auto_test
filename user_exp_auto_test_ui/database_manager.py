@@ -7,6 +7,7 @@ import re
 import subprocess
 import subprocess
 import platform  # For cross-platform compatibility
+from typing import Optional
 
 @dataclass
 class Database_data:
@@ -77,6 +78,10 @@ class Database_data:
     duration: str = ""
     log_path: str = ""
     sys_event_log: str = ""
+    wifi_name:str = ""
+    wifi_band:str = ""
+
+
 IP = "192.168.70.122"
 BASE_URL = f"http://{IP}:8001"
 DRIVER_BT = "Intel(R) Wireless Bluetooth(R)"
@@ -226,6 +231,50 @@ def get_teams_version():
         return output if output else None
     except:
         return None
+    
+def get_connected_wifi_name() -> str:
+    """
+    Returns the connected Wi-Fi SSID on Windows, or OFF if not connected / not found.
+    """
+    try: 
+        out = subprocess.check_output(
+            ["netsh", "wlan", "show", "interfaces"],
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return 'OFF'
+
+    # Avoid matching "BSSID"
+    m = re.search(r"^\s*SSID\s*:\s*(.+?)\s*$", out, flags=re.MULTILINE)
+    if not m:
+        return 'OFF' 
+    ssid = m.group(1).strip()
+    # Some cases show "SSID : " but empty when disconnected
+    return ssid if ssid else 'OFF'
+
+def get_connected_wifi_band() -> str:
+    """
+    Returns the connected Wi-Fi band on Windows, or OFF if not connected / not found.
+    """
+    try: 
+        out = subprocess.check_output(
+            ["netsh", "wlan", "show", "interfaces"],
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return 'OFF'
+
+    # Avoid matching "BSSID"
+    m = re.search(r"^\s*Band\s*:\s*(.+?)\s*$", out, flags=re.MULTILINE)
+    if not m:
+        return 'OFF' 
+    ssid = m.group(1).strip()
+    # Some cases show "SSID : " but empty when disconnected
+    return ssid if ssid else 'OFF'
 
  
 if __name__ == '__main__':
@@ -237,6 +286,8 @@ if __name__ == '__main__':
     print(get_os_version())
     print(get_cpu_name())
     print(get_teams_version())
+    print(get_connected_wifi_name())
+    print(get_connected_wifi_band())
  
  
 

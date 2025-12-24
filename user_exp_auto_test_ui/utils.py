@@ -74,12 +74,9 @@ logging.basicConfig(
         RotatingFileHandler(PYTHON_LOG_FILE, maxBytes=10000000, backupCount=1),
         logging.StreamHandler(),
     ],
-)
-
-
-log = logging.getLogger("POWER CONSUMPTION")
-
-
+) 
+log = logging.getLogger("log")
+ 
 class Service:
     """
     responsible to get all parameters from service json and return them

@@ -2,63 +2,83 @@ import subprocess
 from utils import log as logger
 import shutil
 import re
-import os
+import os 
+import time
 
 class WRTController:
     """_summary_
     this class is used to control wrt tool, to implement wrt log auto dump
     """
     @staticmethod
-    def dump_wrt_log(log_path:str = "") :
+    def dump_wrt_log()->bool:
+        """_summary_
+        Dump wrt log 
+        Returns:
+            bool: _description_
         """
-        dump wrt log
-        """
-        
         logger.info("Starting 'cde dump_collect' to gather WRT logs.")
-
         try:
+            #dump log 
             result = subprocess.run(
                 r'"C:\Program Files\Intel\WRT2\cde.exe" dump_collect',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
-            )
-            #dump log 
+            ) 
             if result.returncode != 0:
                 logger.error(f"'dump_collect' command failed: {result.stderr.strip()}")
-                return
-            
+                return False
+           
+        except Exception as e:
+            logger.error(f"Failed to execute command: {e}")
+            return False
+        logger.info("Command executed successfully. Parsing output...")
+        return True
+
+
+    @staticmethod
+    def copy_wrt_log_to_file(start_time:float,log_path:str = "", )->bool:
+        """_summary_
+        Copy all related wrt log to the specific path after testing
+        Args:
+            start_time (float): _description_
+            log_path (str, optional): _description_. Defaults to "".
+
+        Returns:
+            bool: _description_
+        """
+        try:
             log_root = r"C:\OSData\SystemData\Temp\WRT2G\Log"
             all_dirs = [os.path.join(log_root, d) for d in os.listdir(log_root)
                     if os.path.isdir(os.path.join(log_root, d))]
             if not len(all_dirs):
                 logger.error("No additional directories found to copy.")
-                return    
-            dir_path = max(all_dirs, key=os.path.getmtime)
+                return 
+            print(all_dirs)
             current_path = os.path.dirname(os.path.abspath(__file__))
-            log_path = os.path.join(current_path,log_path,os.path.basename(dir_path))
-            shutil.copytree(dir_path,log_path)
-            #generate report
-            result = subprocess.run(
-                r'"C:\Program Files\Intel\WRT2\cde.exe" generate_report',
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
-            )
-            if result.returncode != 0:
-                logger.error(f"'generate_report' command failed: {result.stderr.strip()}")
-                return
+            for dir in all_dirs:
+                create_time = os.path.getmtime(dir) 
+                print(f"created = {create_time}, start = {start_time}")
+                if create_time >= start_time: 
+                    target_path = os.path.join(current_path,log_path,os.path.basename(dir))
+                    shutil.copytree(dir,target_path) 
+                    
+        except Exception as ex:
+            print(f"Error happen when copy wrt log! {ex}")
+            return False 
+        return True
 
-            result = subprocess.run(
+    @staticmethod
+    def clear_all_log()->bool :
+        result = subprocess.run(
                 r'"C:\Program Files\Intel\WRT2\cde.exe" clear_all',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
             )
-            if result.returncode != 0:
-                logger.error(f"'clear_all' command failed: {result.stderr.strip()}")
-                return
-        except Exception as e:
-            logger.error(f"Failed to execute command: {e}")
-            return 
-        
-        logger.info("Command executed successfully. Parsing output...")
+        if result.returncode != 0:
+            logger.error(f"'clear_all' command failed: {result.stderr.strip()}")
+            return False 
+        return True
 
 
 
 if __name__ == "__main__":
-    WRTController.dump_wrt_log(log_path = "report")
+    #WRTController.dump_wrt_log()
+    WRTController.copy_wrt_log_to_file(start_time = 1765942988.6462076)

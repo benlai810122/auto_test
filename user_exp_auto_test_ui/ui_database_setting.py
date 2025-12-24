@@ -155,23 +155,31 @@ class DataBase_Data_setting(QWidget):
         self.widgets['platform_bios'].setDisabled(True)
         self.widgets['cpu'].setText(dbm.get_cpu_name())
         self.widgets['cpu'].setDisabled(True)
-        self.widgets['wlan'].setText(driver_info.get(dbm.DRIVER_WLAN))
-        self.widgets['wlan'].setDisabled(True)
+
+        if driver_info.get(dbm.DRIVER_WLAN):
+            self.widgets['wlan'].setText(driver_info.get(dbm.DRIVER_WLAN))
+            self.widgets['wlan'].setDisabled(True) 
         if driver_info.get(dbm.DRIVER_BT):
             self.widgets['bt_driver'].setText(driver_info.get(dbm.DRIVER_BT))
-        else:
-            self.widgets['bt_driver'].setText(driver_info.get(dbm.DRIVER_BT_DUAL)) 
-        self.widgets['bt_driver'].setDisabled(True)
-        self.widgets['wifi_driver'].setText(driver_info.get(dbm.DRIVER_WIFI))
-        self.widgets['wifi_driver'].setDisabled(True)
-        self.widgets['audio_driver'].setText(driver_info.get(dbm.DRIVER_ISST))
-        self.widgets['audio_driver'].setDisabled(True)
+            self.widgets['bt_driver'].setDisabled(True)
+        elif driver_info.get(dbm.DRIVER_BT_DUAL):
+            self.widgets['bt_driver'].setText(driver_info.get(dbm.DRIVER_BT_DUAL))
+            self.widgets['bt_driver'].setDisabled(True) 
+        if driver_info.get(dbm.DRIVER_WIFI):
+            self.widgets['wifi_driver'].setText(driver_info.get(dbm.DRIVER_WIFI))
+            self.widgets['wifi_driver'].setDisabled(True)
+        if driver_info.get(dbm.DRIVER_ISST):
+            self.widgets['audio_driver'].setText(driver_info.get(dbm.DRIVER_ISST))
+            self.widgets['audio_driver'].setDisabled(True)
+
         self.widgets['msft_teams_version'].setText(dbm.get_teams_version())
         self.widgets['msft_teams_version'].setDisabled(True)
+
+        self.widgets['wifi_name'].setText(dbm.get_connected_wifi_name())
+        self.widgets['wifi_name'].setDisabled(True)
+        self.widgets['wifi_band'].setText(dbm.get_connected_wifi_band())
+        self.widgets['wifi_band'].setDisabled(True)
     
-
-
-
     def save_data(self):
         #database_data update
         for code in self.codes:

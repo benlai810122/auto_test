@@ -51,6 +51,7 @@ import time
 import pyautogui
 import json
 import system_evt_log_manager as sys_log
+from wrt_controller import WRTController
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -579,8 +580,6 @@ class BTTestApp(QWidget):
         else:
             self.label_mouse_latency.setText("-")
 
-      
-
     def test_case_setting(self, test_case: str):
         # setting the test case
         self.test_case_clicking = test_case
@@ -622,8 +621,8 @@ class BTTestApp(QWidget):
             test_fail_flag = False
             test_fail_continue_times = 0
             start,process = time.perf_counter(), time.perf_counter()
-            while True:
-                
+            start_float_time = time.time()
+            while True: 
                 if self.ck_btn_times.isChecked():
                     if test_cycle >= self.b_config.test_times:
                         break
@@ -642,13 +641,22 @@ class BTTestApp(QWidget):
                         self.log_signal.cell.emit(row, 1, "Pass")
                     else:
                         error_message = (
-                            f"test case: {test_case} item:{row+1} cycles:{test_cycle}"
+                            f"Test case: {test_case} Item:{row+1} Cycles:{test_cycle}"
                         )
                         self.log_signal.cell.emit(row, 1, "Fail")
                         self.log_signal.error.emit(error_message)
-                        test_fail_flag = True
+                        test_fail_flag = True 
+                        #Dump wrt log
+                        self.log_signal.log.emit(f"Test case:{test_case}  fail!", False)
+                        self.log_signal.log.emit("Dump wrt log...", False)
+                        if  WRTController.dump_wrt_log():
+                            self.log_signal.log.emit("Dump wrt log success!", False)
+                        else:
+                            self.log_signal.log("Fail to Dump wrt log!", False)
+ 
                     row += 1
                 test_cycle+= 1
+                self.log_signal.log.emit(f"Current test Cycle:{test_cycle}", False)
                 process = time.perf_counter()
                 if test_fail_flag:
                     test_fail_continue_times += 1
@@ -658,25 +666,28 @@ class BTTestApp(QWidget):
                     test_fail_continue_times = 0
 
                 # update process lab
-                self.log_signal.process.emit(test_cycle, test_fail_times)
-
+                self.log_signal.process.emit(test_cycle, test_fail_times) 
                 # renew the status for another run:
                 for i in range(row):
-                    self.log_signal.cell.emit(i, 1, "")
-
+                    self.log_signal.cell.emit(i, 1, "") 
                 # stop thread if stop btn have been clicked
                 if self.thread_stop_flag:
-                    break
-
+                    break 
                 # if out of continue fail range, stop testing
                 if test_fail_continue_times >= self.b_config.continue_fail_limit:
                     self.log_signal.log.emit("Stop testing!", True)
                     self.log_signal.error.emit(
-                        "out of maxium continue fail range, stop testing!"
+                        "Out of maxium continue fail range, stop testing!"
                     )
                     break
-
-            end = time.perf_counter()
+            end = time.perf_counter() 
+            # copy wrt log to specific folder
+            if  WRTController.copy_wrt_log_to_file(start_float_time,b_config.report_path):
+                self.log_signal.log.emit("wrt log copy success!", False)
+            else :
+                self.log_signal.log.emit("wrt log copy fail!", False)
+            # analyze wrt log code
+                #TBD
 
             # dump the system event log and analyze
             sys_log.export_system_log_last_seconds(int(end-start),b_config.report_path)

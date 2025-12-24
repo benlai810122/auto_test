@@ -7,34 +7,34 @@ cb_os_waiting_time: ''
 cb_period: ''
 cold_boot: N
 cpu: 12th Gen Intel(R) Core(TM) i7-1265U
-cycles: '1'
-date: '2025-12-16 14:46:07'
+cycles: '3'
+date: '2025-12-24 16:39:23'
 device1: ''
 device1_brand: ''
-duration: '10'
-fail_cycles: '0'
+duration: '125'
+fail_cycles: '3'
 fix_bt_driver: ''
 fix_work_week: ''
 headset: None
-headset_brand: Asus
+headset_brand: None
 headset_bt: ''
 hsd_id: ''
 ips_id: ''
 jira_id: ''
 keyboard: None
-keyboard_brand: Samsung
+keyboard_brand: None
 keyboard_bt: ''
 keyboard_click_period: ''
 log_path: ''
 microsoft_teams: N
 modern_standby: N
 mouse: HP 420/425 Programmable BT Mouse
-mouse_brand: Asus
+mouse_brand: Dell
 mouse_bt: ''
 mouse_click_period: ''
 ms_os_waiting_time: ''
 ms_period: ''
-msft_teams_version: 25332.1201.4152.8203
+msft_teams_version: 25332.1210.4188.1171
 op_name: ben
 opp: N
 os_version: 10.0.26220
@@ -45,22 +45,24 @@ platform_bios: 89.12.1
 platform_brand: Dell Inc.
 platform_phase: DVT2
 power_type: DC
-result: Pass
+result: Fail
 s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: Idle
+scenario: Mouse_Function_Check,Idle
 serial_num: J3F87M3
 speaker: ''
 speaker_brand: ''
 speaker_bt: ''
 swift_pair: N
 sys_event_log: ''
-urgent_level: P2
+urgent_level: Fireball
 warm_boot: N
 wb_os_waiting_time: ''
 wb_period: ''
+wifi_band: 5 GHz
 wifi_driver: 23.160.0.4
+wifi_name: ASUS_lab_5G
 wlan: AX211
 wlan_phase: B0
 wrt_preset: Enif
