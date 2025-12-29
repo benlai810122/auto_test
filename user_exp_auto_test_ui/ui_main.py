@@ -51,14 +51,14 @@ import time
 import pyautogui
 import json
 import system_evt_log_manager as sys_log
-from wrt_controller import WRTController
+from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
     error = pyqtSignal(str)
     cell = pyqtSignal(int, int, str)
     process = pyqtSignal(int, int)
-    save_report = pyqtSignal(int, int, int)
+    save_report_database_data = pyqtSignal(int, int, int)
     enable = pyqtSignal()
     set_stutas = pyqtSignal(int, int, list)
 
@@ -87,7 +87,7 @@ class BTTestApp(QWidget):
         self.log_signal.cell.connect(self.update_cell)
         self.log_signal.error.connect(self.error_to_ui)
         self.log_signal.process.connect(self.update_process)
-        self.log_signal.save_report.connect(self.save_report)
+        self.log_signal.save_report_database_data.connect(self.save_report_and_renew_database_data)
         self.log_signal.enable.connect(self.enable_all_item)
         self.log_signal.set_stutas.connect(self.set_stutas)
 
@@ -519,7 +519,7 @@ class BTTestApp(QWidget):
         # setting the power states
         self.power_states_clicking = power_states
 
-    def save_report(self, test_cycle: int, test_fail_times: int, duration: int):
+    def save_report_and_renew_database_data(self, test_cycle: int, test_fail_times: int, duration: int):
         # update database data
         self.database_data.scenario = self.b_config.task_schedule
         self.database_data.fail_cycles = str(test_fail_times)
@@ -528,6 +528,7 @@ class BTTestApp(QWidget):
         self.database_data.duration = str(duration)
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
+        self.database_data.sys_event_log = self.error_message.toPlainText()
 
         # save_report after test finish
         test_process.save_report(
@@ -548,8 +549,7 @@ class BTTestApp(QWidget):
             self.status_label.set_state("FAIL")
         else:
             self.status_label.set_state("PASS")
-
-     
+            
         total_test_time = f"{test_cycle} cycles"
         pass_times = f"{test_cycle-test_fail_times}"
         fail_times = f"{test_fail_times}"
@@ -686,19 +686,20 @@ class BTTestApp(QWidget):
                 self.log_signal.log.emit("wrt log copy success!", False)
             else :
                 self.log_signal.log.emit("wrt log copy fail!", False)
-            # analyze wrt log code
-                #TBD
 
+            bt_warn_message = []
+            # analyze wrt log code
+            bt_warn_message.extend(WRTController.wrt_error_code_filter(b_config.report_path,WRT_CODE_WHITE_LIST)) 
             # dump the system event log and analyze
             sys_log.export_system_log_last_seconds(int(end-start),b_config.report_path)
-            bt_warn_message = sys_log.filter_evtx_by_event_ids(b_config.report_path,sys_log.EVENT_LIST)
+            bt_warn_message.extend(sys_log.filter_evtx_by_event_ids(b_config.report_path,sys_log.EVENT_LIST))
             
             # update UI after test
             self.log_signal.set_stutas.emit(test_cycle, test_fail_times,bt_warn_message)
 
             # dump log aftet test
             self.log_signal.log.emit("Test Finish! generate final report...", True)
-            self.log_signal.save_report.emit(
+            self.log_signal.save_report_database_data.emit(
                 test_cycle, test_fail_times, int(end - start)
             )
             self.log_signal.log.emit(
@@ -789,11 +790,9 @@ class BTTestApp(QWidget):
             for test_item in self.task_schedule:
                 if test_item:
                     item_case = QStandardItem(test_item)
-                    item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
-
+                    item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font 
                     state = QStandardItem("")
-                    state.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
-
+                    state.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font 
                     new_row = [item_case, state]
                     self.task_schedule_model.appendRow(new_row)
         else:

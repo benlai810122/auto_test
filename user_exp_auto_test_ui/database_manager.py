@@ -80,6 +80,7 @@ class Database_data:
     sys_event_log: str = ""
     wifi_name:str = ""
     wifi_band:str = ""
+    comment:str = ""
 
 
 IP = "192.168.70.122"
@@ -245,13 +246,11 @@ def get_connected_wifi_name() -> str:
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
         return 'OFF'
-
-    # Avoid matching "BSSID"
+ 
     m = re.search(r"^\s*SSID\s*:\s*(.+?)\s*$", out, flags=re.MULTILINE)
     if not m:
         return 'OFF' 
-    ssid = m.group(1).strip()
-    # Some cases show "SSID : " but empty when disconnected
+    ssid = m.group(1).strip() 
     return ssid if ssid else 'OFF'
 
 def get_connected_wifi_band() -> str:
@@ -267,13 +266,11 @@ def get_connected_wifi_band() -> str:
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
         return 'OFF'
-
-    # Avoid matching "BSSID"
+ 
     m = re.search(r"^\s*Band\s*:\s*(.+?)\s*$", out, flags=re.MULTILINE)
     if not m:
         return 'OFF' 
-    ssid = m.group(1).strip()
-    # Some cases show "SSID : " but empty when disconnected
+    ssid = m.group(1).strip()  
     return ssid if ssid else 'OFF'
 
  

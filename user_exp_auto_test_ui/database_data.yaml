@@ -2,16 +2,17 @@ apm: N
 apm_period: ''
 audio_driver: 10.29.0.11192
 bt_driver: 23.160.0.9
-bt_interface: 'PCIe '
+bt_interface: PCIe
 cb_os_waiting_time: ''
 cb_period: ''
 cold_boot: N
+comment: ''
 cpu: 12th Gen Intel(R) Core(TM) i7-1265U
 cycles: '3'
-date: '2025-12-24 16:39:23'
+date: '2025-12-29 16:40:06'
 device1: ''
 device1_brand: ''
-duration: '125'
+duration: '126'
 fail_cycles: '3'
 fix_bt_driver: ''
 fix_work_week: ''
@@ -29,7 +30,7 @@ log_path: ''
 microsoft_teams: N
 modern_standby: N
 mouse: HP 420/425 Programmable BT Mouse
-mouse_brand: Dell
+mouse_brand: None
 mouse_bt: ''
 mouse_click_period: ''
 ms_os_waiting_time: ''
@@ -55,7 +56,20 @@ speaker: ''
 speaker_brand: ''
 speaker_bt: ''
 swift_pair: N
-sys_event_log: ''
+sys_event_log: '[2025-12-29 16:40:27.532126] Test case: Mouse_Function_Check Item:1
+  Cycles:0
+
+  [2025-12-29 16:41:10.728783] Test case: Mouse_Function_Check Item:1 Cycles:1
+
+  [2025-12-29 16:41:52.228366] Test case: Mouse_Function_Check Item:1 Cycles:2
+
+  [2025-12-29 16:42:12.333763] Out of maxium continue fail range, stop testing!
+
+  Detect WRT CODE: 6050 , happened time:29-12-2025-16-40-30
+
+  Detect WRT CODE: 6050 , happened time:29-12-2025-16-41-13
+
+  Detect WRT CODE: 6050 , happened time:29-12-2025-16-41-54'
 urgent_level: Fireball
 warm_boot: N
 wb_os_waiting_time: ''

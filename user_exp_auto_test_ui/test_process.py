@@ -151,7 +151,7 @@ def save_report(
     ws.append(["Fail Times", fail_times])
     ws.append(["mouse latency", mouse_latency])
     ws.append(["kdeyboard latency", keyboard_latency])
-    ws.append(["Earliest errot ", earliest_error])
+    ws.append(["Earliest error ", earliest_error])
     ws.append(["Error Message", error_message])
 
     # Config Section
