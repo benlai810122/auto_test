@@ -8,12 +8,12 @@ cb_period: ''
 cold_boot: N
 comment: ''
 cpu: 12th Gen Intel(R) Core(TM) i7-1265U
-cycles: '3'
-date: '2025-12-29 16:40:06'
+cycles: '1'
+date: '2025-12-30 14:28:58'
 device1: ''
 device1_brand: ''
-duration: '126'
-fail_cycles: '3'
+duration: '10'
+fail_cycles: '0'
 fix_bt_driver: ''
 fix_work_week: ''
 headset: None
@@ -46,30 +46,17 @@ platform_bios: 89.12.1
 platform_brand: Dell Inc.
 platform_phase: DVT2
 power_type: DC
-result: Fail
+result: Pass
 s4: N
 s4_os_waiting_time: ''
 s4_period: ''
-scenario: Mouse_Function_Check,Idle
+scenario: Idle
 serial_num: J3F87M3
 speaker: ''
 speaker_brand: ''
 speaker_bt: ''
 swift_pair: N
-sys_event_log: '[2025-12-29 16:40:27.532126] Test case: Mouse_Function_Check Item:1
-  Cycles:0
-
-  [2025-12-29 16:41:10.728783] Test case: Mouse_Function_Check Item:1 Cycles:1
-
-  [2025-12-29 16:41:52.228366] Test case: Mouse_Function_Check Item:1 Cycles:2
-
-  [2025-12-29 16:42:12.333763] Out of maxium continue fail range, stop testing!
-
-  Detect WRT CODE: 6050 , happened time:29-12-2025-16-40-30
-
-  Detect WRT CODE: 6050 , happened time:29-12-2025-16-41-13
-
-  Detect WRT CODE: 6050 , happened time:29-12-2025-16-41-54'
+sys_event_log: ''
 urgent_level: Fireball
 warm_boot: N
 wb_os_waiting_time: ''

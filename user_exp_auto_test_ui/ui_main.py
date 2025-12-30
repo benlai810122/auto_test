@@ -16,7 +16,9 @@ from PyQt5.QtWidgets import (
     QFormLayout,
     QRadioButton,
     QGraphicsDropShadowEffect,
-    QMessageBox
+    QMessageBox,
+    QDialog,
+    QDialogButtonBox
 )
 from PyQt5.QtGui import (
     QStandardItemModel,
@@ -861,21 +863,22 @@ class BTTestApp(QWidget):
             QMessageBox.warning(self,"Warning!","Server is not available, please check the internet setting!")
             return
         
-        #pop out the ensure database data warning window
-        reply = QMessageBox.question(
-        self,
-        "Confirm Upload",
-        "Please make sure all database fields are filled correctly.\n\nDo you want to continue uploading?",
-        QMessageBox.Yes | QMessageBox.No,
-        QMessageBox.No
+        #pop out the window
+        dlg = TextYesNoDialog(
+            title="Confirm Upload",
+            message="Please make sure all database fields are filled correctly, and you can upload the comment for this test.",
+            placeholder="",
+            parent=self
         )
-
-        if reply == QMessageBox.Yes:
-            try: 
+ 
+        if dlg.exec_() == QDialog.Accepted:  # Yes  
+            try:
+                self.database_data.comment = dlg.text()
                 self.log_to_ui("User confirmed upload")
                 json_data = asdict(self.database_data)
                 report_id = dbm.test_create_report(payload=json_data)
                 self.log_to_ui(msg = f'Data report upload successfully! reportID:{report_id}')
+                self.btn_upload.setDisabled(True)
             except Exception as ex:
                 self.log_to_ui(f"Upload fail! Please connect to the developer")
             
@@ -965,6 +968,34 @@ class StatusLabel(QLabel):
             )
         self.flag = not self.flag
 
+
+
+class TextYesNoDialog(QDialog):
+    """
+    A dialog box for user to fill the comment before updating test result to database
+
+    Args:
+        QDialog (_type_): _description_
+    """
+    def __init__(self, title: str, message: str, placeholder: str = "", parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(title)
+
+        layout = QVBoxLayout(self)
+
+        layout.addWidget(QLabel(message))
+
+        self.edit = QLineEdit(self)
+        self.edit.setPlaceholderText(placeholder)
+        layout.addWidget(self.edit)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Yes | QDialogButtonBox.No, parent=self)
+        buttons.accepted.connect(self.accept)   # Yes
+        buttons.rejected.connect(self.reject)   # No
+        layout.addWidget(buttons)
+
+    def text(self) -> str:
+        return self.edit.text().strip()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
