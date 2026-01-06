@@ -31,12 +31,12 @@ microsoft_teams: N
 modern_standby: N
 mouse: HP 420/425 Programmable BT Mouse
 mouse_brand: None
-mouse_bt: ''
+mouse_bt: LE
 mouse_click_period: ''
 ms_os_waiting_time: ''
 ms_period: ''
 msft_teams_version: 25332.1210.4188.1171
-op_name: ben
+op_name: test
 opp: N
 os_version: 10.0.26220
 phone: ''

@@ -265,14 +265,12 @@ def get_connected_wifi_band() -> str:
             errors="ignore",
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
-        return 'OFF'
- 
-    m = re.search(r"^\s*Band\s*:\s*(.+?)\s*$", out, flags=re.MULTILINE)
-    if not m:
         return 'OFF' 
-    ssid = m.group(1).strip()  
-    return ssid if ssid else 'OFF'
-
+    bands = [b.strip() for b in re.findall(r"\bBand\s*:\s*([^,\r\n]+)", out)]
+    if not len(bands):
+        return 'OFF'  
+    return bands[-1]
+ 
  
 if __name__ == '__main__':
     get_serial_number()

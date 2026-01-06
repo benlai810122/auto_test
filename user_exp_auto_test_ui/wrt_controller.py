@@ -5,9 +5,9 @@ import re
 import os 
 import time
 from pathlib import Path
+from typing import Optional
 
-WRT_CODE_WHITE_LIST = ['6050']
-
+WRT_CODE_WHITE_LIST = ['6050','failed']
 class WRTController:
     """_summary_
     this class is used to control wrt tool, to implement wrt log auto dump
@@ -104,11 +104,18 @@ class WRTController:
         for dir in all_dirs:
             folder_name = Path(dir).name
             folder_info = folder_name.split('_')
-            wrt_code = folder_info[5]
+            wrt_code = None
+            for info in folder_info: 
+                if len(info) == 4 and info.isdigit():
+                    wrt_code = info
+                    break
+ 
             happened_time =f'{folder_info[1]}-{folder_info[2]}' 
-            if wrt_code not in white_list:
+            if wrt_code and wrt_code not in white_list:
                 wrt_error_code.append(f"Detect WRT CODE: {wrt_code} , happened time:{happened_time}") 
         return wrt_error_code
+    
+
 
 if __name__ == "__main__":
     #WRTController.dump_wrt_log()

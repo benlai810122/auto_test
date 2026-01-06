@@ -732,7 +732,7 @@ def serial_test(ser: serial.Serial):
 def mouse_move_to_safe_place():
     # move mouse to safe place (top-right) before clicking
     screen_width, screen_height = pyautogui.size()
-    pyautogui.click(x=screen_width - 10, y=10)
+    pyautogui.click(x=screen_width - 20, y=20)
 
 
 def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
