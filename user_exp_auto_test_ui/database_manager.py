@@ -9,6 +9,7 @@ import subprocess
 import platform  # For cross-platform compatibility
 from typing import Optional
 
+
 @dataclass
 class Database_data:
     op_name: str = "Tony"
@@ -270,7 +271,32 @@ def get_connected_wifi_band() -> str:
     if not len(bands):
         return 'OFF'  
     return bands[-1]
+
+def get_wrt_version_and_preset() -> Optional[dict]:
+    """_summary_
+    
+    Returns:
+        dict: [ver] = wrt version
+              [present] = wrt preset
+    """
+    try:  
+        out = subprocess.check_output(
+            ["C:\Program Files\Intel\WRT2\cde.exe", "system_info"],
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+        )
+        wrt_m = re.search(r'"WRT::2G Version"\s*:\s*"([^"]+)"', out)
+        pre_m = re.search(r'"preset"\s*:\s*"([^"]+)"', out)
  
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return None
+     
+    return {
+        "ver": wrt_m.group(1) if wrt_m else None,
+        "preset": pre_m.group(1) if pre_m else None,
+    }
+
  
 if __name__ == '__main__':
     get_serial_number()
@@ -283,6 +309,7 @@ if __name__ == '__main__':
     print(get_teams_version())
     print(get_connected_wifi_name())
     print(get_connected_wifi_band())
+    print(get_wrt_version_and_preset())
  
  
 

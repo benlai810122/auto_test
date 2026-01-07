@@ -38,6 +38,7 @@ from test_process import Power_States
 from test_process import Test_case
 from utils import log as logger
 from bt_control import BluetoothControl
+from bt_control import  bt_type
 from ui_adv_setting import AdvanceSetting
 from functools import partial
 import threading
@@ -754,8 +755,8 @@ class BTTestApp(QWidget):
     def bt_device_check(self):
         # checking the bt device existed, like headset, mouse
         headset = BluetoothControl.find_headset()
-        mouse = BluetoothControl.find_mouse_keyboard("Mouse")
-        keyboard = BluetoothControl.find_mouse_keyboard("Keyboard")
+        mouse = BluetoothControl.find_mouse_keyboard(bt_type.Mouse)
+        keyboard = BluetoothControl.find_mouse_keyboard(bt_type.Keyboard)
         self.led_headset.setText(headset)
         self.led_mouse.setText(mouse)
         self.led_keyboard.setText(keyboard)

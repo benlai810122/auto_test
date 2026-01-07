@@ -114,9 +114,7 @@ class DataBase_Data_setting(QWidget):
             self.widgets[code] = widget
             self.codes.append(code)
             layout.addRow(make_title(label_text), widget)
-
-        print(self.widgets)
-
+ 
         # Save button
         save_button = QPushButton("Save")
         save_button.clicked.connect(self.save_data)
@@ -143,6 +141,7 @@ class DataBase_Data_setting(QWidget):
 
         # auto filled the specific fold:
         driver_info = dbm.get_driver_versions()
+        wrt_info = dbm.get_wrt_version_and_preset()
         self.widgets['serial_num'].setText(dbm.get_serial_number())
         self.widgets['serial_num'].setDisabled(True)
         self.widgets['os_version'].setText(dbm.get_os_version())
@@ -171,6 +170,12 @@ class DataBase_Data_setting(QWidget):
         if driver_info.get(dbm.DRIVER_ISST):
             self.widgets['audio_driver'].setText(driver_info.get(dbm.DRIVER_ISST))
             self.widgets['audio_driver'].setDisabled(True)
+        if wrt_info['ver']:
+            self.widgets['wrt_version'].setText(wrt_info['ver'])
+            self.widgets['wrt_version'].setDisabled(True) 
+        if wrt_info['preset']:
+            self.widgets['wrt_preset'].setText(wrt_info['preset'])
+            self.widgets['wrt_preset'].setDisabled(True)
 
         self.widgets['msft_teams_version'].setText(dbm.get_teams_version())
         self.widgets['msft_teams_version'].setDisabled(True)

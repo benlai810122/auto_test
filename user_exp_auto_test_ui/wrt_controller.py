@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 from typing import Optional
 
+
 WRT_CODE_WHITE_LIST = ['6050','failed']
 class WRTController:
     """_summary_
@@ -109,7 +110,6 @@ class WRTController:
                 if len(info) == 4 and info.isdigit():
                     wrt_code = info
                     break
- 
             happened_time =f'{folder_info[1]}-{folder_info[2]}' 
             if wrt_code and wrt_code not in white_list:
                 wrt_error_code.append(f"Detect WRT CODE: {wrt_code} , happened time:{happened_time}") 

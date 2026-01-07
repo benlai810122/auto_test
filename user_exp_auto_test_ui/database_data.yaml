@@ -18,20 +18,20 @@ fix_bt_driver: ''
 fix_work_week: ''
 headset: None
 headset_brand: None
-headset_bt: ''
+headset_bt: None
 hsd_id: ''
 ips_id: ''
 jira_id: ''
 keyboard: None
 keyboard_brand: None
-keyboard_bt: ''
+keyboard_bt: None
 keyboard_click_period: ''
 log_path: ''
 microsoft_teams: N
 modern_standby: N
 mouse: HP 420/425 Programmable BT Mouse
-mouse_brand: None
-mouse_bt: LE
+mouse_brand: Asus
+mouse_bt: None
 mouse_click_period: ''
 ms_os_waiting_time: ''
 ms_period: ''
@@ -44,8 +44,8 @@ phone_brand: ''
 platform: Latitude 9430
 platform_bios: 89.12.1
 platform_brand: Dell Inc.
-platform_phase: DVT2
-power_type: DC
+platform_phase: PV
+power_type: AC
 result: Pass
 s4: N
 s4_os_waiting_time: ''
@@ -57,7 +57,7 @@ speaker_brand: ''
 speaker_bt: ''
 swift_pair: N
 sys_event_log: ''
-urgent_level: Fireball
+urgent_level: None
 warm_boot: N
 wb_os_waiting_time: ''
 wb_period: ''
@@ -66,5 +66,5 @@ wifi_driver: 23.160.0.4
 wifi_name: ASUS_lab_5G
 wlan: AX211
 wlan_phase: B0
-wrt_preset: Enif
-wrt_version: 23.160.0.1
+wrt_preset: Custom
+wrt_version: 22.180.0.9

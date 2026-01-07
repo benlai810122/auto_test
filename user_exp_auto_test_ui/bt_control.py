@@ -1,18 +1,24 @@
 """
 This file contains the class related to bluetooth devices controlling
 """
-
+from enum import Enum
 from utils import Utils
 import os
 import re
 import wmi
 
 
+MOUSE_KEYBOARD_BLACK_LIST = ['Compatible Mouse','Keyboard_Filter']
+
+class bt_type(Enum):
+    Keyboard = 'keyboard'
+    Mouse = 'mouse'
+ 
+
 class BluetoothControl:
     """
     responsible to control bluetooth devices behavior
     """
-
  
     @staticmethod
     def disconnect_device(target_name: str) -> str:
@@ -68,21 +74,43 @@ class BluetoothControl:
         return device[0] if device else "None"
     
     @staticmethod
-    def find_mouse_keyboard(type:str) -> str:
+    def find_mouse_keyboard(type:bt_type) -> str:
         """
         responsible to find the connected mouse or keyboard 
         """
         c = wmi.WMI()
-        for device in c.Win32_PnPEntity():
-            if type in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                return device.Name
+
+        match type: 
+            case bt_type.Mouse:  
+                for device in c.Win32_PnPEntity():
+                    if 'Mouse' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
+                        for b in MOUSE_KEYBOARD_BLACK_LIST:
+                            if b in device.name:
+                                return 'None'
+                        return device.Name 
+                    if 'MS' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
+                        for b in MOUSE_KEYBOARD_BLACK_LIST:
+                            if b in device.name:
+                                return 'None'
+                        return device.Name
+                    
+            case bt_type.Keyboard:
+                for device in c.Win32_PnPEntity():
+                    if 'Keyboard' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
+                        for b in MOUSE_KEYBOARD_BLACK_LIST:
+                            if b in device.name:
+                                return 'None'
+                        return device.Name
+
         
         return 'None'
 
 
 if __name__ == "__main__":
     #print(BluetoothControl.status_check(target="Zone", type="AudioEndpoint"))
-    device = BluetoothControl.find_headset()
-    print(device)
+    headset = BluetoothControl.find_headset()
+    mouse = BluetoothControl.find_mouse_keyboard(bt_type.Mouse)
+    keyboard = BluetoothControl.find_mouse_keyboard(bt_type.Keyboard)
+    print(f'{headset} {mouse} {keyboard}')
     pass
  
