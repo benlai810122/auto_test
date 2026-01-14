@@ -55,6 +55,7 @@ import pyautogui
 import json
 import system_evt_log_manager as sys_log
 from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
+import version_manager as ver
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -78,7 +79,7 @@ class BTTestApp(QWidget):
         super().__init__()
         self.b_config = b_config
         self.database_data = database_data
-        self.setWindowTitle("Intel User Experience Auto Test ver.20251105")
+        self.setWindowTitle(f"Intel User Experience Auto Test ver: {ver.get_version()}")
         screen_width, screen_height = pyautogui.size()
         self.setGeometry(100, 100, int(screen_width*0.7), int(screen_height*0.7))
         self.init_ui()
@@ -655,7 +656,7 @@ class BTTestApp(QWidget):
                         if  WRTController.dump_wrt_log():
                             self.log_signal.log.emit("Dump wrt log success!", False)
                         else:
-                            self.log_signal.log("Fail to Dump wrt log!", False)
+                            self.log_signal.log.emit("Fail to Dump wrt log!", False)
  
                     row += 1
                 test_cycle+= 1

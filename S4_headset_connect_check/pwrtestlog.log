@@ -1,6 +1,0 @@
-Start: PwrTest
-Error: Pwrtest needs to run elevated in order to support ETW tracing.
-    File: base\power\tools\pwrtest\exe\pwrtestscenario.cpp
-    Line: 1423
-    Error Code: 0x80070005
-End: Pass, PwrTest, (null)

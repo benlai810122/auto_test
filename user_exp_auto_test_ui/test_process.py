@@ -150,7 +150,7 @@ def save_report(
     ws.append(["Pass Times", (total_cycles - fail_times)])
     ws.append(["Fail Times", fail_times])
     ws.append(["mouse latency", mouse_latency])
-    ws.append(["kdeyboard latency", keyboard_latency])
+    ws.append(["keyboard latency", keyboard_latency])
     ws.append(["Earliest error ", earliest_error])
     ws.append(["Error Message", error_message])
 

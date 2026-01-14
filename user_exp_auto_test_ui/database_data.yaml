@@ -29,7 +29,7 @@ keyboard_click_period: ''
 log_path: ''
 microsoft_teams: N
 modern_standby: N
-mouse: HP 420/425 Programmable BT Mouse
+mouse: None
 mouse_brand: Asus
 mouse_bt: None
 mouse_click_period: ''
@@ -43,7 +43,7 @@ phone: ''
 phone_brand: ''
 platform: Latitude 9430
 platform_bios: 89.12.1
-platform_brand: Dell Inc.
+platform_brand: Dell Inc.1`
 platform_phase: PV
 power_type: AC
 result: Pass
