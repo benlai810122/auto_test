@@ -87,11 +87,6 @@ class BluetoothControl:
                         for b in MOUSE_KEYBOARD_BLACK_LIST:
                             if b in device.name:
                                 continue
-                        return device.Name 
-                    if ' MS' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                        for b in MOUSE_KEYBOARD_BLACK_LIST:
-                            if b in device.name:
-                                continue
                         return device.Name
                
                     
