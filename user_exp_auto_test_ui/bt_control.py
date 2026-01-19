@@ -86,20 +86,21 @@ class BluetoothControl:
                     if 'Mouse' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
                         for b in MOUSE_KEYBOARD_BLACK_LIST:
                             if b in device.name:
-                                return 'None'
+                                continue
                         return device.Name 
-                    if 'MS' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
+                    if ' MS' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
                         for b in MOUSE_KEYBOARD_BLACK_LIST:
                             if b in device.name:
-                                return 'None'
+                                continue
                         return device.Name
+               
                     
             case bt_type.Keyboard:
                 for device in c.Win32_PnPEntity():
                     if 'Keyboard' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
                         for b in MOUSE_KEYBOARD_BLACK_LIST:
                             if b in device.name:
-                                return 'None'
+                                continue
                         return device.Name
 
         
