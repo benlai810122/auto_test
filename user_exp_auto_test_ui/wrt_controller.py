@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Optional
 
 
-WRT_CODE_WHITE_LIST = ['6050','failed']
+WRT_CODE_WHITE_LIST = ['7019','6050','failed']
 class WRTController:
     """_summary_
     this class is used to control wrt tool, to implement wrt log auto dump
