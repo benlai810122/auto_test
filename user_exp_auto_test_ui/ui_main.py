@@ -1001,6 +1001,8 @@ class TextYesNoDialog(QDialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    dbm.ensure_database_setting()
+    test_process.ensure_config_setting()
     database_data = dbm.load_database_data("database_data.yaml")
     b_config = test_process.load_basic_config("config_basic.yaml")
     window = BTTestApp(b_config, database_data)

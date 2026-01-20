@@ -24,6 +24,8 @@ from openpyxl.styles import Font, Alignment
 from youtube_control import YoutubeControl
 import pygetwindow as gw
 from database_manager import Database_data
+from pathlib import Path
+import shutil
 
 
 class Power_States(Enum):
@@ -100,6 +102,18 @@ class Basic_Config:
     mouse_latency_threshold: int = 80
     keyboard_latency_threshold: int = 100
     report_path:str = ""
+
+
+
+def ensure_config_setting():
+    cfg = Path("config_basic.yaml")
+    template = Path("config_basic.yaml.example")
+
+    if not cfg.exists():
+        shutil.copy(template, cfg)
+        print("Created config_basic.yaml from template")
+    else:
+        print("Using existing config_basic.yaml")
 
 
 def load_basic_config(file_path: str) -> Basic_Config:

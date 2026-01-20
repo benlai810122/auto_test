@@ -8,7 +8,9 @@ import subprocess
 import subprocess
 import platform  # For cross-platform compatibility
 from typing import Optional
-
+from pathlib import Path
+import shutil
+import winreg
 
 @dataclass
 class Database_data:
@@ -91,6 +93,16 @@ DRIVER_BT_DUAL = "Intel(R) Wireless Dual Bluetooth(R)"
 DRIVER_WIFI = "Intel(R) Wi-Fi"
 DRIVER_ISST = "Smart Sound Technology for Bluetooth"
 DRIVER_WLAN = "wlan"
+
+def ensure_database_setting():
+    cfg = Path("database_data.yaml")
+    template = Path("database_data.yaml.example")
+
+    if not cfg.exists():
+        shutil.copy(template, cfg)
+        print("Created database_data.yaml from template")
+    else:
+        print("Using existing database_data.yaml")
 
 def load_database_data(file_path: str) -> Database_data:
     #load the database data from yaml file
@@ -212,10 +224,12 @@ def get_platform_name():
     return lines[0] if lines else None
 
 def get_os_version():
-    cmd = ["wmic", "os", "get", "version"]
-    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
-    lines = [l.strip() for l in output.splitlines() if l.strip() and "Version" not in l]
-    return lines[0] if lines else None
+    #get os version with UBR
+    key_path = r"SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+    with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key_path) as key:
+        current_build = winreg.QueryValueEx(key, "CurrentBuild")[0]
+        ubr = winreg.QueryValueEx(key, "UBR")[0]  # <-- this is .7535
+    return f"{current_build}.{ubr}"
 
 def get_cpu_name():
     cmd = ["wmic", "cpu", "get", "name"]
