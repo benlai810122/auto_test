@@ -518,7 +518,6 @@ class BTTestApp(QWidget):
             self.slider_test_times.setDisabled(True)
             self.slider_test_hours.setDisabled(False)
         
-
     def power_states_setting(self, power_states: str):
         # setting the power states
         self.power_states_clicking = power_states
