@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package audiotest;
+
+service DutAgent {
+  rpc Health(HealthRequest) returns (HealthResponse);
+
+  rpc PrepareRecording(PrepareRecordingRequest) returns (PrepareRecordingResponse);
+  rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
+  rpc StopRecording(StopRecordingRequest) returns (StopRecordingResponse);
+
+  // Server-streaming: agent sends file chunks back to Control PC
+  rpc DownloadFile(DownloadFileRequest) returns (stream FileChunk);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string hostname = 1;
+  string os_version = 2;
+  bool teams_running = 3;
+}
+
+enum RecordMode {
+  RECORD_MODE_UNSPECIFIED = 0;
+  MIC = 1;
+  LOOPBACK = 2;
+}
+
+message PrepareRecordingRequest {
+  string run_id = 1;
+  RecordMode mode = 2;
+  string device_id = 3;     // optional: "default" or a real id
+  int32 sample_rate = 4;    // e.g. 48000
+  int32 channels = 5;       // e.g. 1 or 2
+}
+
+message PrepareRecordingResponse {
+  bool ok = 1;
+  string message = 2;
+}
+
+message StartRecordingRequest {
+  string run_id = 1;
+  RecordMode mode = 2;
+  int64 start_epoch_ms = 3; // optional: for coordination/logging
+}
+
+message StartRecordingResponse {
+  bool ok = 1;
+  string message = 2;
+  string out_path = 3;
+}
+
+message StopRecordingRequest {
+  string run_id = 1;
+  RecordMode mode = 2;
+}
+
+message StopRecordingResponse {
+  bool ok = 1;
+  string message = 2;
+  string out_path = 3;
+  int64 bytes_written = 4;
+}
+
+message DownloadFileRequest {
+  string path = 1;          // full path on DUT
+  int32 chunk_size = 2;     // e.g. 262144
+}
+
+message FileChunk {
+  bytes data = 1;
+}
