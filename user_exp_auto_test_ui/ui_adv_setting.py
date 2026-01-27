@@ -159,7 +159,7 @@ class AdvanceSetting(QWidget):
         functional_laylout.addRow("Teams meeting URL:",self.led_team_url)
         #output_source : 2
         self.combo_output_source = QComboBox()
-        self.combo_output_source.addItems(["Teams_bot", "Local_audio","Local_video","Teams_Local_audio","Youtube"])
+        self.combo_output_source.addItems(["Teams_bot", "Local_audio_mp3","Local_audio_wav","Teams_Local_mp3,Teams_Local_wav","Youtube"])
         functional_laylout.addRow("Environment Source:",self.combo_output_source)
 
         #output_source_play_time_s

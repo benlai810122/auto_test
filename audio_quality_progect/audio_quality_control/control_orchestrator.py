@@ -23,12 +23,8 @@ async def start_recording(host: str, mode: int, run_id: str, out_dir: str):
         prep = await stub.PrepareRecording(
             pb2.PrepareRecordingRequest(
                 run_id=run_id,
-                mode=mode,
-                device_id="default",
-                sample_rate=48000,
-                channels=2,
             ),
-            timeout=10,
+            timeout=30,
         )
         if not prep.ok:
             raise RuntimeError(f"[{host}] Prepare failed: {prep.message}")
@@ -44,49 +40,38 @@ async def start_recording(host: str, mode: int, run_id: str, out_dir: str):
         return stub, started.out_path  # keep stub+path so we can stop+download later
 
 async def main():
-    dut_mic = "10.0.0.101:50051"  # MIC
-    dut_loopback = "10.0.0.102:50051"  # LOOPBACK
-
+    dut_mic = "192.168.70.100:50051"  # MIC
+    dut_loopback = "10.0.0.102:50051"  # LOOPBACK 
     run_id = time.strftime("Run_%Y%m%d_%H%M%S")
     out_dir = os.path.join(os.getcwd(), "record", run_id)
 
-    # for testing
-    stub_a, path_a = await start_recording(dut_mic, pb2.MIC, run_id, out_dir)
 
-    # Start both recorders
-    '''
-    (stub_a, path_a), (stub_b, path_b) = await asyncio.gather(
-        start_recording(dut_mic, pb2.MIC, run_id, out_dir),
-        start_recording(dut_loopback, pb2.LOOPBACK, run_id, out_dir),
-    ) 
-    '''
+    channel_a = grpc.aio.insecure_channel(dut_mic)
     
-    print("Both DUTs are recording. (Your Teams call/audio stimulus runs now)")
-    await asyncio.sleep(10)  # replace with your real call window / stimulus timing
- 
-    """
-    # control arduino start play 1k tone
-    TBD.
+    try:
+        stub_a = pb2_grpc.DutAgentStub(channel_a)
 
-    """ 
-    # Stop both
-    '''
-    stop_mic, stop_loopback = await asyncio.gather(
-        stub_a.StopRecording(pb2.StopRecordingRequest(run_id=run_id, mode=pb2.MIC), timeout=10),
-        stub_b.StopRecording(pb2.StopRecordingRequest(run_id=run_id, mode=pb2.LOOPBACK), timeout=10),
-    )
-    '''  
-    stop_mic = await stub_a.StopRecording(
-    pb2.StopRecordingRequest(run_id=run_id, mode=pb2.MIC),
-    timeout=10,)
-    
-    if not stop_mic.ok:
-        raise RuntimeError(f"DUT-A stop failed: {stop_mic.message}")
-     
-    # Download both WAVs
-    local_a = os.path.join(out_dir, "tx_mic.wav")
-    local_b = os.path.join(out_dir, "rx_loopback.wav") 
+        health = await stub_a.Health(pb2.HealthRequest(), timeout=3)
+        print(f"[{dut_mic}] hostname={health.hostname}, os={health.os_version}")
+      
+        # prepare
+        prep = await stub_a.PrepareRecording(pb2.PrepareRecordingRequest(run_id=run_id))
+        if not prep.ok:
+            raise RuntimeError(f"[{dut_mic}] Prepare failed: {prep.message}")
+        # start
+        started = await stub_a.StartRecording(pb2.StartRecordingRequest(run_id=run_id, mode=pb2.MIC))
+        if not started.ok:
+            raise RuntimeError(f"[{dut_mic}] Start failed: {started.message}")
 
+        # ... your test window ...
+        await asyncio.sleep(30) 
+        # stop mic  
+        stop_mic = await stub_a.StopRecording(pb2.StopRecordingRequest(run_id=run_id, mode=pb2.MIC), timeout=20)
+
+        
+    finally:
+        await channel_a.close()
+        
     await download_file(stub_a, stop_mic.out_path, local_a)
     '''
     await asyncio.gather(

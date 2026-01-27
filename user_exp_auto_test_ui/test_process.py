@@ -41,10 +41,11 @@ class Headset(Enum):
 
 class ENV(Enum):
     Teams = 0
-    Local_audio = 1
-    Local_video = 2
-    Teams_Local = 3
-    Youtube = 4
+    Local_audio_mp3 = 1 
+    Local_audio_wav = 2
+    Teams_Local_mp3 = 3
+    Teams_Local_wav = 4
+    Youtube = 5
 
 
 class Test_case(Enum):
@@ -90,7 +91,7 @@ class Basic_Config:
     timeout_s: int = 5
     sleep_time_s: int = 30
     wake_up_time_s: int = 60
-    ENV_source: int = ENV.Local_audio.value
+    ENV_source: int = ENV.Local_audio_mp3.value
     headset_setting: int = Headset.idle.value
     test_retry_times: int = 3
     continue_fail_limit: int = 5
@@ -367,19 +368,19 @@ def env_init(
                 return False
             log_callback("VPT teams robot join the meeting...", False)
             time.sleep(10)
-        case ENV.Local_audio.value:
+        case ENV.Local_audio_mp3.value:
             log_callback("Start playing the local music...", False)
             videoControl = VideoControl(
                 path=os.path.join("\\", "local_music", "test.mp3")
             )
             videoControl.play()
-        case ENV.Local_video.value:
+        case ENV.Local_audio_wav.value:
             log_callback("Start playing the local music...", False)
             videoControl = VideoControl(
-                path=os.path.join("\\", "local_music", "test.mp4")
+                path=os.path.join("\\", "local_music", "test.wav")
             )
             videoControl.play()
-        case ENV.Teams_Local.value:
+        case ENV.Teams_Local_mp3.value:
             # open the teams call and join the meeting
             res = open_teams_call_and_join_meeting(t_control=t_control)
             if not res:
@@ -390,7 +391,22 @@ def env_init(
             # start playing local music after joining the teams call meeting
             log_callback("Start playing the local music...", False)
             videoControl = VideoControl(
-                path=os.path.join("\\", "local_music", "test.mp4")
+                path=os.path.join("\\", "local_music", "test.mp3")
+            )
+            videoControl.play()
+
+        case ENV.Teams_Local_wav.value:
+            # open the teams call and join the meeting
+            res = open_teams_call_and_join_meeting(t_control=t_control)
+            if not res:
+                log_callback("Can not join the Teams call meeting!", False)
+                close_teams_call_and_vpt()
+                return False
+            log_callback("Start the teams meeting...", False)
+            # start playing local music after joining the teams call meeting
+            log_callback("Start playing the local music...", False)
+            videoControl = VideoControl(
+                path=os.path.join("\\", "local_music", "test.wav")
             )
             videoControl.play()
         case ENV.Youtube.value:
@@ -473,21 +489,28 @@ def env_restore(env_source: ENV, log_callback) -> bool:
             close_teams_call_and_vpt()
             log_callback("End the teams meeting and VPT robot", False)
 
-        case ENV.Local_audio.value:
+        case ENV.Local_audio_mp3.value:
             # close the media player
             VideoControl.stop_play()
             log_callback("End local music playing", False)
 
-        case ENV.Local_video.value:
+        case ENV.Local_audio_wav.value:
             # close the media player
             VideoControl.stop_play()
             log_callback("End local video playing", False)
 
-        case ENV.Teams_Local.value:
+        case ENV.Teams_Local_mp3.value:
             MeetingControl.close_teams()
             log_callback("End the teams meeting", False)
             VideoControl.stop_play()
             log_callback("End local music playing", False)
+        
+        case ENV.Teams_Local_wav.value:
+            MeetingControl.close_teams()
+            log_callback("End the teams meeting", False)
+            VideoControl.stop_play()
+            log_callback("End local music playing", False)
+
 
         case ENV.Youtube.value:
             YoutubeControl.Close()
