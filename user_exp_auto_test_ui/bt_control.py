@@ -8,7 +8,8 @@ import re
 import wmi
 
 
-MOUSE_KEYBOARD_BLACK_LIST = ['Compatible Mouse','Keyboard_Filter']
+MOUSE_BLACK_LIST = ['Compatible Mouse']
+KEYBOARD_BLACK_LIST = ['Keyboard_Filter']
 
 class bt_type(Enum):
     Keyboard = 'keyboard'
@@ -84,19 +85,21 @@ class BluetoothControl:
             case bt_type.Mouse:  
                 for device in c.Win32_PnPEntity():
                     if 'Mouse' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                        for b in MOUSE_KEYBOARD_BLACK_LIST:
+                        for b in MOUSE_BLACK_LIST:
                             if b in device.name:
                                 continue
-                        return device.Name
+                            else:
+                                return device.Name
                
                     
             case bt_type.Keyboard:
                 for device in c.Win32_PnPEntity():
                     if 'Keyboard' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                        for b in MOUSE_KEYBOARD_BLACK_LIST:
+                        for b in KEYBOARD_BLACK_LIST:
                             if b in device.name:
                                 continue
-                        return device.Name
+                            else:
+                                return device.Name
 
         
         return 'None'

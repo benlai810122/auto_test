@@ -9,6 +9,7 @@ import audio_test_pb2_grpc as pb2_grpc
 from mic_recording_manager import MicRecorder as MR
 from typing import Optional 
 from audio_test_manager import AudioTestManager as ATM
+from teams_meeting_manager import MeetingControl as TC
  
 
 class DutAgent(pb2_grpc.DutAgentServicer):
@@ -44,6 +45,7 @@ class DutAgent(pb2_grpc.DutAgentServicer):
         try:
             out_path = self.rec_mgr.stop(request.run_id, request.mode)
             size = os.path.getsize(out_path)
+            TC.end_meeting()
             return pb2.StopRecordingResponse(ok=True, message="STOPPED", out_path=out_path, bytes_written=size)
         except Exception as e:
             return pb2.StopRecordingResponse(ok=False, message=str(e), out_path="", bytes_written=0)
