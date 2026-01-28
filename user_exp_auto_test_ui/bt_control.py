@@ -9,7 +9,7 @@ import wmi
 
 
 MOUSE_BLACK_LIST = ['Compatible Mouse']
-KEYBOARD_BLACK_LIST = ['Keyboard_Filter']
+KEYBOARD_BLACK_LIST = ['Keyboard_Filter','PS/2']
 
 class bt_type(Enum):
     Keyboard = 'keyboard'
@@ -74,32 +74,35 @@ class BluetoothControl:
         device = re.findall(r"(?<=FriendlyName=Headset \()(?!(?:.*Hands\-Free|.*Microsoft))(.*?)(?=\); Status=OK)", result)
         return device[0] if device else "None"
     
+    
+    
     @staticmethod
     def find_mouse_keyboard(type:bt_type) -> str:
         """
         responsible to find the connected mouse or keyboard 
         """
-        c = wmi.WMI()
 
+        def device_filter_check(dev_name:str,filter:list)->bool:
+            for b in filter:
+                if b in dev_name:
+                    return False
+            return True
+
+
+        c = wmi.WMI() 
         match type: 
             case bt_type.Mouse:  
                 for device in c.Win32_PnPEntity():
                     if 'Mouse' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                        for b in MOUSE_BLACK_LIST:
-                            if b in device.name:
-                                continue
-                            else:
-                                return device.Name
+                        if device_filter_check(str(device.Name),MOUSE_BLACK_LIST):
+                            return device.Name
                
                     
             case bt_type.Keyboard:
                 for device in c.Win32_PnPEntity():
                     if 'Keyboard' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
-                        for b in KEYBOARD_BLACK_LIST:
-                            if b in device.name:
-                                continue
-                            else:
-                                return device.Name
+                       if device_filter_check(str(device.Name),KEYBOARD_BLACK_LIST):
+                            return device.Name
 
         
         return 'None'
