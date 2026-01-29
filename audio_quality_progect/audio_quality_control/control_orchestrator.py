@@ -19,7 +19,6 @@ async def main():
     dut_loopback = "10.0.0.102:50051"  # LOOPBACK 
     run_id = time.strftime("Run_%Y%m%d_%H%M%S")
     out_dir = os.path.join(os.getcwd(), "record", run_id)
-
     channel_a = grpc.aio.insecure_channel(dut_mic)
     
     try:

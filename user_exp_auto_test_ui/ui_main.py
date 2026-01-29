@@ -56,6 +56,8 @@ import json
 import system_evt_log_manager as sys_log
 from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
 import version_manager as ver
+import os
+from pathlib import Path
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -968,9 +970,7 @@ class StatusLabel(QLabel):
         """
             )
         self.flag = not self.flag
-
-
-
+ 
 class TextYesNoDialog(QDialog):
     """
     A dialog box for user to fill the comment before updating test result to database
@@ -998,10 +998,18 @@ class TextYesNoDialog(QDialog):
     def text(self) -> str:
         return self.edit.text().strip()
 
+
+def report_folder_checking():
+    path = Path("report") 
+    if not path.exists():
+        os.makedirs("report")
+        print("Created report folder...")
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     dbm.ensure_database_setting()
     test_process.ensure_config_setting()
+    report_folder_checking()
     database_data = dbm.load_database_data("database_data.yaml")
     b_config = test_process.load_basic_config("config_basic.yaml")
     window = BTTestApp(b_config, database_data)
