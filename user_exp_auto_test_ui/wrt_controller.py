@@ -16,17 +16,19 @@ class WRTController:
     @staticmethod
     def dump_wrt_log()->bool:
         """_summary_
-        Dump wrt log 
+        Dump wrt log
         Returns:
             bool: _description_
         """
         logger.info("Starting 'cde dump_collect' to gather WRT logs.")
         try:
-            #dump log 
+            #dump log
             result = subprocess.run(
                 r'"C:\Program Files\Intel\WRT2\cde.exe" dump_collect',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
             )
+            #wait for the log dump
+            time.sleep(60)
             if result.returncode != 0:
                 logger.error(f"'dump_collect' command failed: {result.stderr.strip()}")
                 return False
