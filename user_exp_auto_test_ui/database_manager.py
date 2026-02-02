@@ -311,6 +311,33 @@ def get_wrt_version_and_preset() -> Optional[dict]:
         "preset": pre_m.group(1) if pre_m else None,
     }
 
+def database_data_renew(data:Database_data):
+    driver_info = get_driver_versions()
+    wrt_info = get_wrt_version_and_preset()
+    data.serial_num = get_serial_number() 
+    data.os_version = get_os_version()
+    data.platform_brand = get_platform_brand() 
+    data.platform = get_platform_name() 
+    data.platform_bios = get_bios_version()
+    data.cpu = get_cpu_name() 
+    if driver_info.get(DRIVER_WLAN):
+        data.wlan = driver_info.get(DRIVER_WLAN)
+    if driver_info.get(DRIVER_BT):
+        data.bt_driver = driver_info.get(DRIVER_BT) 
+    elif driver_info.get(DRIVER_BT_DUAL):
+        data.bt_driver = driver_info.get(DRIVER_BT_DUAL)
+    if driver_info.get(DRIVER_WIFI):
+        data.wifi_driver = driver_info.get(DRIVER_WIFI)
+    if driver_info.get(DRIVER_ISST):
+        data.audio_driver = driver_info.get(DRIVER_ISST)
+    if wrt_info['ver']:
+        data.wrt_version = wrt_info['ver']
+    if wrt_info['preset']:
+        data.wrt_preset = wrt_info['preset']
+    data.msft_teams_version = get_teams_version() 
+    data.wifi_name = get_connected_wifi_name() 
+    data.wifi_band = get_connected_wifi_band()
+ 
  
 if __name__ == '__main__':
     get_serial_number()

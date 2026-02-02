@@ -58,6 +58,8 @@ from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
 import version_manager as ver
 import os
 from pathlib import Path
+from test_process import ENV
+
 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
@@ -71,7 +73,7 @@ class LogSignal(QObject):
 class BTTestApp(QWidget):
 
     b_config: Basic_Config = None
-    task_schedule: list[str] = []
+    task_schedule_list: list[str] = []
     test_thread: threading = None
     power_states_clicking: str = ""
     test_case_clicking: str = ""
@@ -83,7 +85,7 @@ class BTTestApp(QWidget):
         self.database_data = database_data
         self.setWindowTitle(f"Intel User Experience Auto Test ver: {ver.get_version()}")
         screen_width, screen_height = pyautogui.size()
-        self.setGeometry(100, 100, int(screen_width*0.7), int(screen_height*0.7))
+        self.setGeometry(100, 100, int(screen_width*0.7), int(screen_height*0.8))
         self.init_ui()
         self.bt_device_check()
         self.serial_port_check()
@@ -208,6 +210,22 @@ class BTTestApp(QWidget):
         power_states_layout.addLayout(layout_P_1)
         power_states_layout.addWidget(self.btn_ps_add)
         self.power_states_group.setLayout(power_states_layout)
+
+        # --- Patten Selection ---
+        self.test_patten_group = QGroupBox("Patten Selection")
+        patten_layout = QVBoxLayout()
+        patten_level_1 = QHBoxLayout()
+        self.btn_tc1 = QPushButton("S3+Mouse+Teams")
+        self.btn_tc1.clicked.connect(partial(self.patten_setting,"S3+Mouse+Teams"))
+        self.btn_tc2 = QPushButton("S4+Music")
+        self.btn_tc2.clicked.connect(partial(self.patten_setting,"S4+Music"))
+        self.btn_tc3 = QPushButton("S4+Teams")
+        self.btn_tc3.clicked.connect(partial(self.patten_setting,"S4+Teams"))
+        patten_level_1.addWidget(self.btn_tc1)
+        patten_level_1.addWidget(self.btn_tc2)
+        patten_level_1.addWidget(self.btn_tc3)
+        patten_layout.addLayout(patten_layout)
+        self.test_patten_group.setLayout(patten_level_1)
 
         # --- Test Case Selection ---
         self.test_case_group = QGroupBox("Test Case Selection")
@@ -472,6 +490,7 @@ class BTTestApp(QWidget):
         layout_1.addWidget(self.status_label)
         layout_1.addWidget(self.device_group)
         layout_1.addWidget(self.power_states_group)
+        layout_1.addWidget(self.test_patten_group)
         layout_1.addWidget(self.test_case_group)
         layout_1.addWidget(self.log_group)
         layout_1.addLayout(button_layout)
@@ -489,7 +508,7 @@ class BTTestApp(QWidget):
             case "ps_add":
                 # power states:
                 if self.power_states_clicking:
-                    self.task_schedule.append(self.power_states_clicking)
+                    self.task_schedule_list.append(self.power_states_clicking)
                     item_case = QStandardItem(self.power_states_clicking)
                     item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
                     state = QStandardItem("")
@@ -499,7 +518,7 @@ class BTTestApp(QWidget):
             case "tc_add":
                 # power states:
                 if self.test_case_clicking:
-                    self.task_schedule.append(self.test_case_clicking)
+                    self.task_schedule_list.append(self.test_case_clicking)
                     item_case = QStandardItem(self.test_case_clicking)
                     item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font
                     state = QStandardItem("")
@@ -510,7 +529,7 @@ class BTTestApp(QWidget):
                 row_count = self.task_schedule_model.rowCount()
                 if row_count:
                     self.task_schedule_model.removeRow(row_count - 1)
-                    self.task_schedule.pop()
+                    self.task_schedule_list.pop()
 
     def test_times_hours_chose(self):
         if self.ck_btn_times.isChecked():
@@ -635,7 +654,7 @@ class BTTestApp(QWidget):
                     if int(process - start) >= self.b_config.test_times*3600:
                         break
                 row = 0
-                for test_case in self.task_schedule:
+                for test_case in self.task_schedule_list:
                     if self.thread_stop_flag:
                         break
                     self.log_signal.cell.emit(row, 1, "running...")
@@ -734,6 +753,34 @@ class BTTestApp(QWidget):
             self.btn_quit.setDisabled(True)
             self.status_label.set_state("WAITING")
 
+    def patten_setting(self,name: str): 
+        match name:
+            case 'S3+Mouse+Teams':
+                self.b_config.task_schedule = "Modern_Standby,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.sleep_time_s = 60
+                self.b_config.wake_up_time_s = 30
+                self.b_config.test_times = 1000
+                self.b_config.ENV_source = ENV.Teams_Local_wav.value
+                self.b_config.continue_fail_limit = 1
+                self.ui_renew()
+                
+            case 'S4+Music':
+                self.b_config.task_schedule = "Hibernation,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.sleep_time_s = 60
+                self.b_config.wake_up_time_s = 30
+                self.b_config.test_times = 1000
+                self.b_config.ENV_source = ENV.Local_audio_mp3.value
+                self.b_config.continue_fail_limit = 1
+                self.ui_renew()
+            case 'S4+Teams':
+                self.b_config.task_schedule = "Hibernation,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.sleep_time_s = 60
+                self.b_config.wake_up_time_s = 30
+                self.b_config.test_times = 1000
+                self.b_config.ENV_source = ENV.Teams_Local_wav.value
+                self.b_config.continue_fail_limit = 1
+                self.ui_renew()
+
     def disable_all_item(self):
         self.power_states_group.setDisabled(True)
         self.setting_group.setDisabled(True)
@@ -788,11 +835,13 @@ class BTTestApp(QWidget):
         self.database_data = database_data
 
     def ui_renew(self):
+        self.task_schedule_list.clear()
+        self.task_schedule_model.clear()
         self.slider_test_times.setValue(self.b_config.test_times)
         # task schedule init
         if self.b_config.task_schedule != "":
-            self.task_schedule = self.b_config.task_schedule.split(",")
-            for test_item in self.task_schedule:
+            self.task_schedule_list = self.b_config.task_schedule.split(",")
+            for test_item in self.task_schedule_list:
                 if test_item:
                     item_case = QStandardItem(test_item)
                     item_case.setFont(QFont("Arial", 12, QFont.Bold))  # Bold font 
@@ -801,7 +850,7 @@ class BTTestApp(QWidget):
                     new_row = [item_case, state]
                     self.task_schedule_model.appendRow(new_row)
         else:
-            self.task_schedule.clear()
+            self.task_schedule_list.clear()
 
         #def setting
         self.ck_btn_times.click()
@@ -840,7 +889,7 @@ class BTTestApp(QWidget):
     def save_config(self):
         # update task schedule
         self.b_config.task_schedule = ""
-        for test_item in self.task_schedule:
+        for test_item in self.task_schedule_list:
             if test_item != "":
                 self.b_config.task_schedule += test_item + ","
         self.b_config.task_schedule = self.b_config.task_schedule[:-1]
@@ -1012,6 +1061,7 @@ if __name__ == "__main__":
     report_folder_checking()
     database_data = dbm.load_database_data("database_data.yaml")
     b_config = test_process.load_basic_config("config_basic.yaml")
+    dbm.database_data_renew(database_data)
     window = BTTestApp(b_config, database_data)
     window.show()
     sys.exit(app.exec_())
