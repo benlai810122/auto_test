@@ -59,8 +59,7 @@ import version_manager as ver
 import os
 from pathlib import Path
 from test_process import ENV
-
-
+ 
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
     error = pyqtSignal(str)
@@ -658,9 +657,11 @@ class BTTestApp(QWidget):
                     if self.thread_stop_flag:
                         break
                     self.log_signal.cell.emit(row, 1, "running...")
-                    test_result = test_process.run_test(
+                    test_result, test_message = test_process.run_test(
                         test_case, self.b_config, self.log_signal.log.emit
                     )
+                    if test_message != '':
+                        self.log_signal.error.emit(test_message)
                     if test_result:
                         self.log_signal.cell.emit(row, 1, "Pass")
                     else:
@@ -677,7 +678,6 @@ class BTTestApp(QWidget):
                             self.log_signal.log.emit("Dump wrt log success!", False)
                         else:
                             self.log_signal.log.emit("Fail to Dump wrt log!", False)
- 
                     row += 1
                 test_cycle+= 1
                 self.log_signal.log.emit(f"Current test Cycle:{test_cycle}", False)

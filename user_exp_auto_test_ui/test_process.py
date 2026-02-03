@@ -4,7 +4,7 @@ from pynput.keyboard import Key, Controller
 from teams_meeting_control import MeetingControl
 from teams_call.auto_vpt.vpt_contoller import VPTControl
 from wrt_controller import WRTController
-from audio_detect_control import AudioDetectController
+from audio_detect_control import AudioDetectController as ADC
 from video_control import VideoControl
 from utils import Utils
 from enum import Enum
@@ -26,6 +26,7 @@ import pygetwindow as gw
 from database_manager import Database_data
 from pathlib import Path
 import shutil
+from typing import Tuple
 
 
 class Power_States(Enum):
@@ -429,11 +430,27 @@ def env_init(
 
 def headset_output_test(
     b_config: Basic_Config, ser: serial.Serial, log_callback
-) -> bool:
+) -> Tuple[bool,str]:
+    
     log_callback("Start headset output function test...", False)
     test_time = 0
     res_output = False
-
+    message = ""
+    #check the headset endpoit exist:
+    audio_detect = ADC(headset=b_config.headset)
+    if audio_detect.device_checking()<0:
+        # waiting for 100 sec and check again
+        log_callback("Can't detect the headset endpoint, waiting 100s then check again...", False)
+        message = "[Warn] Headset endpoint didn't resume at time! "
+        time.sleep(100)
+        if not audio_detect.device_checking():
+            log_callback("Headset endpoint lost!", False)
+            message = "[Error] Headset Endpoint lost!"
+            audio_detect.audio_dect_terminate()
+            return False, message
+    audio_detect.audio_dect_terminate()
+    
+    #set the volume to 100 %
     for _ in range(50):
         pyautogui.press("volumeup")
         time.sleep(0.1)
@@ -446,14 +463,11 @@ def headset_output_test(
 
         if not res_output:
             log_callback("headset output test fail, retry again!", False)
-        if test_time > b_config.test_retry_times:
-            #log_callback("***Headset output function have some issue!***", False)
-            #log_callback("Dump WRT log...", False)
-            #WRTController.dump_wrt_log(log_path=b_config.report_path)
-            return False
+        if test_time > b_config.test_retry_times: 
+            return False, message
         test_time += 1
     log_callback("Headset output function test finish", False)
-    return res_output
+    return res_output , message
 
 
 def headset_input_test(
@@ -464,13 +478,10 @@ def headset_input_test(
     test_time = 0
     res_input = False
     while not res_input:
-        ad_Controller = AudioDetectController(headset=b_config.headset, threshold=150)
+        ad_Controller = ADC(headset=b_config.headset, threshold=150)
         buzzer_buzzing(ser=ser, command=CMD_buzzer)
         res_input = ad_Controller.audio_detect()
-        if test_time > b_config.test_retry_times:
-            #log_callback("***Headset input function have some issue!***", False)
-            #log_callback("Dump WRT log...", False)
-            #WRTController.dump_wrt_log(log_path=b_config.report_path)
+        if test_time > b_config.test_retry_times: 
             return False
         test_time += 1
     log_callback("Headset input function test finish", False)
@@ -608,7 +619,7 @@ def arduino_serial_port_reset(ser: serial.Serial, serial_port: str):
     return serial.Serial(serial_port, 115200)
 
 
-def wait_for_port(port_name, timeout=30):
+def wait_for_port(port_name, timeout=5):
     """Wait until a specific COM port reappears"""
     start = time.time()
     while time.time() - start < timeout:
@@ -772,7 +783,7 @@ def mouse_move_to_safe_place():
     pyautogui.click(x=screen_width - 50, y=50)
 
 
-def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
+def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool, str]:
     """_summary_
     Args:
         test_case (str): test case
@@ -785,6 +796,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
     # connect to arduino board
     global g_COM_PORT
     res = True
+    message = ''
     g_COM_PORT = b_config.com
     ser: serial.Serial = None
 
@@ -792,7 +804,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
     if test_case == Test_case.Idle.value:
         log_callback(f"waiting for {b_config.wake_up_time_s} sec...", False)
         time.sleep(b_config.wake_up_time_s)
-        return True
+        return True, message
 
     if not g_COM_PORT:
         try:
@@ -801,19 +813,22 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             )
         except:
             log_callback("Can not find the arduino board!", False)
-            return False
+            message = "[Error] Arduino board lost!"
+            return False ,message
 
     try:
-        if wait_for_port(g_COM_PORT, 30):
+        if wait_for_port(g_COM_PORT, 5):
             ser = serial.Serial(g_COM_PORT, 115200, timeout=30)
             time.sleep(5)
         else:
             log_callback(f"Cant not find the serial device", False)
-            return False
+            message = "[Error] Serial port missing!"
+            return False, message
 
     except Exception as ex:
         log_callback(f"Serial port connection error:{ex}", False)
-        return False
+        message = "[Error] Serial port connect issue!"
+        return False, message
 
     log_callback(f"test case: {test_case}", False)
 
@@ -940,7 +955,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
             )
 
         case Test_case.Headset_output.value:
-            res = headset_output_test(
+            res,message = headset_output_test(
                 b_config=b_config, ser=ser, log_callback=log_callback
             )
 
@@ -1005,7 +1020,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> bool:
     except:
         pass
 
-    return res
+    return res, message
 
 
 if __name__ == "__main__":

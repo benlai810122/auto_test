@@ -24,19 +24,19 @@ class AudioDetectController:
         self.__chunk_size = chunk_size
         self.__threshold = threshold
         self.__timeout = timeout
+        self.__audio = pyaudio.PyAudio()
   
 
     def audio_detect(self)->bool:
         res = False
-        audio = pyaudio.PyAudio()
         stream = None
-        dev_index = self.__device_checking(audio=audio)
+        dev_index = self.device_checking()
         print(dev_index)
         if dev_index < 0:
             return False
         
         try:
-            stream =  audio.open(format=self.__sample_format,
+            stream =  self.__audio.open(format=self.__sample_format,
                         channels=self.__channels,
                         rate=self.__fs,
                         input=True,
@@ -56,35 +56,38 @@ class AudioDetectController:
                 time_counter+=0.01
             stream.stop_stream()
             stream.close()
-            audio.terminate()
+            self.__audio.terminate()
         except OSError as os_error:
             if stream and stream.is_active:
                 stream.stop_stream()
                 stream.close()
-            audio.terminate()
+            self.__audio.terminate()
             logger.error(f'Have unexpect error when test output function:{os_error}')
             return True #ignore the os_error
         return res
 
-        
-        
 
-    def __device_checking(self,audio:pyaudio.PyAudio)->int:
-        info = audio.get_host_api_info_by_index(0)
+    def device_checking(self)->int:
+        info = self.__audio.get_host_api_info_by_index(0)
         numdevices = info.get('deviceCount')
         for i in range(0, numdevices):
-            if (audio.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-                dev_name = audio.get_device_info_by_host_api_device_index(0, i).get('name')
+            if (self.__audio.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+                dev_name = self.__audio.get_device_info_by_host_api_device_index(0, i).get('name')
                 print(dev_name)
                 if self.__headset_name in dev_name:
                     return i
         return -1
+    
+    def audio_dect_terminate(self):
+        if self.__audio :
+            self.__audio.terminate()
 
 
 if __name__ == '__main__':
     headset = "WL5024"
     ad_Controller = AudioDetectController(headset= headset, threshold=500)
-    if ad_Controller.audio_detect():
-        print('sound detected!')
-    else:
-        print('sound not detected!')
+    print(ad_Controller.device_checking())
+    #if ad_Controller.audio_detect():
+        #print('sound detected!')
+    #else:
+        #print('sound not detected!')
