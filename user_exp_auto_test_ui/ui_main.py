@@ -295,7 +295,7 @@ class BTTestApp(QWidget):
         func_level_4 = QHBoxLayout()
         self.ck_btn_env_init = QRadioButton("Environment Initialization")
         self.ck_btn_env_restore = QRadioButton("Environment Restore")
-        self.emtpy4_3 = QLabel("")
+        self.ck_btn_h_c_c = QRadioButton("Headset Connection Check")
         self.emtpy4_4 = QLabel("")
         self.ck_btn_env_init.clicked.connect(
             partial(self.test_case_setting, Test_case.Environment_init.value)
@@ -303,9 +303,12 @@ class BTTestApp(QWidget):
         self.ck_btn_env_restore.clicked.connect(
             partial(self.test_case_setting, Test_case.Environment_restore.value)
         )
+        self.ck_btn_h_c_c.clicked.connect(
+            partial(self.test_case_setting, Test_case.Headset_connect_check.value)
+        )
         func_level_4.addWidget(self.ck_btn_env_init)
         func_level_4.addWidget(self.ck_btn_env_restore)
-        func_level_4.addWidget(self.emtpy4_3)
+        func_level_4.addWidget(self.ck_btn_h_c_c)
         func_level_4.addWidget(self.emtpy4_4)
 
         self.btn_tc_add = QPushButton("Add")
@@ -665,6 +668,7 @@ class BTTestApp(QWidget):
                     if test_result:
                         self.log_signal.cell.emit(row, 1, "Pass")
                     else:
+                        #setting error message
                         error_message = (
                             f"Test case: {test_case} Item:{row+1} Cycles:{test_cycle}"
                         )
@@ -678,6 +682,10 @@ class BTTestApp(QWidget):
                             self.log_signal.log.emit("Dump wrt log success!", False)
                         else:
                             self.log_signal.log.emit("Fail to Dump wrt log!", False)
+                        # if test_case = evn_init or headset_connect_check, stop test immediately
+                        if test_case == Test_case.Environment_init.value or test_case == Test_case.Headset_connect_check.value:
+                            break
+
                     row += 1
                 test_cycle+= 1
                 self.log_signal.log.emit(f"Current test Cycle:{test_cycle}", False)
@@ -756,7 +764,7 @@ class BTTestApp(QWidget):
     def patten_setting(self,name: str): 
         match name:
             case 'S3+Mouse+Teams':
-                self.b_config.task_schedule = "Modern_Standby,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.task_schedule = "Modern_Standby,Idle,Headset_connect_check,Environment_Initialization,Headset_Output_Check,Environment_Restore"
                 self.b_config.sleep_time_s = 60
                 self.b_config.wake_up_time_s = 30
                 self.b_config.test_times = 1000
@@ -765,7 +773,7 @@ class BTTestApp(QWidget):
                 self.ui_renew()
                 
             case 'S4+Music':
-                self.b_config.task_schedule = "Hibernation,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.task_schedule = "Hibernation,Idle,Headset_connect_check,Environment_Initialization,Headset_Output_Check,Environment_Restore"
                 self.b_config.sleep_time_s = 60
                 self.b_config.wake_up_time_s = 30
                 self.b_config.test_times = 1000
@@ -773,7 +781,7 @@ class BTTestApp(QWidget):
                 self.b_config.continue_fail_limit = 1
                 self.ui_renew()
             case 'S4+Teams':
-                self.b_config.task_schedule = "Hibernation,Idle,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.task_schedule = "Hibernation,Idle,Headset_connect_check,Environment_Initialization,Headset_Output_Check,Environment_Restore"
                 self.b_config.sleep_time_s = 60
                 self.b_config.wake_up_time_s = 30
                 self.b_config.test_times = 1000

@@ -2,6 +2,7 @@ import pyaudio
 import numpy as np
 import time
 from utils import log as logger
+from pycaw.pycaw import AudioUtilities
 
 class AudioDetectController:
     '''
@@ -81,12 +82,14 @@ class AudioDetectController:
     def audio_dect_terminate(self):
         if self.__audio :
             self.__audio.terminate()
-
-
+ 
+     
 if __name__ == '__main__':
     headset = "WL5024"
     ad_Controller = AudioDetectController(headset= headset, threshold=500)
-    print(ad_Controller.device_checking())
+     
+    #else:
+        #print('device dont exist')
     #if ad_Controller.audio_detect():
         #print('sound detected!')
     #else:

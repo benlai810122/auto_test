@@ -65,6 +65,7 @@ class Test_case(Enum):
     Mouse_latency = "Mouse_Latency_Test"
     Environment_init = "Environment_Initialization"
     Environment_restore = "Environment_Restore"
+    Headset_connect_check = "Headset_connect_check"
 
 
 # Arduino cmd setting
@@ -428,6 +429,25 @@ def env_init(
     return True
 
 
+def headset_connect_dected(b_config: Basic_Config,log_callback)-> Tuple[bool,str]:
+    #check the headset endpoit exist:
+    audio_detect = ADC(headset=b_config.headset)
+    message = ''
+    if audio_detect.device_checking()<0:
+        # waiting for 100 sec and check again
+        log_callback("Headset disconnect, waiting 100s then check again...", False)
+        message = "[Warn] Headset connection didn't resume at time! "
+        audio_detect.audio_dect_terminate()
+        time.sleep(100)
+        audio_detect = ADC(headset=b_config.headset)
+        if audio_detect.device_checking() <0:
+            log_callback("Headset disconnect!", False)
+            audio_detect.audio_dect_terminate()
+            return False, message
+    audio_detect.audio_dect_terminate()
+    return True, message
+
+
 def headset_output_test(
     b_config: Basic_Config, ser: serial.Serial, log_callback
 ) -> Tuple[bool,str]:
@@ -436,20 +456,7 @@ def headset_output_test(
     test_time = 0
     res_output = False
     message = ""
-    #check the headset endpoit exist:
-    audio_detect = ADC(headset=b_config.headset)
-    if audio_detect.device_checking()<0:
-        # waiting for 100 sec and check again
-        log_callback("Can't detect the headset endpoint, waiting 100s then check again...", False)
-        message = "[Warn] Headset endpoint didn't resume at time! "
-        time.sleep(100)
-        if not audio_detect.device_checking():
-            log_callback("Headset endpoint lost!", False)
-            message = "[Error] Headset Endpoint lost!"
-            audio_detect.audio_dect_terminate()
-            return False, message
-    audio_detect.audio_dect_terminate()
-    
+     
     #set the volume to 100 %
     for _ in range(50):
         pyautogui.press("volumeup")
@@ -1005,6 +1012,9 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
 
         case Test_case.Environment_restore.value:
             res = env_restore(env_source=b_config.ENV_source, log_callback=log_callback)
+
+        case Test_case.Headset_connect_check.value:
+            res,message = headset_connect_dected(b_config,log_callback)
 
         case "test":
             serial_test(ser=ser)
