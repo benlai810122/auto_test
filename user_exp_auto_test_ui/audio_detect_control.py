@@ -2,7 +2,6 @@ import pyaudio
 import numpy as np
 import time
 from utils import log as logger
-from pycaw.pycaw import AudioUtilities
 
 class AudioDetectController:
     '''
