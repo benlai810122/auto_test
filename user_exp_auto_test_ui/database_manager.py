@@ -84,6 +84,7 @@ class Database_data:
     wifi_name:str = ""
     wifi_band:str = ""
     comment:str = ""
+    music_type:str = "None"
 
 
 IP = "192.168.70.122"

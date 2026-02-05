@@ -214,12 +214,15 @@ class BTTestApp(QWidget):
         self.test_patten_group = QGroupBox("Patten Selection")
         patten_layout = QVBoxLayout()
         patten_level_1 = QHBoxLayout()
+        self.btn_tc0 = QPushButton("S3+Mouse+music")
+        self.btn_tc0.clicked.connect(partial(self.patten_setting,"S3+Mouse+music"))
         self.btn_tc1 = QPushButton("S3+Mouse+Teams")
         self.btn_tc1.clicked.connect(partial(self.patten_setting,"S3+Mouse+Teams"))
         self.btn_tc2 = QPushButton("S4+Music")
         self.btn_tc2.clicked.connect(partial(self.patten_setting,"S4+Music"))
         self.btn_tc3 = QPushButton("S4+Teams")
         self.btn_tc3.clicked.connect(partial(self.patten_setting,"S4+Teams"))
+        patten_level_1.addWidget(self.btn_tc0)
         patten_level_1.addWidget(self.btn_tc1)
         patten_level_1.addWidget(self.btn_tc2)
         patten_level_1.addWidget(self.btn_tc3)
@@ -554,7 +557,17 @@ class BTTestApp(QWidget):
         self.database_data.duration = str(duration)
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
+        self.database_data.microsoft_teams = "Y" if 'Teams' in ENV(b_config.ENV_source).name else "N"
         self.database_data.sys_event_log = self.error_message.toPlainText()
+        if Test_case.Environment_init.value in database_data.scenario:
+            if 'wav' in ENV(self.b_config.ENV_source).name:
+                self.database_data.music_type  = 'wav'
+            elif 'mp3' in ENV(self.b_config.ENV_source).name:
+                self.database_data.music_type = 'mp3'
+            elif 'Youtube' in ENV(self.b_config.ENV_source).name:
+                self.database_data.music_type = 'youtube'
+        else:
+            self.database_data.music_type = 'None'
 
         # save_report after test finish
         test_process.save_report(
@@ -763,12 +776,20 @@ class BTTestApp(QWidget):
 
     def patten_setting(self,name: str): 
         match name:
+            case 'S3+Mouse+Music':
+                self.b_config.task_schedule = "Modern_Standby,Idle,Headset_connect_check,Environment_Initialization,Headset_Output_Check,Environment_Restore"
+                self.b_config.sleep_time_s = 60
+                self.b_config.wake_up_time_s = 30
+                self.b_config.test_times = 1000
+                self.b_config.ENV_source = ENV.Local_audio_mp3.value
+                self.b_config.continue_fail_limit = 1
+                self.ui_renew()
             case 'S3+Mouse+Teams':
                 self.b_config.task_schedule = "Modern_Standby,Idle,Headset_connect_check,Environment_Initialization,Headset_Output_Check,Environment_Restore"
                 self.b_config.sleep_time_s = 60
                 self.b_config.wake_up_time_s = 30
                 self.b_config.test_times = 1000
-                self.b_config.ENV_source = ENV.Teams_Local_wav.value
+                self.b_config.ENV_source = ENV.Teams_Local_mp3.value
                 self.b_config.continue_fail_limit = 1
                 self.ui_renew()
                 
@@ -785,7 +806,7 @@ class BTTestApp(QWidget):
                 self.b_config.sleep_time_s = 60
                 self.b_config.wake_up_time_s = 30
                 self.b_config.test_times = 1000
-                self.b_config.ENV_source = ENV.Teams_Local_wav.value
+                self.b_config.ENV_source = ENV.Teams_Local_mp3.value
                 self.b_config.continue_fail_limit = 1
                 self.ui_renew()
 
