@@ -27,7 +27,8 @@ from database_manager import Database_data
 from pathlib import Path
 import shutil
 from typing import Tuple
-
+import subprocess
+import pyscreenshot as ImageGrab
 
 class Power_States(Enum):
     idle = 0
@@ -135,6 +136,18 @@ def create_report_folder(base_path="report") -> str:
     print(f"Report folder created at: {folder_path}")
 
     return folder_path
+
+def screen_shoot_bluetooth_status_(path:str):
+    # open window's bluetooth and device pages
+    subprocess.Popen(["explorer.exe", "ms-settings:bluetooth"])
+    time.sleep(5)
+
+    #screen shoot and save it to report folder
+    img = ImageGrab.grab()
+    picture_name = "bluetooth_status.png"
+    picture_name = os.path.join(path,picture_name)
+    img.save(picture_name, quality=90)
+
 
 
 def save_report(
@@ -1023,6 +1036,10 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             log_callback("Not match any test case, please check!", False)
             res = False
 
+    # screen shoot the bluetooth status if res = false
+    if not res:
+        screen_shoot_bluetooth_status_(b_config.report_path)
+
     # close serial connect after testing:
     try:
         print("Relsease serial port!")
@@ -1034,12 +1051,5 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
 
 
 if __name__ == "__main__":
-    """
-    b_config  = Basic_Config()
-    def log_callback(meg:str):
-        print(meg)
-        logger.info(meg)
-    test_case = 'keyboard_function'
-    run_test(test_case,b_config,log_callback=log_callback)
-    """
-    print(gw.getAllTitles())
+   screen_shoot_bluetooth_status_('report')
+   
