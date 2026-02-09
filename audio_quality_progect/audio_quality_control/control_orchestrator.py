@@ -13,7 +13,6 @@ async def download_file(stub, remote_path: str, local_path: str):
         async for chunk in resp_stream:
             f.write(chunk.data)
 
- 
 async def main():
     dut_mic = "192.168.70.100:50051"  # MIC
     dut_loopback = "10.0.0.102:50051"  # LOOPBACK 
