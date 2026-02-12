@@ -59,15 +59,16 @@ import version_manager as ver
 import os
 from pathlib import Path
 from test_process import ENV
+import shutil
  
 class LogSignal(QObject):
     log = pyqtSignal(str, bool)
     error = pyqtSignal(str)
     cell = pyqtSignal(int, int, str)
     process = pyqtSignal(int, int)
-    save_report_database_data = pyqtSignal(int, int, int)
+    save_report_database_data = pyqtSignal(int, int, int,bool)
     enable = pyqtSignal()
-    set_stutas = pyqtSignal(int, int, list)
+    set_stutas = pyqtSignal(int, int, list,bool)
 
 class BTTestApp(QWidget):
 
@@ -548,12 +549,16 @@ class BTTestApp(QWidget):
         # setting the power states
         self.power_states_clicking = power_states
 
-    def save_report_and_renew_database_data(self, test_cycle: int, test_fail_times: int, duration: int):
+    def save_report_and_renew_database_data(self, test_cycle: int, test_fail_times: int, duration: int, true_fail_flag:bool):
         # update database data
         self.database_data.scenario = self.b_config.task_schedule
         self.database_data.fail_cycles = str(test_fail_times)
         self.database_data.cycles = str(test_cycle)
-        self.database_data.result = "Pass" if not test_fail_times else "Fail"
+        if true_fail_flag:
+            self.database_data.result = "Fail"
+        else:
+            self.database_data.result = "Warning" if test_fail_times else "Pass"
+        
         self.database_data.duration = str(duration)
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
@@ -581,11 +586,14 @@ class BTTestApp(QWidget):
             self.error_message.toPlainText()
         )
 
-    def set_stutas(self, test_cycle: int, test_fail_times: int, bt_warning_msg:str):
+    def set_stutas(self, test_cycle: int, test_fail_times: int, bt_warning_msg:list,true_fail_flag:bool):
         # set the ui state after test finish
         # status label
         if test_fail_times:
-            self.status_label.set_state("FAIL")
+            if true_fail_flag:
+                self.status_label.set_state("FAIL")
+            else:
+                self.status_label.set_state("WARNING")
         else:
             self.status_label.set_state("PASS")
             
@@ -661,6 +669,7 @@ class BTTestApp(QWidget):
             test_fail_continue_times = 0
             start,process = time.perf_counter(), time.perf_counter()
             start_float_time = time.time()
+            true_fail_flag = False
             while True: 
                 if self.ck_btn_times.isChecked():
                     if test_cycle >= self.b_config.test_times:
@@ -724,33 +733,35 @@ class BTTestApp(QWidget):
                     self.log_signal.error.emit(
                         "Out of maxium continue fail range, stop testing!"
                     )
+                    true_fail_flag = True
                     break
+            # Test finish!
             end = time.perf_counter() 
             # copy wrt log to specific folder
             if  WRTController.copy_wrt_log_to_file(start_float_time,b_config.report_path):
                 self.log_signal.log.emit("wrt log copy success!", False)
             else :
                 self.log_signal.log.emit("wrt log copy fail!", False)
-
             bt_warn_message = []
             # analyze wrt log code
             bt_warn_message.extend(WRTController.wrt_error_code_filter(b_config.report_path,WRT_CODE_WHITE_LIST)) 
             # dump the system event log and analyze
             sys_log.export_system_log_last_seconds(int(end-start),b_config.report_path)
             bt_warn_message.extend(sys_log.filter_evtx_by_event_ids(b_config.report_path,sys_log.EVENT_LIST))
-            
             # update UI after test
-            self.log_signal.set_stutas.emit(test_cycle, test_fail_times,bt_warn_message)
-
+            self.log_signal.set_stutas.emit(test_cycle, test_fail_times,bt_warn_message,true_fail_flag)
             # dump log aftet test
             self.log_signal.log.emit("Test Finish! generate final report...", True)
             self.log_signal.save_report_database_data.emit(
-                test_cycle, test_fail_times, int(end - start)
+                test_cycle, test_fail_times, int(end - start),true_fail_flag 
             )
             self.log_signal.log.emit(
                 "Final report is ready and dump to report folder!", True
             )
             self.log_signal.enable.emit()
+
+            #copy log.txt to specific log folder
+            shutil.copy("log.txt", b_config.report_path)
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
@@ -840,9 +851,12 @@ class BTTestApp(QWidget):
         self.led_keyboard.setText(keyboard)
         self.b_config.headset = headset
         # database
-        self.database_data.mouse = mouse
-        self.database_data.keyboard = keyboard
-        self.database_data.headset = headset
+        if mouse != 'None':
+            self.database_data.mouse = mouse
+        if keyboard != 'None':
+            self.database_data.keyboard = keyboard
+        if headset != 'None':
+            self.database_data.headset = headset
 
     def advance_setting(self):
         self.settings_window = AdvanceSetting(self.b_config)
@@ -1004,6 +1018,7 @@ class StatusLabel(QLabel):
             "STOP": ("STOP", "black"),
             "PASS": ("PASS", "green"),
             "FAIL": ("FAIL", "red"),
+            "WARNING": ("WARNING", "yellow"),
         }
         text, color = styles.get(state, ("UNKNOWN", "blue"))
         self.setText(text)
