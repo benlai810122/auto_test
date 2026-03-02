@@ -557,12 +557,10 @@ class BTTestApp(QWidget):
         if true_fail_flag:
             self.database_data.result = "Fail"
         else:
-            self.database_data.result = "Warning" if test_fail_times else "Pass"
-        
+            self.database_data.result = "Warning" if test_fail_times else "Pass"   
         self.database_data.duration = str(duration)
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
-        self.database_data.microsoft_teams = "Y" if 'Teams' in ENV(b_config.ENV_source).name else "N"
         self.database_data.sys_event_log = self.error_message.toPlainText()
         if Test_case.Environment_init.value in database_data.scenario:
             if 'wav' in ENV(self.b_config.ENV_source).name:
@@ -571,8 +569,10 @@ class BTTestApp(QWidget):
                 self.database_data.music_type = 'mp3'
             elif 'Youtube' in ENV(self.b_config.ENV_source).name:
                 self.database_data.music_type = 'youtube'
+            self.database_data.microsoft_teams = "Y" if 'Teams' in ENV(b_config.ENV_source).name else "N"
         else:
             self.database_data.music_type = 'None'
+            self.database_data.microsoft_teams = "N"
 
         # save_report after test finish
         test_process.save_report(
