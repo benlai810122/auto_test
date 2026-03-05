@@ -6,6 +6,8 @@ from utils import Utils
 import os
 import re
 import wmi
+from pathlib import Path
+from typing import List
 
 
 MOUSE_BLACK_LIST = ['Compatible Mouse']
@@ -20,6 +22,7 @@ class BluetoothControl:
     """
     responsible to control bluetooth devices behavior
     """
+
  
     @staticmethod
     def disconnect_device(target_name: str) -> str:
@@ -27,7 +30,6 @@ class BluetoothControl:
         responsible to connect specific bluetooth device
         #Need to install "Bluetooth Command Line Tools" before using "btpair" cmd at powershell
         """
-
         cmd = "btpair -u -n" + target_name
         result = Utils.run_sync_ps_cmd(cmd)
         return result
@@ -87,6 +89,17 @@ class BluetoothControl:
                 if b in dev_name:
                     return False
             return True
+        
+        def mosue_white_list_download()->list[str]:
+            path = Path("mouse_white_list.txt")
+            if not path.exists():
+                print("mouse white list file not found!")
+                return []
+            with path.open("r", encoding="utf-8") as f:
+                return [line.strip() for line in f if line.strip()]
+            
+        
+        mosue_white_list = mosue_white_list_download()
 
 
         c = wmi.WMI() 
@@ -96,6 +109,9 @@ class BluetoothControl:
                     if 'Mouse' in str(device.Name) and 'Standard' not in str(device.Name) and 'HID' not in str(device.Name):
                         if device_filter_check(str(device.Name),MOUSE_BLACK_LIST):
                             return device.Name
+                    for mw in mosue_white_list:
+                        if mw in str(device.Name):
+                            return device.Name 
                
                     
             case bt_type.Keyboard:

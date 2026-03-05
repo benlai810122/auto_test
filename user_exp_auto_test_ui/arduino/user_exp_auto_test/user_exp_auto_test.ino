@@ -11,11 +11,22 @@
 Servo myservo_mic_power;  // create Servo object to control a servo
 Servo myservo_mouse;
 Servo myservo_keyboard; 
-int buzzer_ping = 2;
-int servo_ping_1 = 3;
-int servo_ping_2 = 5;
-int servo_ping_3 = 6;
-int sound_ping = 4;
+const int buzzer_ping = 2;
+const int servo_ping_1 = 3;
+const int sound_ping = 4;
+const int servo_ping_2 = 5;
+const int servo_ping_3 = 6;
+
+const int CMD_SERVO_HEADSET_POWER = 0;
+const int CMD_SOUND_DETECTER = 1;
+const int CMD_BUZZER = 2;
+const int CMD_MOUSE_CLICKING = 3;
+const int CMD_MOUSE_DELAY_CLICKING = 4;
+const int CMD_MOUSE_RANDOM_CLICKING = 5;
+const int CMD_KEYBOARD_CLICKING = 6;
+const int CMD_KEYBOARD_RANDOM_CLICKING = 7;
+
+
 int click_times = 5;
 int random_click_times = 10;
 int sleep_time = 60;
@@ -26,15 +37,16 @@ int delay_time_array[] = {2000,3000,4000,5000};
 int index = 0;
 
 void setup() {
-  Serial.begin(115200);
+
+  pinMode(sound_ping, INPUT);
+  pinMode(buzzer_ping, OUTPUT);
   myservo_mic_power.attach(servo_ping_1);  // attaches the servo on pin 3 to the Servo object
   myservo_mouse.attach(servo_ping_2);
   myservo_keyboard.attach(servo_ping_3);
-  pinMode(sound_ping, INPUT);
-  pinMode(buzzer_ping, OUTPUT);
   myservo_mic_power.write(0);
   myservo_mouse.write(0);
   myservo_keyboard.write(0);
+  Serial.begin(115200);
 }
 
 void loop() {
@@ -54,18 +66,17 @@ void loop() {
     }
   }
 }
-
 void test_start()
 {
   
   int mode = inputBuffer[0];
   //CMD_servo (for headset power control)
-  if (mode == '0')
+  if (mode == CMD_SERVO_HEADSET_POWER)
   {
     mouse_click(myservo_mic_power,0,51,1000);
   }
   //CMD_voice_detect (for headset input test)
-  else if (mode =='1')
+  else if (mode == CMD_SOUND_DETECTER)
   {
     int detected_time = 1000;
     int ping_states = 0 ;
@@ -78,14 +89,14 @@ void test_start()
     Serial.write(ping_states+0x30);
   }
   //CMD_buzzer (for headset output test)
-  else if(mode =='2')
+  else if(mode == CMD_BUZZER)
   {
     digitalWrite(buzzer_ping,HIGH);
     delay(5000);
     digitalWrite(buzzer_ping,LOW);
   }
   //CMD_mouse_clicking (for mouse function test)
-  else if (mode =='3')
+  else if (mode == CMD_MOUSE_CLICKING)
   {
     int counter = 0;
     while(counter<click_times)
@@ -96,7 +107,7 @@ void test_start()
     }
   }
   //CMD_mouse_delay_clicking (for MS power states)
-  else if (mode =='4')
+  else if (mode == CMD_MOUSE_DELAY_CLICKING)
   {
     int index_s = 2;
     String sleep_time_s = "";
@@ -120,7 +131,7 @@ void test_start()
     }
   }
   //CMD_mouse_random_clicking (for mouse random clicking test)
-  else if (mode =='5')
+  else if (mode == CMD_MOUSE_RANDOM_CLICKING)
   {
     int counter = 0;
     while(counter<random_click_times)
@@ -133,8 +144,8 @@ void test_start()
     }
     Serial.write("c");
   }
-  //CMD_keyboard_clicking (for mouse function test)
-  else if (mode =='6')
+//CMD_keyboard_clicking (for mouse function test)
+  else if (mode == CMD_KEYBOARD_CLICKING)
   {
     int counter = 0;
     while(counter<click_times)
@@ -144,28 +155,8 @@ void test_start()
       delay(1000);
     }
   }
-  //CMD_mouse_latency (for mouse latency test)
-  else if (mode =='7')
-  {
-    //waiting for 500 ms
-    delay(500);
-    int counter = 0;
-    mouse_click(myservo_mouse,0,52,500);
-    counter++;
-  }
-
-  //CMD_keyboard_latency (for keyboard latency test)
-  else if (mode =='8')
-  {
-    //waiting for 500 ms
-    delay(500);
-    int counter = 0;
-    mouse_click(myservo_keyboard,0,50,500);
-    counter++;
-  }
-
   //CMD_keyboard_random_clicking (for keyboard random clicking test)
-  else if (mode =='9')
+  else if (mode == CMD_KEYBOARD_RANDOM_CLICKING)
   {
     int counter = 0;
     while(counter<random_click_times)
@@ -178,7 +169,7 @@ void test_start()
     }
     Serial.write("c");
   }
-
+  // for test
   else if (mode =='f')
   {
     Serial.write("c");

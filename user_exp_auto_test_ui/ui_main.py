@@ -851,12 +851,9 @@ class BTTestApp(QWidget):
         self.led_keyboard.setText(keyboard)
         self.b_config.headset = headset
         # database
-        if mouse != 'None':
-            self.database_data.mouse = mouse
-        if keyboard != 'None':
-            self.database_data.keyboard = keyboard
-        if headset != 'None':
-            self.database_data.headset = headset
+        self.database_data.mouse = mouse
+        self.database_data.keyboard = keyboard
+        self.database_data.headset = headset
 
     def advance_setting(self):
         self.settings_window = AdvanceSetting(self.b_config)

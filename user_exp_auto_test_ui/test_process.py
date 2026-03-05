@@ -77,9 +77,13 @@ CMD_mouse_clicking = str.encode("3")
 CMD_mouse_delay_clicking = str.encode("4")
 CMD_mouse_random_clicking = str.encode("5")
 CMD_keyboard_clicking = str.encode("6")
-CMD_mouse_latency = str.encode("7")
-CMD_keyboard_latency = str.encode("8")
-CMD_keyboard_random_clicking = str.encode("9")
+CMD_keyboard_random_clicking = str.encode("7")
+
+CMD_mouse_latency = str.encode("a")
+CMD_keyboard_latency = str.encode("b")
+CMD_mouse_latency_with_keyboard = str.encode("c")
+CMD_keyboard_latency_with_mouse = str.encode("d")
+
 CMD_test = str.encode("f")
 g_COM_PORT = ""
 
@@ -696,8 +700,6 @@ def safe_write(ser: serial.Serial, data, baudrate=115200):
 
 
 g_latency = 0.0
-
-
 def mouse_latency(
     ser: serial.Serial, threshold: int, timeout_s: int, log_callback=None
 ) -> bool:
@@ -709,9 +711,8 @@ def mouse_latency(
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) - 0.5 - 0.173
+            g_latency = (end - start) -0.063
             return False  # stop listener
-
     latency_list = []
     for _ in range(15):
         start = time.perf_counter()  # mark the time
@@ -799,9 +800,11 @@ def serial_test(ser: serial.Serial):
 
 def mouse_move_to_safe_place():
     # move mouse to safe place (top-right) before clicking
-    screen_width, screen_height = pyautogui.size()
-    pyautogui.click(x=screen_width - 50, y=50)
-
+    try:
+        screen_width, screen_height = pyautogui.size()
+        pyautogui.click(x=screen_width - 50, y=50)
+    except:
+        pass
 
 def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool, str]:
     """_summary_
@@ -995,7 +998,6 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
         case Test_case.Mouse_latency.value:
             # move to safe place
             mouse_move_to_safe_place()
-
             res = mouse_latency(
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold,
