@@ -12,17 +12,11 @@ SYSTEM_POWER_CAPABILITIES
     VideoDimPresent        = 1 
     HiberFilePresent       = 1 
     AoAc                   = 1 
-
-No.0 Transition -- TargetState: S4
-  TargetState:       S4
-  EffectiveState:    S4
-  SleepTimeMs:       2625    
-  HiberPagesWritten: 960466  
-  HiberWriteTimeMs:  18046   
-  HiberReadTimeMs:   7315    
-  BiosInitTimeMs:    6952    
-  DriverWakeTimeMs:  1258    
-  Transition StartTime: 08/25/2025 11:57:00::913
-  Transition EndTime:   08/25/2025 11:58:21::889
-No.0 Transition -- Complete
+Error: Virtual power button driver not found, please install the Windows Device
+Testing Framework (WDTF) which is found in the Microsoft Windows Driver Kit
+(WDK) version 8 or later.
+
+    File: base\power\tools\pwrtest\exe\scenarioconnectedstandby.cpp
+    Line: 313
+    Error Code: 0x2
 End: Pass, PwrTest, (null)

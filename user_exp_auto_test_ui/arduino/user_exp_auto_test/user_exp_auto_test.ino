@@ -17,14 +17,14 @@ const int sound_ping = 4;
 const int servo_ping_2 = 5;
 const int servo_ping_3 = 6;
 
-const int CMD_SERVO_HEADSET_POWER = 0;
-const int CMD_SOUND_DETECTER = 1;
-const int CMD_BUZZER = 2;
-const int CMD_MOUSE_CLICKING = 3;
-const int CMD_MOUSE_DELAY_CLICKING = 4;
-const int CMD_MOUSE_RANDOM_CLICKING = 5;
-const int CMD_KEYBOARD_CLICKING = 6;
-const int CMD_KEYBOARD_RANDOM_CLICKING = 7;
+const char CMD_SERVO_HEADSET_POWER = '0';
+const char CMD_SOUND_DETECTER = '1';
+const char CMD_BUZZER = '2';
+const char CMD_MOUSE_CLICKING = '3';
+const char CMD_MOUSE_DELAY_CLICKING = '4';
+const char CMD_MOUSE_RANDOM_CLICKING = '5';
+const char CMD_KEYBOARD_CLICKING = '6';
+const char CMD_KEYBOARD_RANDOM_CLICKING = '7';
 
 
 int click_times = 5;

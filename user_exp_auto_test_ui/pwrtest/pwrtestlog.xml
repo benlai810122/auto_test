@@ -1,7 +1,7 @@
-<PwrTestLog date="08/25/2025" time="11:56:59" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
+<PwrTestLog date="03/09/2026" time="11:32:11" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
   <SystemInformation>
     <ComputerName>DESKTOP-LGJ88V6</ComputerName>
-    <OSBuildNumber>26200</OSBuildNumber>
+    <OSBuildNumber>26220</OSBuildNumber>
     <SystemManufacturer>Dell Inc.</SystemManufacturer>
     <SystemProductName>Latitude 9430</SystemProductName>
     <BIOSVersion>89.12.1</BIOSVersion>
@@ -23,21 +23,5 @@
     <HiberFilePresent>1</HiberFilePresent>
     <AoAc>1</AoAc>
   </SYSTEM_POWER_CAPABILITIES>
-  <SleepScenario>
-    <SleepTransitions hybrid="1" delay="120" sleeptime="60" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
-      <SleepTransition number="0" status="6357062">
-        <StartT>08/25/2025 11:57:00</StartT>
-        <EndT>08/25/2025 11:58:21</EndT>
-        <Duration>00:01:20</Duration>
-        <TargetState>4</TargetState>
-        <EffectiveState>4</EffectiveState>
-        <Suspend>2625</Suspend>
-        <BIOSInit>6952</BIOSInit>
-        <DriverInit>1258</DriverInit>
-        <HiberPagesWritten>960466</HiberPagesWritten>
-        <HiberRead>7315</HiberRead>
-        <HiberWrite>18046</HiberWrite>
-      </SleepTransition>
-    </SleepTransitions>
-  </SleepScenario>
-</PwrTestLog>
+  <CSTransitions>
+    </PwrTestLog>
