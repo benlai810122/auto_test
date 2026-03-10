@@ -802,7 +802,7 @@ def mouse_move_to_safe_place():
     # move mouse to safe place (top-right) before clicking
     try:
         screen_width, screen_height = pyautogui.size()
-        pyautogui.click(x=screen_width - 5, y= 5)
+        pyautogui.click(x=screen_width - 100, y= 5)
     except:
         pass
 
