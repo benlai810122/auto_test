@@ -57,6 +57,7 @@ class Test_case(Enum):
     Mouse_function = "Mouse_Function_Check"
     keyboard_function = "Keyboard_Function_Check"
     keyboard_latency = "Keyboard_Latency_Test"
+    keyboard_latency_with_mouse = "Keyboard_Latency_with_mouse_Test"
     Keyboard_random = "Keyboard_Random_Click"
     Mouse_random = "Mouse_Random_Click"
     Headset_init = "Headset_Initialization"
@@ -64,6 +65,7 @@ class Test_case(Enum):
     Headset_output = "Headset_Output_Check"
     Headset_del = "Headset_Restore"
     Mouse_latency = "Mouse_Latency_Test"
+    Mouse_latency_with_keyboard = "Mouse_Latency_with_keyboard_Test"
     Environment_init = "Environment_Initialization"
     Environment_restore = "Environment_Restore"
     Headset_connect_check = "Headset_connect_check"
@@ -86,6 +88,9 @@ CMD_keyboard_latency_with_mouse = str.encode("d")
 
 CMD_test = str.encode("f")
 g_COM_PORT = ""
+
+#this const is for latency test
+LATENCY_CONST = 0.063
 
 
 @dataclass
@@ -701,7 +706,7 @@ def safe_write(ser: serial.Serial, data, baudrate=115200):
 
 g_latency = 0.0
 def mouse_latency(
-    ser: serial.Serial, threshold: int, timeout_s: int, log_callback=None
+    ser: serial.Serial, threshold: int, timeout_s: int, with_keyboard_flag = False, log_callback=None
 ) -> bool:
 
     global g_latency
@@ -711,12 +716,15 @@ def mouse_latency(
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) -0.063
+            g_latency = (end - start) - LATENCY_CONST
             return False  # stop listener
     latency_list = []
     for _ in range(15):
         start = time.perf_counter()  # mark the time
-        ser.write(CMD_mouse_latency + b"\n")  # example: send 'C' = click command
+        if with_keyboard_flag:
+            ser.write(CMD_mouse_latency_with_keyboard + b"\n")
+        else:
+            ser.write(CMD_mouse_latency + b"\n")  
         ser.flush()
         with mouse.Listener(on_click=on_click) as listener:
             listener.join()
@@ -745,7 +753,7 @@ def mouse_latency(
 
 
 def keyboard_latency(
-    ser: serial.Serial, threshold: int, timeout_s: int, log_callback=None
+    ser: serial.Serial, threshold: int, timeout_s: int, with_mouse_flag = False, log_callback=None, 
 ) -> bool:
 
     global g_latency
@@ -754,13 +762,16 @@ def keyboard_latency(
         global g_latency
         end = time.perf_counter()
         # minus the servo motor moving time
-        g_latency = (end - start) - 0.5 - 0.173
-        return False  # stop listener
+        g_latency = (end - start) - LATENCY_CONST
+        return False  #stop listener
 
     latency_list = []
     for _ in range(15):
         start = time.perf_counter()  # mark the time
-        ser.write(CMD_keyboard_latency + b"\n")  # example: send 'C' = click command
+        if with_mouse_flag:
+            ser.write(CMD_keyboard_latency_with_mouse + b"\n")
+        else:
+            ser.write(CMD_keyboard_latency + b"\n")
         ser.flush()
         with keyboard.Listener(on_press=on_press) as listener:
             listener.join()
@@ -783,9 +794,9 @@ def keyboard_latency(
         return False
 
     average_latency = sum(latency_list) / len(latency_list)
-    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms", False)
-
+    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms", False) 
     return True if average_latency <= threshold else False
+
 
 
 def serial_test(ser: serial.Serial):
@@ -1005,11 +1016,31 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
                 log_callback=log_callback,
             )
 
+        case Test_case.Mouse_latency_with_keyboard.value:
+            # move to safe place
+            mouse_move_to_safe_place()
+            res = mouse_latency(
+                ser=ser,
+                threshold=b_config.mouse_latency_threshold,
+                timeout_s=b_config.timeout_s,
+                with_keyboard_flag= True,
+                log_callback=log_callback,
+            )
+
         case Test_case.keyboard_latency.value:
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold,
                 timeout_s=b_config.timeout_s,
+                log_callback=log_callback,
+            )
+        
+        case Test_case.keyboard_latency_with_mouse.value:
+            res = keyboard_latency(
+                ser=ser,
+                threshold=b_config.keyboard_latency_threshold,
+                timeout_s=b_config.timeout_s,
+                with_mouse_flag= True,
                 log_callback=log_callback,
             )
 
@@ -1054,4 +1085,3 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
 
 if __name__ == "__main__":
    screen_shoot_bluetooth_status_('report')
-   

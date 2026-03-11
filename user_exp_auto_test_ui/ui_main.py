@@ -237,7 +237,8 @@ class BTTestApp(QWidget):
         func_level_1 = QHBoxLayout()
         self.ck_btn_mouse = QRadioButton("Mouse Function Check")
         self.ck_btn_m_random = QRadioButton("Mouse Random Click")
-        self.ck_btn_ml = QRadioButton("Mouse Latency Test")
+        self.ck_btn_ml = QRadioButton("Mouse Latency")
+        self.ck_btn_ml_k = QRadioButton("Mouse Latency with K")
         self.empty1_4 = QLabel("")
 
         self.ck_btn_mouse.clicked.connect(
@@ -249,9 +250,13 @@ class BTTestApp(QWidget):
         self.ck_btn_ml.clicked.connect(
             partial(self.test_case_setting, Test_case.Mouse_latency.value)
         )
+        self.ck_btn_ml_k.clicked.connect(
+            partial(self.test_case_setting, Test_case.Mouse_latency_with_keyboard.value)
+        )
         func_level_1.addWidget(self.ck_btn_mouse)
         func_level_1.addWidget(self.ck_btn_m_random)
         func_level_1.addWidget(self.ck_btn_ml)
+        func_level_1.addWidget(self.ck_btn_ml_k)
         func_level_1.addWidget(self.empty1_4)
 
         func_level_2 = QHBoxLayout()
@@ -279,7 +284,8 @@ class BTTestApp(QWidget):
         func_level_3 = QHBoxLayout()
         self.ck_btn_k_function = QRadioButton("Keyboard Function Check")
         self.ck_btn_kr = QRadioButton("Keyboard Random Click")
-        self.ck_btn_kl = QRadioButton("Keyboard Latency Test")
+        self.ck_btn_kl = QRadioButton("Keyboard Latency")
+        self.ck_btn_kl_m = QRadioButton("Keyboard Latency with M")
 
         self.emtpy3_4 = QLabel("")
         self.ck_btn_k_function.clicked.connect(
@@ -291,9 +297,13 @@ class BTTestApp(QWidget):
         self.ck_btn_kl.clicked.connect(
             partial(self.test_case_setting, Test_case.keyboard_latency.value)
         )
+        self.ck_btn_kl_m.clicked.connect(
+            partial(self.test_case_setting, Test_case.keyboard_latency_with_mouse.value)
+        )
         func_level_3.addWidget(self.ck_btn_k_function)
         func_level_3.addWidget(self.ck_btn_kr)
         func_level_3.addWidget(self.ck_btn_kl)
+        func_level_3.addWidget(self.ck_btn_kl_m)
         func_level_3.addWidget(self.emtpy3_4)
 
         func_level_4 = QHBoxLayout()
