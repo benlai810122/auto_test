@@ -1014,6 +1014,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = mouse_latency(
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms,
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
@@ -1024,6 +1025,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = mouse_latency(
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms,
                 timeout_s=b_config.timeout_s,
                 with_keyboard_flag= True,
                 log_callback=log_callback,
@@ -1032,7 +1034,8 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
         case Test_case.keyboard_latency.value:
             res = keyboard_latency(
                 ser=ser,
-                threshold=b_config.keyboard_latency_threshold,
+                threshold=b_config.keyboard_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms,
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
@@ -1040,7 +1043,8 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
         case Test_case.keyboard_latency_with_mouse.value:
             res = keyboard_latency(
                 ser=ser,
-                threshold=b_config.keyboard_latency_threshold,
+                threshold=b_config.keyboard_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms,
                 timeout_s=b_config.timeout_s,
                 with_mouse_flag= True,
                 log_callback=log_callback,
