@@ -3,8 +3,8 @@ com: ''
 continue_fail_limit: 3
 headset: None
 headset_setting: 0
-keyboard_latency_threshold: 100
-mouse_latency_threshold: 1000
+keyboard_latency_threshold_ms: 100
+mouse_latency_threshold_ms: 80
 output_source_play_time_s: 20
 report_path: report\Report_20251230_142858
 sleep_time_s: 20
