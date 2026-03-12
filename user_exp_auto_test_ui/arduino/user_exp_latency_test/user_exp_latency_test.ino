@@ -1,7 +1,7 @@
 
 const int SOLENOID_MOUSE_PIN = 9;   // for mouse latency PWM PIN
 const int SOLENOID_KEYBOARD_PIN = 10;   // for keyboard latency PWM PIN
-const unsigned long PRESS_MS = 80;  // Solenoid ON time (20~35 ms typical)
+const unsigned long PRESS_MS = 100;  // Solenoid ON time (20~35 ms typical)
 const unsigned long PRESS_STRENG = 145;  // Solenoid ON time (20~35 ms typical)
 
 const char MOUSE_LATENCY_SINGLE_CMD = 'a';

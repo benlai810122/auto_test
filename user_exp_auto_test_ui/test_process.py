@@ -90,7 +90,7 @@ CMD_test = str.encode("f")
 g_COM_PORT = ""
 
 #this const is for latency test
-LATENCY_CONST = 0.063
+g_latency = 0.0
 
 
 @dataclass
@@ -112,8 +112,9 @@ class Basic_Config:
     test_times: int = 100
     com: str = ""
     youtube_link: str = "https://www.youtube.com/watch?v=w9k7eWD0ik8"
-    mouse_latency_threshold: int = 80
-    keyboard_latency_threshold: int = 100
+    mouse_latency_threshold_ms: int = 80
+    keyboard_latency_threshold_ms: int = 100
+    latency_calibration_ms: int = 0
     report_path:str = ""
 
 
@@ -704,19 +705,20 @@ def safe_write(ser: serial.Serial, data, baudrate=115200):
         ser.close()
 
 
-g_latency = 0.0
+
 def mouse_latency(
-    ser: serial.Serial, threshold: int, timeout_s: int, with_keyboard_flag = False, log_callback=None
+    ser: serial.Serial, threshold: int,latency_calibration: int, timeout_s: int, with_keyboard_flag = False, log_callback=None
 ) -> bool:
 
     global g_latency
+    latency_const = float(latency_calibration)/1000
 
     def on_click(x, y, button, pressed):
         global g_latency
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) - LATENCY_CONST
+            g_latency = (end - start) - latency_const
             return False  # stop listener
     latency_list = []
     for _ in range(15):
@@ -753,16 +755,16 @@ def mouse_latency(
 
 
 def keyboard_latency(
-    ser: serial.Serial, threshold: int, timeout_s: int, with_mouse_flag = False, log_callback=None, 
+    ser: serial.Serial, threshold: int,latency_calibration: int, timeout_s: int, with_mouse_flag = False, log_callback=None, 
 ) -> bool:
 
     global g_latency
-
+    latency_const = float(latency_calibration)/1000
     def on_press(key):
         global g_latency
         end = time.perf_counter()
         # minus the servo motor moving time
-        g_latency = (end - start) - LATENCY_CONST
+        g_latency = (end - start) - latency_const
         return False  #stop listener
 
     latency_list = []
@@ -1011,7 +1013,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             mouse_move_to_safe_place()
             res = mouse_latency(
                 ser=ser,
-                threshold=b_config.mouse_latency_threshold,
+                threshold=b_config.mouse_latency_threshold_ms,
                 timeout_s=b_config.timeout_s,
                 log_callback=log_callback,
             )
@@ -1021,7 +1023,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             mouse_move_to_safe_place()
             res = mouse_latency(
                 ser=ser,
-                threshold=b_config.mouse_latency_threshold,
+                threshold=b_config.mouse_latency_threshold_ms,
                 timeout_s=b_config.timeout_s,
                 with_keyboard_flag= True,
                 log_callback=log_callback,

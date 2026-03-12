@@ -178,7 +178,6 @@ class AdvanceSetting(QWidget):
         ospts_layout.addWidget(self.label_ospts)
         ospts_layout.addWidget(self.slider_ospts)
         ospts_layout.addWidget(self.value_ospts)
-
         functional_laylout.addRow(ospts_layout)
 
         #headset_setting : 0
@@ -190,10 +189,28 @@ class AdvanceSetting(QWidget):
         functional_group.setLayout(functional_laylout) 
         self.btn_confirm = QPushButton("Save")
         self.btn_confirm.clicked.connect(self.send_setting)
-        
+
+
+        # ---latency setting ---
+        latency_group = QGroupBox("Latency Setting")
+        latency_laylout = QFormLayout()
+        #mouse latency threshold
+        self.mlt = QLineEdit()
+        #keyboard latency threshold
+        self.klt = QLineEdit()
+        #latency calibration 
+        self.lc = QLineEdit()
+
+        latency_group.setLayout(latency_laylout) 
+        latency_laylout.addRow("Mouse Latency Threshold (ms):",self.mlt)
+        latency_laylout.addRow("Keyboard Latency Threshold (ms):",self.klt)
+        latency_laylout.addRow("Latency Calibration (ms):",self.lc)
+
+
         layout.addWidget(system_group)
         layout.addWidget(power_state_group)
         layout.addWidget(functional_group)
+        layout.addWidget(latency_group)
         layout.addWidget(self.btn_confirm)
         self.setLayout(layout)
 
@@ -210,8 +227,10 @@ class AdvanceSetting(QWidget):
         self.led_team_url.setText(self.b_config.teams_url)
         self.combo_output_source.setCurrentIndex(self.b_config.ENV_source)
         self.combo_headset_setting.setCurrentIndex(self.b_config.headset_setting)
-     
-        
+        # ---latency setting ---
+        self.mlt.setText(str(self.b_config.mouse_latency_threshold_ms))
+        self.klt.setText(str(self.b_config.keyboard_latency_threshold_ms))
+        self.lc.setText(str(self.b_config.latency_calibration_ms))
 
 
     def update_slider_value(self,value_name,value):
@@ -244,15 +263,24 @@ class AdvanceSetting(QWidget):
         data.teams_url = self.led_team_url.text()
         data.ENV_source = self.combo_output_source.currentIndex()
         data.headset_setting = self.combo_headset_setting.currentIndex()
-        data.output_source_play_time_s = self.slider_ospts.value() 
-        
+        data.output_source_play_time_s = self.slider_ospts.value()
+
+        # ---latency setting ---
+        if self.mlt.text().isdigit():
+            data.mouse_latency_threshold_ms = int(self.mlt.text())
+        if self.klt.text().isdigit():
+            data.keyboard_latency_threshold_ms = int(self.klt.text())
+        if self.lc.text().isdigit():
+            data.latency_calibration_ms = int(self.lc.text())
+
         self.setting_changed.emit(data)
         self.close()
 
  
 if __name__ == "__main__":
+    b = Basic_Config()
     app = QApplication(sys.argv)
-    window = AdvanceSetting()
+    window = AdvanceSetting(b)
     window.show()
     sys.exit(app.exec_())
 

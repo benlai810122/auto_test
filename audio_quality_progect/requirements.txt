@@ -1,4 +1,0 @@
-soundfile
-sounddevice
-grpcio 
-grpcio-tools

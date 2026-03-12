@@ -11,6 +11,8 @@ service DutAgent {
 
   // Server-streaming: agent sends file chunks back to Control PC
   rpc DownloadFile(DownloadFileRequest) returns (stream FileChunk);
+  // open url , for audio
+  rpc OpenUrl(OpenUrlRequest) returns (OpenUrlResponse);
 }
 
 message HealthRequest {}

@@ -16,3 +16,4 @@ test_times: 1
 timeout_s: 15
 wake_up_time_s: 10
 youtube_link: https://www.youtube.com/watch?v=CxwJrzEdw1U
+latency_calibration_ms: 0
