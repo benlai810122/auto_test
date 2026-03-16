@@ -7,12 +7,15 @@ service DutAgent {
 
   rpc PrepareRecording(PrepareRecordingRequest) returns (PrepareRecordingResponse);
   rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
-  rpc StopRecording(StopRecordingRequest) returns (StopRecordingResponse);
-
+  rpc StopRecording(StopRecordingRequest) returns (StopRecordingResponse); 
   // Server-streaming: agent sends file chunks back to Control PC
-  rpc DownloadFile(DownloadFileRequest) returns (stream FileChunk);
-  // open url , for audio
+  rpc DownloadFile(DownloadFileRequest) returns (stream FileChunk); 
+  // open specific url
   rpc OpenUrl(OpenUrlRequest) returns (OpenUrlResponse);
+  // Get the headset status
+  rpc GetHeadsetStatus(HeadsetStatusRequest) returns (HeadsetStatusResponse);
+
+
 }
 
 message HealthRequest {}
@@ -73,4 +76,45 @@ message DownloadFileRequest {
 
 message FileChunk {
   bytes data = 1;
+}
+
+message OpenUrlRequest {
+  string url = 1;              // e.g. "https://www.youtube.com"
+  bool new_window = 2;         // optional
+  bool bring_to_front = 3;     // optional
+}
+
+message OpenUrlResponse {
+  bool ok = 1;
+  string message = 2;
+}
+
+message HeadsetStatusRequest {
+  // Optional filters to identify the headset you care about
+  // If empty, the agent can report default input/output + whether they look like a headset.
+  string name_hint = 1;       // e.g. "Jabra", "Poly", "Logitech"
+  bool require_mic = 2;       // default false
+  bool require_speaker = 3;   // default false
+}
+
+message AudioEndpoint {
+  string device_id = 1;       // stable ID if you have one, else best-effort
+  string name = 2;            // friendly name
+  bool is_default = 3;
+  bool is_enabled = 4;
+}
+
+message HeadsetStatusResponse {
+  bool ok = 1;
+  string message = 2;
+
+  bool headset_present = 3;        // overall pass/fail for “connected”
+  bool mic_present = 4;
+  bool speaker_present = 5;
+
+  AudioEndpoint default_mic = 6;
+  AudioEndpoint default_speaker = 7;
+
+  repeated AudioEndpoint matched_mics = 8;
+  repeated AudioEndpoint matched_speakers = 9;
 }

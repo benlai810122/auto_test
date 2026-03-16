@@ -59,6 +59,16 @@ class DutAgentStub(object):
                 request_serializer=audio__test__pb2.DownloadFileRequest.SerializeToString,
                 response_deserializer=audio__test__pb2.FileChunk.FromString,
                 _registered_method=True)
+        self.OpenUrl = channel.unary_unary(
+                '/audiotest.DutAgent/OpenUrl',
+                request_serializer=audio__test__pb2.OpenUrlRequest.SerializeToString,
+                response_deserializer=audio__test__pb2.OpenUrlResponse.FromString,
+                _registered_method=True)
+        self.GetHeadsetStatus = channel.unary_unary(
+                '/audiotest.DutAgent/GetHeadsetStatus',
+                request_serializer=audio__test__pb2.HeadsetStatusRequest.SerializeToString,
+                response_deserializer=audio__test__pb2.HeadsetStatusResponse.FromString,
+                _registered_method=True)
 
 
 class DutAgentServicer(object):
@@ -95,6 +105,20 @@ class DutAgentServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OpenUrl(self, request, context):
+        """open specific url
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetHeadsetStatus(self, request, context):
+        """Get the headset status
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DutAgentServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -122,6 +146,16 @@ def add_DutAgentServicer_to_server(servicer, server):
                     servicer.DownloadFile,
                     request_deserializer=audio__test__pb2.DownloadFileRequest.FromString,
                     response_serializer=audio__test__pb2.FileChunk.SerializeToString,
+            ),
+            'OpenUrl': grpc.unary_unary_rpc_method_handler(
+                    servicer.OpenUrl,
+                    request_deserializer=audio__test__pb2.OpenUrlRequest.FromString,
+                    response_serializer=audio__test__pb2.OpenUrlResponse.SerializeToString,
+            ),
+            'GetHeadsetStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetHeadsetStatus,
+                    request_deserializer=audio__test__pb2.HeadsetStatusRequest.FromString,
+                    response_serializer=audio__test__pb2.HeadsetStatusResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -259,6 +293,60 @@ class DutAgent(object):
             '/audiotest.DutAgent/DownloadFile',
             audio__test__pb2.DownloadFileRequest.SerializeToString,
             audio__test__pb2.FileChunk.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OpenUrl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/audiotest.DutAgent/OpenUrl',
+            audio__test__pb2.OpenUrlRequest.SerializeToString,
+            audio__test__pb2.OpenUrlResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetHeadsetStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/audiotest.DutAgent/GetHeadsetStatus',
+            audio__test__pb2.HeadsetStatusRequest.SerializeToString,
+            audio__test__pb2.HeadsetStatusResponse.FromString,
             options,
             channel_credentials,
             insecure,

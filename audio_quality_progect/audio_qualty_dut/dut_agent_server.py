@@ -10,6 +10,9 @@ from mic_recording_manager import MicRecorder as MR
 from typing import Optional 
 from audio_test_manager import AudioTestManager as ATM
 from teams_meeting_manager import MeetingControl as TC
+import webbrowser
+import headset_status_check as hsc
+ 
  
 
 class DutAgent(pb2_grpc.DutAgentServicer):
@@ -49,6 +52,17 @@ class DutAgent(pb2_grpc.DutAgentServicer):
             return pb2.StopRecordingResponse(ok=True, message="STOPPED", out_path=out_path, bytes_written=size)
         except Exception as e:
             return pb2.StopRecordingResponse(ok=False, message=str(e), out_path="", bytes_written=0)
+        
+    def OpenUrl(self, request, context):
+        try:
+            url = request.url.strip()
+            if not (url.startswith("http://") or url.startswith("https://")):
+                return pb2.OpenUrlResponse(ok=False, message="URL must start with http:// or https://")
+
+            webbrowser.open(url, new=1 if request.new_window else 0)
+            return pb2.OpenUrlResponse(ok=True, message="Opened")
+        except Exception as e:
+            return pb2.OpenUrlResponse(ok=False, message=str(e))
 
     def DownloadFile(self, request, context):
         path = request.path
@@ -64,6 +78,54 @@ class DutAgent(pb2_grpc.DutAgentServicer):
                 if not data:
                     break
                 yield pb2.FileChunk(data=data)
+
+
+    def GetHeadsetStatus(self, request, context):
+        try:
+            devs = hsc._sd_devices()
+            default_in, default_out = hsc._sd_default_indices() 
+            mics, spks = hsc._match_by_hint(devs, request.name_hint) 
+            # If user provided name_hint, presence means matched list is non-empty.
+            # If name_hint empty, presence means default device exists.
+            if (request.name_hint or "").strip():
+                mic_present = len(mics) > 0
+                speaker_present = len(spks) > 0
+            else:
+                mic_present = default_in is not None and default_in >= 0
+                speaker_present = default_out is not None and default_out >= 0
+
+            # Determine overall
+            if request.require_mic or request.require_speaker:
+                headset_present = (not request.require_mic or mic_present) and \
+                                 (not request.require_speaker or speaker_present)
+            else:
+                headset_present = mic_present or speaker_present
+            # Default endpoints
+            default_mic = pb2.AudioEndpoint()
+            default_speaker = pb2.AudioEndpoint()
+            if default_in is not None and 0 <= default_in < len(devs):
+                default_mic = hsc._mk_endpoint(default_in, devs[default_in]["name"], True)
+            if default_out is not None and 0 <= default_out < len(devs):
+                default_speaker = hsc._mk_endpoint(default_out, devs[default_out]["name"], True)
+            resp = pb2.HeadsetStatusResponse(
+                ok=True,
+                message="OK",
+                headset_present=headset_present,
+                mic_present=mic_present,
+                speaker_present=speaker_present,
+                default_mic=default_mic,
+                default_speaker=default_speaker,
+            )
+            # Matched lists (only meaningful when name_hint set, but okay to return anyway)
+            for idx, name in mics:
+                resp.matched_mics.append(hsc._mk_endpoint(idx, name, idx == default_in))
+            for idx, name in spks:
+                resp.matched_speakers.append(hsc._mk_endpoint(idx, name, idx == default_out))
+
+            return resp
+
+        except Exception as e:
+            return pb2.HeadsetStatusResponse(ok=False, message=str(e))
       
 def audio_folder_checking():
     path = Path("audio") 

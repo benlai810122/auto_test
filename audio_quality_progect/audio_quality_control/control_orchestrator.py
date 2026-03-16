@@ -28,6 +28,29 @@ async def main():
         prep = await stub_a.PrepareRecording(pb2.PrepareRecordingRequest(run_id=run_id))
         if not prep.ok:
             raise RuntimeError(f"[{dut_mic}] Prepare failed: {prep.message}")
+        
+        #Get headsetstatus
+        resp = await stub_a.GetHeadsetStatus(pb2.HeadsetStatusRequest(
+            name_hint="Dell WL5024",
+            require_mic=True,
+            require_speaker=True,
+        ), timeout=5)
+
+        if not resp.ok:
+            print("Error:", resp.message)
+        else:
+            print("Headset present:", resp.headset_present)
+            print("Default mic:", resp.default_mic.name)
+            print("Default speaker:", resp.default_speaker.name)
+                
+        #open youtube url
+        resp = await stub_a.OpenUrl(pb2.OpenUrlRequest(
+            url="https://www.youtube.com",
+            new_window=True,
+            bring_to_front=False,
+        ), timeout=10) 
+        print(resp.ok, resp.message)
+
         # start recording
         started = await stub_a.StartRecording(pb2.StartRecordingRequest(run_id=run_id, mode=pb2.MIC))
         if not started.ok:
