@@ -53,12 +53,28 @@ class DutAgent(pb2_grpc.DutAgentServicer):
         except Exception as e:
             return pb2.StopRecordingResponse(ok=False, message=str(e), out_path="", bytes_written=0)
         
+    def JoinMeetingByUrl(self, request, context):
+        try:
+            url = (request.meeting_url or "").strip()
+            if not url:
+                return pb2.JoinMeetingByUrlResponse(ok=False, message="meeting_url is empty")
+            if not (url.startswith("http://") or url.startswith("https://")):
+                return pb2.JoinMeetingByUrlResponse(ok=False, message="meeting_url must start with http(s)://")
+            
+            tc = TC(url,'teams_call')
+            result = tc.open_teams_and_join_meeting()
+            if not result:
+                return pb2.JoinMeetingByUrlResponse(ok=False, message="Meeting join fail!")
+            
+            return pb2.JoinMeetingByUrlResponse(ok=True, message="Opened meeting URL")
+
+        except Exception as e:
+            return pb2.JoinMeetingByUrlResponse(ok=False, message=str(e))
     def OpenUrl(self, request, context):
         try:
             url = request.url.strip()
             if not (url.startswith("http://") or url.startswith("https://")):
                 return pb2.OpenUrlResponse(ok=False, message="URL must start with http:// or https://")
-
             webbrowser.open(url, new=1 if request.new_window else 0)
             return pb2.OpenUrlResponse(ok=True, message="Opened")
         except Exception as e:

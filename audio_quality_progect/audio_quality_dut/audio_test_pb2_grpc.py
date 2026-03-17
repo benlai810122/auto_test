@@ -69,6 +69,11 @@ class DutAgentStub(object):
                 request_serializer=audio__test__pb2.HeadsetStatusRequest.SerializeToString,
                 response_deserializer=audio__test__pb2.HeadsetStatusResponse.FromString,
                 _registered_method=True)
+        self.JoinMeetingByUrl = channel.unary_unary(
+                '/audiotest.DutAgent/JoinMeetingByUrl',
+                request_serializer=audio__test__pb2.JoinMeetingByUrlRequest.SerializeToString,
+                response_deserializer=audio__test__pb2.JoinMeetingByUrlResponse.FromString,
+                _registered_method=True)
 
 
 class DutAgentServicer(object):
@@ -119,6 +124,13 @@ class DutAgentServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def JoinMeetingByUrl(self, request, context):
+        """open teams call and join meeting
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DutAgentServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -156,6 +168,11 @@ def add_DutAgentServicer_to_server(servicer, server):
                     servicer.GetHeadsetStatus,
                     request_deserializer=audio__test__pb2.HeadsetStatusRequest.FromString,
                     response_serializer=audio__test__pb2.HeadsetStatusResponse.SerializeToString,
+            ),
+            'JoinMeetingByUrl': grpc.unary_unary_rpc_method_handler(
+                    servicer.JoinMeetingByUrl,
+                    request_deserializer=audio__test__pb2.JoinMeetingByUrlRequest.FromString,
+                    response_serializer=audio__test__pb2.JoinMeetingByUrlResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -347,6 +364,33 @@ class DutAgent(object):
             '/audiotest.DutAgent/GetHeadsetStatus',
             audio__test__pb2.HeadsetStatusRequest.SerializeToString,
             audio__test__pb2.HeadsetStatusResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def JoinMeetingByUrl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/audiotest.DutAgent/JoinMeetingByUrl',
+            audio__test__pb2.JoinMeetingByUrlRequest.SerializeToString,
+            audio__test__pb2.JoinMeetingByUrlResponse.FromString,
             options,
             channel_credentials,
             insecure,

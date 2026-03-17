@@ -5,6 +5,9 @@ import grpc
 import audio_test_pb2 as pb2
 import audio_test_pb2_grpc as pb2_grpc
 
+
+meeting_url = "https://teams.microsoft.com/meet/21942003076107?p=rl8WJrKGgHXU8itu2u"
+
 async def download_file(stub, remote_path: str, local_path: str):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     resp_stream = stub.DownloadFile(pb2.DownloadFileRequest(path=remote_path, chunk_size=262144))
@@ -50,6 +53,13 @@ async def main():
             new_window=True,
             bring_to_front=False,
         ), timeout=10) 
+        print(resp.ok, resp.message)
+
+        #teams_call 
+        resp = await stub_a.JoinMeetingByUrl(
+            pb2.JoinMeetingByUrlRequest(meeting_url=meeting_url, open_in_new_window=True),
+            timeout=10,
+        )
         print(resp.ok, resp.message)
         '''
         # start recording

@@ -14,6 +14,8 @@ service DutAgent {
   rpc OpenUrl(OpenUrlRequest) returns (OpenUrlResponse);
   // Get the headset status
   rpc GetHeadsetStatus(HeadsetStatusRequest) returns (HeadsetStatusResponse);
+  // open teams call and join meeting
+  rpc JoinMeetingByUrl(JoinMeetingByUrlRequest) returns (JoinMeetingByUrlResponse);
 
 
 }
@@ -117,4 +119,14 @@ message HeadsetStatusResponse {
 
   repeated AudioEndpoint matched_mics = 8;
   repeated AudioEndpoint matched_speakers = 9;
+}
+
+message JoinMeetingByUrlRequest {
+  string meeting_url = 1;      // required
+  bool open_in_new_window = 2; // optional: for browser-based open
+}
+
+message JoinMeetingByUrlResponse {
+  bool ok = 1;
+  string message = 2;
 }

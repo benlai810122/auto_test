@@ -28,7 +28,6 @@ void setup() {
 }
 
 void loop() {
-
   while (Serial.available() > 0)
   {
     char received = Serial.read();
@@ -44,7 +43,6 @@ void loop() {
     }
   }
 }
-
 void test_start()
 {
   int mode = inputBuffer[0];
