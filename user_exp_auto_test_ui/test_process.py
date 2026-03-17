@@ -91,6 +91,7 @@ g_COM_PORT = ""
 
 #this const is for latency test
 g_latency = 0.0
+g_long_press = 0.5
 
 
 @dataclass
@@ -718,7 +719,10 @@ def mouse_latency(
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            g_latency = (end - start) - latency_const
+            if(with_keyboard_flag):
+                g_latency = (end - start) - latency_const - g_long_press
+            else:
+                g_latency = (end - start) - latency_const 
             return False  # stop listener
     latency_list = []
     for _ in range(15):
@@ -763,8 +767,10 @@ def keyboard_latency(
     def on_press(key):
         global g_latency
         end = time.perf_counter()
-        # minus the servo motor moving time
-        g_latency = (end - start) - latency_const
+        if with_mouse_flag:
+            g_latency = (end - start) - latency_const -g_long_press
+        else: 
+            g_latency = (end - start) - latency_const
         return False  #stop listener
 
     latency_list = []

@@ -14,7 +14,7 @@ class AudioTestManager:
         self.mr = MR()
         self.tc = TC(TEAMS_CALL_LINK,'teams_call')
 
-    def prepare(self, run_id: str, mode: int, device_id: str, sr: int, ch: int) -> bool:
+    def prepare(self, run_id: str) -> bool:
         #Start teams call meeting
         if not self.tc.open_teams_and_join_meeting():
             return False 

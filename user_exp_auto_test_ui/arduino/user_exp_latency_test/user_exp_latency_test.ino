@@ -3,6 +3,7 @@ const int SOLENOID_MOUSE_PIN = 9;   // for mouse latency PWM PIN
 const int SOLENOID_KEYBOARD_PIN = 10;   // for keyboard latency PWM PIN
 const unsigned long PRESS_MS = 100;  // Solenoid ON time (20~35 ms typical)
 const unsigned long PRESS_STRENG = 145;  // Solenoid ON time (20~35 ms typical)
+const unsigned long CONTINUE_PRESS_MS = 500;  // Solenoid ON time (20~35 ms typical)
 
 const char MOUSE_LATENCY_SINGLE_CMD = 'a';
 const char KEYBOARD_LATENCY_SINGLE_CMD = 'b';
@@ -60,16 +61,20 @@ void test_start()
   //MOUSE LATENCY TEST WITH KEYBOARD
   else if (mode == MOUSE_LATENCY_WITH_KEYBOARD_CMD)
   {
+    analogWrite(SOLENOID_KEYBOARD_PIN, PRESS_STRENG);
+    delay(CONTINUE_PRESS_MS);
     pulse_solenoid(SOLENOID_MOUSE_PIN,PRESS_MS,PRESS_STRENG);
-    delay(40);
-    pulse_solenoid(SOLENOID_KEYBOARD_PIN,PRESS_MS,PRESS_STRENG);
+    delay(CONTINUE_PRESS_MS);
+    analogWrite(SOLENOID_KEYBOARD_PIN, 0); 
   }
   //KEYBOARD LATENCY TEST WITH MOUSE
   else if (mode == KEYBOARD_LATENCY_WITH_MOUSE_CMD)
   {
+    analogWrite(SOLENOID_MOUSE_PIN, PRESS_STRENG);
+    delay(CONTINUE_PRESS_MS);
     pulse_solenoid(SOLENOID_KEYBOARD_PIN,PRESS_MS,PRESS_STRENG);
-    delay(40);
-    pulse_solenoid(SOLENOID_MOUSE_PIN,PRESS_MS,PRESS_STRENG);
+    delay(CONTINUE_PRESS_MS);
+    analogWrite(SOLENOID_MOUSE_PIN, 0); 
   }
   //for test
   else if (mode =='f')

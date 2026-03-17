@@ -14,7 +14,7 @@ async def download_file(stub, remote_path: str, local_path: str):
             f.write(chunk.data)
 
 async def main():
-    dut_mic = "192.168.70.100:50051"  # MIC
+    dut_mic = "192.168.70.179:50051"  # MIC
     dut_loopback = "10.0.0.102:50051"  # LOOPBACK 
     run_id = time.strftime("Run_%Y%m%d_%H%M%S")
     out_dir = os.path.join(os.getcwd(), "record", run_id)
@@ -24,11 +24,12 @@ async def main():
         stub_a = pb2_grpc.DutAgentStub(channel_a) 
         health = await stub_a.Health(pb2.HealthRequest(), timeout=3)
         print(f"[{dut_mic}] hostname={health.hostname}, os={health.os_version}") 
-        # prepare
+        # prepare 
         prep = await stub_a.PrepareRecording(pb2.PrepareRecordingRequest(run_id=run_id))
         if not prep.ok:
             raise RuntimeError(f"[{dut_mic}] Prepare failed: {prep.message}")
         
+
         #Get headsetstatus
         resp = await stub_a.GetHeadsetStatus(pb2.HeadsetStatusRequest(
             name_hint="Dell WL5024",
@@ -50,7 +51,7 @@ async def main():
             bring_to_front=False,
         ), timeout=10) 
         print(resp.ok, resp.message)
-
+        '''
         # start recording
         started = await stub_a.StartRecording(pb2.StartRecordingRequest(run_id=run_id, mode=pb2.MIC))
         if not started.ok:
@@ -66,6 +67,7 @@ async def main():
         await download_file(stub_a, stop_mic.out_path, local_a)
         print("Downloaded:")
         print(" ", local_a)
+        '''
     finally:
         await channel_a.close()
     
