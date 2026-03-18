@@ -18,7 +18,8 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QMessageBox,
     QDialog,
-    QDialogButtonBox
+    QDialogButtonBox,
+    QTabWidget
 )
 from PyQt5.QtGui import (
     QStandardItemModel,
@@ -233,33 +234,49 @@ class BTTestApp(QWidget):
         # --- Test Case Selection ---
         self.test_case_group = QGroupBox("Test Case Selection")
         test_layout = QVBoxLayout()
+        self.tab_widget = QTabWidget()
+        
 
-        func_level_1 = QHBoxLayout()
+        #===============stress test=================
+        stress_test_tab = QWidget() 
+        stress_test_layout = QVBoxLayout()
+        # stress test: mouse
+        stress_level_1 = QHBoxLayout()
         self.ck_btn_mouse = QRadioButton("Mouse Function Check")
         self.ck_btn_m_random = QRadioButton("Mouse Random Click")
-        self.ck_btn_ml = QRadioButton("Mouse Latency")
-        self.ck_btn_ml_k = QRadioButton("Mouse Latency with K")
-        self.empty1_4 = QLabel("")
+        self.emtpy1_3 = QLabel("")
+        self.emtpy1_4 = QLabel("")
 
         self.ck_btn_mouse.clicked.connect(
             partial(self.test_case_setting, Test_case.Mouse_function.value)
-        )
+        ) 
         self.ck_btn_m_random.clicked.connect(
             partial(self.test_case_setting, Test_case.Mouse_random.value)
         )
-        self.ck_btn_ml.clicked.connect(
-            partial(self.test_case_setting, Test_case.Mouse_latency.value)
-        )
-        self.ck_btn_ml_k.clicked.connect(
-            partial(self.test_case_setting, Test_case.Mouse_latency_with_keyboard.value)
-        )
-        func_level_1.addWidget(self.ck_btn_mouse)
-        func_level_1.addWidget(self.ck_btn_m_random)
-        func_level_1.addWidget(self.ck_btn_ml)
-        func_level_1.addWidget(self.ck_btn_ml_k)
-        func_level_1.addWidget(self.empty1_4)
+        stress_level_1.addWidget(self.ck_btn_mouse)
+        stress_level_1.addWidget(self.ck_btn_m_random)
+        stress_level_1.addWidget(self.emtpy1_3)
+        stress_level_1.addWidget(self.emtpy1_4)
 
-        func_level_2 = QHBoxLayout()
+        # stress test: keyboard 
+        stress_level_2 = QHBoxLayout() 
+        self.ck_btn_k_function = QRadioButton("Keyboard Function Check")
+        self.ck_btn_kr = QRadioButton("Keyboard Random Click")
+        self.emtpy2_3 = QLabel("")
+        self.emtpy2_4 = QLabel("")
+        self.ck_btn_k_function.clicked.connect(
+            partial(self.test_case_setting, Test_case.keyboard_function.value)
+        )
+        self.ck_btn_kr.clicked.connect(
+            partial(self.test_case_setting, Test_case.Keyboard_random.value)
+        ) 
+        stress_level_2.addWidget(self.ck_btn_k_function)
+        stress_level_2.addWidget(self.ck_btn_kr)
+        stress_level_2.addWidget(self.emtpy2_3)
+        stress_level_2.addWidget(self.emtpy2_4)
+
+        # stress test: headset
+        stress_level_3 = QHBoxLayout()
         self.ck_btn_h_input = QRadioButton("Headset Mic Check")
         self.ck_btn_h_output = QRadioButton("Headset Output Check")
         self.ck_btn_h_init = QRadioButton("Headset Initialization")
@@ -276,37 +293,13 @@ class BTTestApp(QWidget):
         self.ck_btn_h_del.clicked.connect(
             partial(self.test_case_setting, Test_case.Headset_del.value)
         )
-        func_level_2.addWidget(self.ck_btn_h_input)
-        func_level_2.addWidget(self.ck_btn_h_output)
-        func_level_2.addWidget(self.ck_btn_h_init)
-        func_level_2.addWidget(self.ck_btn_h_del)
+        stress_level_3.addWidget(self.ck_btn_h_input)
+        stress_level_3.addWidget(self.ck_btn_h_output)
+        stress_level_3.addWidget(self.ck_btn_h_init)
+        stress_level_3.addWidget(self.ck_btn_h_del)
 
-        func_level_3 = QHBoxLayout()
-        self.ck_btn_k_function = QRadioButton("Keyboard Function Check")
-        self.ck_btn_kr = QRadioButton("Keyboard Random Click")
-        self.ck_btn_kl = QRadioButton("Keyboard Latency")
-        self.ck_btn_kl_m = QRadioButton("Keyboard Latency with M")
-
-        self.emtpy3_4 = QLabel("")
-        self.ck_btn_k_function.clicked.connect(
-            partial(self.test_case_setting, Test_case.keyboard_function.value)
-        )
-        self.ck_btn_kr.clicked.connect(
-            partial(self.test_case_setting, Test_case.Keyboard_random.value)
-        )
-        self.ck_btn_kl.clicked.connect(
-            partial(self.test_case_setting, Test_case.keyboard_latency.value)
-        )
-        self.ck_btn_kl_m.clicked.connect(
-            partial(self.test_case_setting, Test_case.keyboard_latency_with_mouse.value)
-        )
-        func_level_3.addWidget(self.ck_btn_k_function)
-        func_level_3.addWidget(self.ck_btn_kr)
-        func_level_3.addWidget(self.ck_btn_kl)
-        func_level_3.addWidget(self.ck_btn_kl_m)
-        func_level_3.addWidget(self.emtpy3_4)
-
-        func_level_4 = QHBoxLayout()
+        # stress test: environment 
+        stress_level_4 = QHBoxLayout()
         self.ck_btn_env_init = QRadioButton("Environment Initialization")
         self.ck_btn_env_restore = QRadioButton("Environment Restore")
         self.ck_btn_h_c_c = QRadioButton("Headset Connection Check")
@@ -320,19 +313,74 @@ class BTTestApp(QWidget):
         self.ck_btn_h_c_c.clicked.connect(
             partial(self.test_case_setting, Test_case.Headset_connect_check.value)
         )
-        func_level_4.addWidget(self.ck_btn_env_init)
-        func_level_4.addWidget(self.ck_btn_env_restore)
-        func_level_4.addWidget(self.ck_btn_h_c_c)
-        func_level_4.addWidget(self.emtpy4_4)
+        stress_level_4.addWidget(self.ck_btn_env_init)
+        stress_level_4.addWidget(self.ck_btn_env_restore)
+        stress_level_4.addWidget(self.ck_btn_h_c_c)
+        stress_level_4.addWidget(self.emtpy4_4)
 
+        stress_test_layout.addLayout(stress_level_1)
+        stress_test_layout.addLayout(stress_level_2)
+        stress_test_layout.addLayout(stress_level_3)
+        stress_test_layout.addLayout(stress_level_4) 
+        stress_test_tab.setLayout(stress_test_layout)
+  
+        #==========Latency test===================
+
+        latency_test_tab = QWidget()
+        latency_test_layout = QVBoxLayout()
+        #latency test : mouse 
+        latnecy_level_1 = QHBoxLayout()
+        self.ck_btn_ml = QRadioButton("Mouse Latency")
+        self.ck_btn_ml_W = QRadioButton("[waked] Mouse Latency")
+        self.ck_btn_ml_k = QRadioButton("[waked] Mouse Latency with KBD")
+        self.emtpy1_4_l = QLabel("")
+        self.ck_btn_ml.clicked.connect(
+            partial(self.test_case_setting, Test_case.Mouse_latency.value)
+        )
+        self.ck_btn_ml_W.clicked.connect(
+            partial(self.test_case_setting, Test_case.Mouse_latency_waked.value)
+        )
+        self.ck_btn_ml_k.clicked.connect(
+            partial(self.test_case_setting, Test_case.Mouse_latency_with_keyboard.value)
+        ) 
+        latnecy_level_1.addWidget(self.ck_btn_ml)
+        latnecy_level_1.addWidget(self.ck_btn_ml_W)
+        latnecy_level_1.addWidget(self.ck_btn_ml_k)
+        latnecy_level_1.addWidget(self.emtpy1_4_l)
+     
+        #latency test : keyboard
+        latnecy_level_2 = QHBoxLayout()
+        self.ck_btn_kl = QRadioButton("Keyboard Latency")
+        self.ck_btn_kl_w = QRadioButton("[waked] Keyboard Latency")
+        self.ck_btn_kl_m = QRadioButton("[waked] Keyboard Latency with mouse")
+        self.emtpy2_4_l = QLabel("")
+        self.ck_btn_kl.clicked.connect(
+            partial(self.test_case_setting, Test_case.keyboard_latency.value)
+        )
+        self.ck_btn_kl_w.clicked.connect(
+            partial(self.test_case_setting, Test_case.keyboard_latency_waked.value)
+        )
+        self.ck_btn_kl_m.clicked.connect(
+            partial(self.test_case_setting, Test_case.keyboard_latency_with_mouse.value)
+        ) 
+        latnecy_level_2.addWidget(self.ck_btn_kl)
+        latnecy_level_2.addWidget(self.ck_btn_kl_w)
+        latnecy_level_2.addWidget(self.ck_btn_kl_m)
+        latnecy_level_2.addWidget(self.emtpy2_4_l)
+
+        latency_test_layout.addLayout(latnecy_level_1)
+        latency_test_layout.addLayout(latnecy_level_2)
+        latency_test_tab.setLayout(latency_test_layout)
+
+        
         self.btn_tc_add = QPushButton("Add")
         self.btn_tc_add.clicked.connect(partial(self.task_schedule_setting, "tc_add"))
         self.btn_tc_add.setMaximumWidth(100)
 
-        test_layout.addLayout(func_level_1)
-        test_layout.addLayout(func_level_2)
-        test_layout.addLayout(func_level_3)
-        test_layout.addLayout(func_level_4)
+        
+        self.tab_widget.addTab(stress_test_tab,"Stress Test")
+        self.tab_widget.addTab(latency_test_tab, "Latency Test") 
+        test_layout.addWidget(self.tab_widget)
         test_layout.addWidget(self.btn_tc_add)
         self.test_case_group.setLayout(test_layout)
 

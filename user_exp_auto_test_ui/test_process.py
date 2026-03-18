@@ -58,6 +58,7 @@ class Test_case(Enum):
     keyboard_function = "Keyboard_Function_Check"
     keyboard_latency = "Keyboard_Latency_Test"
     keyboard_latency_with_mouse = "Keyboard_Latency_with_mouse_Test"
+    keyboard_latency_waked= "Keyboard_Latency_waked_Test"
     Keyboard_random = "Keyboard_Random_Click"
     Mouse_random = "Mouse_Random_Click"
     Headset_init = "Headset_Initialization"
@@ -66,6 +67,7 @@ class Test_case(Enum):
     Headset_del = "Headset_Restore"
     Mouse_latency = "Mouse_Latency_Test"
     Mouse_latency_with_keyboard = "Mouse_Latency_with_keyboard_Test"
+    Mouse_latency_waked = "Mouse_Latency_waked_Test"
     Environment_init = "Environment_Initialization"
     Environment_restore = "Environment_Restore"
     Headset_connect_check = "Headset_connect_check"
@@ -708,7 +710,7 @@ def safe_write(ser: serial.Serial, data, baudrate=115200):
 
 
 def mouse_latency(
-    ser: serial.Serial, threshold: int,latency_calibration: int, timeout_s: int, with_keyboard_flag = False, log_callback=None
+    ser: serial.Serial, threshold: int,latency_calibration: int, waked_flag = False, with_keyboard_flag = False, log_callback=None
 ) -> bool:
 
     global g_latency
@@ -726,11 +728,17 @@ def mouse_latency(
             return False  # stop listener
     latency_list = []
     for _ in range(15):
+
+        if waked_flag:
+            ser.write(CMD_mouse_latency + b"\n")
+            ser.flush()
+            time.sleep(1)
+
         start = time.perf_counter()  # mark the time
         if with_keyboard_flag:
             ser.write(CMD_mouse_latency_with_keyboard + b"\n")
         else:
-            ser.write(CMD_mouse_latency + b"\n")  
+            ser.write(CMD_mouse_latency + b"\n")
         ser.flush()
         with mouse.Listener(on_click=on_click) as listener:
             listener.join()
@@ -759,7 +767,7 @@ def mouse_latency(
 
 
 def keyboard_latency(
-    ser: serial.Serial, threshold: int,latency_calibration: int, timeout_s: int, with_mouse_flag = False, log_callback=None, 
+    ser: serial.Serial, threshold: int,latency_calibration: int, waked_flag = False, with_mouse_flag = False, log_callback=None, 
 ) -> bool:
 
     global g_latency
@@ -775,6 +783,12 @@ def keyboard_latency(
 
     latency_list = []
     for _ in range(15):
+
+        if waked_flag:
+            ser.write(CMD_keyboard_latency + b"\n")
+            ser.flush()
+            time.sleep(1)
+
         start = time.perf_counter()  # mark the time
         if with_mouse_flag:
             ser.write(CMD_keyboard_latency_with_mouse + b"\n")
@@ -1020,8 +1034,17 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = mouse_latency(
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold_ms,
-                latency_calibration=b_config.latency_calibration_ms,
-                timeout_s=b_config.timeout_s,
+                latency_calibration=b_config.latency_calibration_ms, 
+                log_callback=log_callback,
+            )
+        case Test_case.Mouse_latency_waked.value:
+            # move to safe place
+            mouse_move_to_safe_place()
+            res = mouse_latency(
+                ser=ser,
+                threshold=b_config.mouse_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms, 
+                waked_flag=True,
                 log_callback=log_callback,
             )
 
@@ -1032,7 +1055,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold_ms,
                 latency_calibration=b_config.latency_calibration_ms,
-                timeout_s=b_config.timeout_s,
+                waked_flag = True,
                 with_keyboard_flag= True,
                 log_callback=log_callback,
             )
@@ -1041,17 +1064,25 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
-                latency_calibration=b_config.latency_calibration_ms,
-                timeout_s=b_config.timeout_s,
+                latency_calibration=b_config.latency_calibration_ms, 
                 log_callback=log_callback,
             )
         
+        case Test_case.keyboard_latency_waked.value:
+            res = keyboard_latency(
+                ser=ser,
+                threshold=b_config.keyboard_latency_threshold_ms,
+                latency_calibration=b_config.latency_calibration_ms,
+                waked_flag=True,
+                log_callback=log_callback,
+            )
+
         case Test_case.keyboard_latency_with_mouse.value:
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
                 latency_calibration=b_config.latency_calibration_ms,
-                timeout_s=b_config.timeout_s,
+                waked_flag=True,
                 with_mouse_flag= True,
                 log_callback=log_callback,
             )
