@@ -12,3 +12,9 @@ soundfile>=0.12.1
 # ---- Analysis ----
 numpy>=1.26
 scipy>=1.11
+
+# --- other ---
+pynput>=1.8.1
+pyautogui
+pyscreenshot
+pillow
