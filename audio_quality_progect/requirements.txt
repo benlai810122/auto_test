@@ -1,0 +1,14 @@
+# ---- Core: gRPC ----
+grpcio>=1.60
+grpcio-tools>=1.60
+protobuf>=4.25
+
+# ---- DUT audio capture / device detection (sounddevice uses PortAudio) ----
+sounddevice>=0.4.6
+
+# ---- WAV I/O (for saving/reading recordings) ----
+soundfile>=0.12.1
+
+# ---- Analysis ----
+numpy>=1.26
+scipy>=1.11
