@@ -1,10 +1,9 @@
-syntax = "proto3";
 
+syntax = "proto3"; 
 package audiotest;
-
+import "google/protobuf/empty.proto";
 service DutAgent {
-  rpc Health(HealthRequest) returns (HealthResponse);
-
+  rpc Health(HealthRequest) returns (HealthResponse); 
   rpc PrepareRecording(PrepareRecordingRequest) returns (PrepareRecordingResponse);
   rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
   rpc StopRecording(StopRecordingRequest) returns (StopRecordingResponse); 
@@ -16,7 +15,10 @@ service DutAgent {
   rpc GetHeadsetStatus(HeadsetStatusRequest) returns (HeadsetStatusResponse);
   // open teams call and join meeting
   rpc JoinMeetingByUrl(JoinMeetingByUrlRequest) returns (JoinMeetingByUrlResponse);
-
+  //close temas meeting
+  rpc CloseTeamsMeeting(google.protobuf.Empty) returns (SimpleResponse);
+  //close url
+  rpc CloseUrl(google.protobuf.Empty) returns (SimpleResponse);
 
 }
 
@@ -127,6 +129,11 @@ message JoinMeetingByUrlRequest {
 }
 
 message JoinMeetingByUrlResponse {
+  bool ok = 1;
+  string message = 2;
+}
+
+message SimpleResponse {
   bool ok = 1;
   string message = 2;
 }

@@ -12,6 +12,8 @@ from audio_test_manager import AudioTestManager as ATM
 from teams_meeting_manager import MeetingControl as TC
 import webbrowser
 import headset_status_check as hsc
+from google.protobuf import empty_pb2
+from utils import Utils
  
  
 
@@ -94,6 +96,23 @@ class DutAgent(pb2_grpc.DutAgentServicer):
                 if not data:
                     break
                 yield pb2.FileChunk(data=data)
+    
+    def CloseTeamsMeeting(self, request: empty_pb2.Empty, context):
+        try:
+            # close the meeting
+            TC.close_teams()
+            return pb2.SimpleResponse(ok=True, message="Teams meeting closed")
+        except Exception as e:
+            return pb2.SimpleResponse(ok=False, message=str(e))
+
+    def CloseUrl(self, request: empty_pb2.Empty, context):
+        try:
+            # kill all webbrowser
+            Utils.taskkill("msedge.exe")
+            Utils.taskkill("chrome.exe")
+            return pb2.SimpleResponse(ok=True, message="Meeting URL closed")
+        except Exception as e:
+            return pb2.SimpleResponse(ok=False, message=str(e))
 
 
     def GetHeadsetStatus(self, request, context):

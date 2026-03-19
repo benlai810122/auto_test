@@ -18,3 +18,4 @@ pynput>=1.8.1
 pyautogui
 pyscreenshot
 pillow
+opencv-python

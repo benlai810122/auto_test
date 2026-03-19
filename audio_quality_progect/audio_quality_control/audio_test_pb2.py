@@ -22,51 +22,54 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10\x61udio_test.proto\x12\taudiotest\"\x0f\n\rHealthRequest\"M\n\x0eHealthResponse\x12\x10\n\x08hostname\x18\x01 \x01(\t\x12\x12\n\nos_version\x18\x02 \x01(\t\x12\x15\n\rteams_running\x18\x03 \x01(\x08\"\x88\x01\n\x17PrepareRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\x12\x11\n\tdevice_id\x18\x03 \x01(\t\x12\x13\n\x0bsample_rate\x18\x04 \x01(\x05\x12\x10\n\x08\x63hannels\x18\x05 \x01(\x05\"7\n\x18PrepareRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"d\n\x15StartRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\x12\x16\n\x0estart_epoch_ms\x18\x03 \x01(\x03\"G\n\x16StartRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x10\n\x08out_path\x18\x03 \x01(\t\"K\n\x14StopRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\"]\n\x15StopRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x10\n\x08out_path\x18\x03 \x01(\t\x12\x15\n\rbytes_written\x18\x04 \x01(\x03\"7\n\x13\x44ownloadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x12\n\nchunk_size\x18\x02 \x01(\x05\"\x19\n\tFileChunk\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"I\n\x0eOpenUrlRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\x12\x12\n\nnew_window\x18\x02 \x01(\x08\x12\x16\n\x0e\x62ring_to_front\x18\x03 \x01(\x08\".\n\x0fOpenUrlResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"W\n\x14HeadsetStatusRequest\x12\x11\n\tname_hint\x18\x01 \x01(\t\x12\x13\n\x0brequire_mic\x18\x02 \x01(\x08\x12\x17\n\x0frequire_speaker\x18\x03 \x01(\x08\"X\n\rAudioEndpoint\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x12\n\nis_enabled\x18\x04 \x01(\x08\"\xc1\x02\n\x15HeadsetStatusResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x17\n\x0fheadset_present\x18\x03 \x01(\x08\x12\x13\n\x0bmic_present\x18\x04 \x01(\x08\x12\x17\n\x0fspeaker_present\x18\x05 \x01(\x08\x12-\n\x0b\x64\x65\x66\x61ult_mic\x18\x06 \x01(\x0b\x32\x18.audiotest.AudioEndpoint\x12\x31\n\x0f\x64\x65\x66\x61ult_speaker\x18\x07 \x01(\x0b\x32\x18.audiotest.AudioEndpoint\x12.\n\x0cmatched_mics\x18\x08 \x03(\x0b\x32\x18.audiotest.AudioEndpoint\x12\x32\n\x10matched_speakers\x18\t \x03(\x0b\x32\x18.audiotest.AudioEndpoint\"J\n\x17JoinMeetingByUrlRequest\x12\x13\n\x0bmeeting_url\x18\x01 \x01(\t\x12\x1a\n\x12open_in_new_window\x18\x02 \x01(\x08\"7\n\x18JoinMeetingByUrlResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t*@\n\nRecordMode\x12\x1b\n\x17RECORD_MODE_UNSPECIFIED\x10\x00\x12\x07\n\x03MIC\x10\x01\x12\x0c\n\x08LOOPBACK\x10\x02\x32\x8f\x05\n\x08\x44utAgent\x12=\n\x06Health\x12\x18.audiotest.HealthRequest\x1a\x19.audiotest.HealthResponse\x12[\n\x10PrepareRecording\x12\".audiotest.PrepareRecordingRequest\x1a#.audiotest.PrepareRecordingResponse\x12U\n\x0eStartRecording\x12 .audiotest.StartRecordingRequest\x1a!.audiotest.StartRecordingResponse\x12R\n\rStopRecording\x12\x1f.audiotest.StopRecordingRequest\x1a .audiotest.StopRecordingResponse\x12\x46\n\x0c\x44ownloadFile\x12\x1e.audiotest.DownloadFileRequest\x1a\x14.audiotest.FileChunk0\x01\x12@\n\x07OpenUrl\x12\x19.audiotest.OpenUrlRequest\x1a\x1a.audiotest.OpenUrlResponse\x12U\n\x10GetHeadsetStatus\x12\x1f.audiotest.HeadsetStatusRequest\x1a .audiotest.HeadsetStatusResponse\x12[\n\x10JoinMeetingByUrl\x12\".audiotest.JoinMeetingByUrlRequest\x1a#.audiotest.JoinMeetingByUrlResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10\x61udio_test.proto\x12\taudiotest\x1a\x1bgoogle/protobuf/empty.proto\"\x0f\n\rHealthRequest\"M\n\x0eHealthResponse\x12\x10\n\x08hostname\x18\x01 \x01(\t\x12\x12\n\nos_version\x18\x02 \x01(\t\x12\x15\n\rteams_running\x18\x03 \x01(\x08\"\x88\x01\n\x17PrepareRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\x12\x11\n\tdevice_id\x18\x03 \x01(\t\x12\x13\n\x0bsample_rate\x18\x04 \x01(\x05\x12\x10\n\x08\x63hannels\x18\x05 \x01(\x05\"7\n\x18PrepareRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"d\n\x15StartRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\x12\x16\n\x0estart_epoch_ms\x18\x03 \x01(\x03\"G\n\x16StartRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x10\n\x08out_path\x18\x03 \x01(\t\"K\n\x14StopRecordingRequest\x12\x0e\n\x06run_id\x18\x01 \x01(\t\x12#\n\x04mode\x18\x02 \x01(\x0e\x32\x15.audiotest.RecordMode\"]\n\x15StopRecordingResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x10\n\x08out_path\x18\x03 \x01(\t\x12\x15\n\rbytes_written\x18\x04 \x01(\x03\"7\n\x13\x44ownloadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x12\n\nchunk_size\x18\x02 \x01(\x05\"\x19\n\tFileChunk\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"I\n\x0eOpenUrlRequest\x12\x0b\n\x03url\x18\x01 \x01(\t\x12\x12\n\nnew_window\x18\x02 \x01(\x08\x12\x16\n\x0e\x62ring_to_front\x18\x03 \x01(\x08\".\n\x0fOpenUrlResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"W\n\x14HeadsetStatusRequest\x12\x11\n\tname_hint\x18\x01 \x01(\t\x12\x13\n\x0brequire_mic\x18\x02 \x01(\x08\x12\x17\n\x0frequire_speaker\x18\x03 \x01(\x08\"X\n\rAudioEndpoint\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nis_default\x18\x03 \x01(\x08\x12\x12\n\nis_enabled\x18\x04 \x01(\x08\"\xc1\x02\n\x15HeadsetStatusResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x17\n\x0fheadset_present\x18\x03 \x01(\x08\x12\x13\n\x0bmic_present\x18\x04 \x01(\x08\x12\x17\n\x0fspeaker_present\x18\x05 \x01(\x08\x12-\n\x0b\x64\x65\x66\x61ult_mic\x18\x06 \x01(\x0b\x32\x18.audiotest.AudioEndpoint\x12\x31\n\x0f\x64\x65\x66\x61ult_speaker\x18\x07 \x01(\x0b\x32\x18.audiotest.AudioEndpoint\x12.\n\x0cmatched_mics\x18\x08 \x03(\x0b\x32\x18.audiotest.AudioEndpoint\x12\x32\n\x10matched_speakers\x18\t \x03(\x0b\x32\x18.audiotest.AudioEndpoint\"J\n\x17JoinMeetingByUrlRequest\x12\x13\n\x0bmeeting_url\x18\x01 \x01(\t\x12\x1a\n\x12open_in_new_window\x18\x02 \x01(\x08\"7\n\x18JoinMeetingByUrlResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"-\n\x0eSimpleResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t*@\n\nRecordMode\x12\x1b\n\x17RECORD_MODE_UNSPECIFIED\x10\x00\x12\x07\n\x03MIC\x10\x01\x12\x0c\n\x08LOOPBACK\x10\x02\x32\x96\x06\n\x08\x44utAgent\x12=\n\x06Health\x12\x18.audiotest.HealthRequest\x1a\x19.audiotest.HealthResponse\x12[\n\x10PrepareRecording\x12\".audiotest.PrepareRecordingRequest\x1a#.audiotest.PrepareRecordingResponse\x12U\n\x0eStartRecording\x12 .audiotest.StartRecordingRequest\x1a!.audiotest.StartRecordingResponse\x12R\n\rStopRecording\x12\x1f.audiotest.StopRecordingRequest\x1a .audiotest.StopRecordingResponse\x12\x46\n\x0c\x44ownloadFile\x12\x1e.audiotest.DownloadFileRequest\x1a\x14.audiotest.FileChunk0\x01\x12@\n\x07OpenUrl\x12\x19.audiotest.OpenUrlRequest\x1a\x1a.audiotest.OpenUrlResponse\x12U\n\x10GetHeadsetStatus\x12\x1f.audiotest.HeadsetStatusRequest\x1a .audiotest.HeadsetStatusResponse\x12[\n\x10JoinMeetingByUrl\x12\".audiotest.JoinMeetingByUrlRequest\x1a#.audiotest.JoinMeetingByUrlResponse\x12\x46\n\x11\x43loseTeamsMeeting\x12\x16.google.protobuf.Empty\x1a\x19.audiotest.SimpleResponse\x12=\n\x08\x43loseUrl\x12\x16.google.protobuf.Empty\x1a\x19.audiotest.SimpleResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'audio_test_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_RECORDMODE']._serialized_start=1513
-  _globals['_RECORDMODE']._serialized_end=1577
-  _globals['_HEALTHREQUEST']._serialized_start=31
-  _globals['_HEALTHREQUEST']._serialized_end=46
-  _globals['_HEALTHRESPONSE']._serialized_start=48
-  _globals['_HEALTHRESPONSE']._serialized_end=125
-  _globals['_PREPARERECORDINGREQUEST']._serialized_start=128
-  _globals['_PREPARERECORDINGREQUEST']._serialized_end=264
-  _globals['_PREPARERECORDINGRESPONSE']._serialized_start=266
-  _globals['_PREPARERECORDINGRESPONSE']._serialized_end=321
-  _globals['_STARTRECORDINGREQUEST']._serialized_start=323
-  _globals['_STARTRECORDINGREQUEST']._serialized_end=423
-  _globals['_STARTRECORDINGRESPONSE']._serialized_start=425
-  _globals['_STARTRECORDINGRESPONSE']._serialized_end=496
-  _globals['_STOPRECORDINGREQUEST']._serialized_start=498
-  _globals['_STOPRECORDINGREQUEST']._serialized_end=573
-  _globals['_STOPRECORDINGRESPONSE']._serialized_start=575
-  _globals['_STOPRECORDINGRESPONSE']._serialized_end=668
-  _globals['_DOWNLOADFILEREQUEST']._serialized_start=670
-  _globals['_DOWNLOADFILEREQUEST']._serialized_end=725
-  _globals['_FILECHUNK']._serialized_start=727
-  _globals['_FILECHUNK']._serialized_end=752
-  _globals['_OPENURLREQUEST']._serialized_start=754
-  _globals['_OPENURLREQUEST']._serialized_end=827
-  _globals['_OPENURLRESPONSE']._serialized_start=829
-  _globals['_OPENURLRESPONSE']._serialized_end=875
-  _globals['_HEADSETSTATUSREQUEST']._serialized_start=877
-  _globals['_HEADSETSTATUSREQUEST']._serialized_end=964
-  _globals['_AUDIOENDPOINT']._serialized_start=966
-  _globals['_AUDIOENDPOINT']._serialized_end=1054
-  _globals['_HEADSETSTATUSRESPONSE']._serialized_start=1057
-  _globals['_HEADSETSTATUSRESPONSE']._serialized_end=1378
-  _globals['_JOINMEETINGBYURLREQUEST']._serialized_start=1380
-  _globals['_JOINMEETINGBYURLREQUEST']._serialized_end=1454
-  _globals['_JOINMEETINGBYURLRESPONSE']._serialized_start=1456
-  _globals['_JOINMEETINGBYURLRESPONSE']._serialized_end=1511
-  _globals['_DUTAGENT']._serialized_start=1580
-  _globals['_DUTAGENT']._serialized_end=2235
+  _globals['_RECORDMODE']._serialized_start=1589
+  _globals['_RECORDMODE']._serialized_end=1653
+  _globals['_HEALTHREQUEST']._serialized_start=60
+  _globals['_HEALTHREQUEST']._serialized_end=75
+  _globals['_HEALTHRESPONSE']._serialized_start=77
+  _globals['_HEALTHRESPONSE']._serialized_end=154
+  _globals['_PREPARERECORDINGREQUEST']._serialized_start=157
+  _globals['_PREPARERECORDINGREQUEST']._serialized_end=293
+  _globals['_PREPARERECORDINGRESPONSE']._serialized_start=295
+  _globals['_PREPARERECORDINGRESPONSE']._serialized_end=350
+  _globals['_STARTRECORDINGREQUEST']._serialized_start=352
+  _globals['_STARTRECORDINGREQUEST']._serialized_end=452
+  _globals['_STARTRECORDINGRESPONSE']._serialized_start=454
+  _globals['_STARTRECORDINGRESPONSE']._serialized_end=525
+  _globals['_STOPRECORDINGREQUEST']._serialized_start=527
+  _globals['_STOPRECORDINGREQUEST']._serialized_end=602
+  _globals['_STOPRECORDINGRESPONSE']._serialized_start=604
+  _globals['_STOPRECORDINGRESPONSE']._serialized_end=697
+  _globals['_DOWNLOADFILEREQUEST']._serialized_start=699
+  _globals['_DOWNLOADFILEREQUEST']._serialized_end=754
+  _globals['_FILECHUNK']._serialized_start=756
+  _globals['_FILECHUNK']._serialized_end=781
+  _globals['_OPENURLREQUEST']._serialized_start=783
+  _globals['_OPENURLREQUEST']._serialized_end=856
+  _globals['_OPENURLRESPONSE']._serialized_start=858
+  _globals['_OPENURLRESPONSE']._serialized_end=904
+  _globals['_HEADSETSTATUSREQUEST']._serialized_start=906
+  _globals['_HEADSETSTATUSREQUEST']._serialized_end=993
+  _globals['_AUDIOENDPOINT']._serialized_start=995
+  _globals['_AUDIOENDPOINT']._serialized_end=1083
+  _globals['_HEADSETSTATUSRESPONSE']._serialized_start=1086
+  _globals['_HEADSETSTATUSRESPONSE']._serialized_end=1407
+  _globals['_JOINMEETINGBYURLREQUEST']._serialized_start=1409
+  _globals['_JOINMEETINGBYURLREQUEST']._serialized_end=1483
+  _globals['_JOINMEETINGBYURLRESPONSE']._serialized_start=1485
+  _globals['_JOINMEETINGBYURLRESPONSE']._serialized_end=1540
+  _globals['_SIMPLERESPONSE']._serialized_start=1542
+  _globals['_SIMPLERESPONSE']._serialized_end=1587
+  _globals['_DUTAGENT']._serialized_start=1656
+  _globals['_DUTAGENT']._serialized_end=2446
 # @@protoc_insertion_point(module_scope)

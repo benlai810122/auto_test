@@ -4,6 +4,7 @@ import grpc
 import warnings
 
 import audio_test_pb2 as audio__test__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 GRPC_GENERATED_VERSION = '1.76.0'
 GRPC_VERSION = grpc.__version__
@@ -74,6 +75,16 @@ class DutAgentStub(object):
                 request_serializer=audio__test__pb2.JoinMeetingByUrlRequest.SerializeToString,
                 response_deserializer=audio__test__pb2.JoinMeetingByUrlResponse.FromString,
                 _registered_method=True)
+        self.CloseTeamsMeeting = channel.unary_unary(
+                '/audiotest.DutAgent/CloseTeamsMeeting',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=audio__test__pb2.SimpleResponse.FromString,
+                _registered_method=True)
+        self.CloseUrl = channel.unary_unary(
+                '/audiotest.DutAgent/CloseUrl',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=audio__test__pb2.SimpleResponse.FromString,
+                _registered_method=True)
 
 
 class DutAgentServicer(object):
@@ -131,6 +142,20 @@ class DutAgentServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CloseTeamsMeeting(self, request, context):
+        """close temas meeting
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CloseUrl(self, request, context):
+        """close url
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DutAgentServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -173,6 +198,16 @@ def add_DutAgentServicer_to_server(servicer, server):
                     servicer.JoinMeetingByUrl,
                     request_deserializer=audio__test__pb2.JoinMeetingByUrlRequest.FromString,
                     response_serializer=audio__test__pb2.JoinMeetingByUrlResponse.SerializeToString,
+            ),
+            'CloseTeamsMeeting': grpc.unary_unary_rpc_method_handler(
+                    servicer.CloseTeamsMeeting,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=audio__test__pb2.SimpleResponse.SerializeToString,
+            ),
+            'CloseUrl': grpc.unary_unary_rpc_method_handler(
+                    servicer.CloseUrl,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=audio__test__pb2.SimpleResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -391,6 +426,60 @@ class DutAgent(object):
             '/audiotest.DutAgent/JoinMeetingByUrl',
             audio__test__pb2.JoinMeetingByUrlRequest.SerializeToString,
             audio__test__pb2.JoinMeetingByUrlResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CloseTeamsMeeting(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/audiotest.DutAgent/CloseTeamsMeeting',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            audio__test__pb2.SimpleResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CloseUrl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/audiotest.DutAgent/CloseUrl',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            audio__test__pb2.SimpleResponse.FromString,
             options,
             channel_credentials,
             insecure,
