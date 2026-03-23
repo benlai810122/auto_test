@@ -117,6 +117,7 @@ class DutAgent(pb2_grpc.DutAgentServicer):
 
     def GetHeadsetStatus(self, request, context):
         try:
+           
             devs = hsc._sd_devices()
             default_in, default_out = hsc._sd_default_indices() 
             mics, spks = hsc._match_by_hint(devs, request.name_hint) 

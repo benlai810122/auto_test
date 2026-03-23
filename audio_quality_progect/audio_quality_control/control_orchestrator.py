@@ -11,9 +11,9 @@ DUT2_IP = "192.168.70.158:50051"
 
 
 meeting_url = "https://teams.microsoft.com/meet/21942003076107?p=rl8WJrKGgHXU8itu2u"
-youtube_url = "https://music.youtube.com/watch?v=vzLBNcIWAnU&list=RDAMVMvzLBNcIWAnU"
+youtube_url = "https://www.youtube.com/watch?v=Kw1s1KlDqI0"
 
-headset_target = "Poly V4320"
+headset_target = "Poly"
 
 async def download_file(stub, remote_path: str, local_path: str):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
@@ -34,7 +34,9 @@ async def main():
         # create stub for both channel:
         stub_1 = pb2_grpc.DutAgentStub(channel_1)
         stub_2 = pb2_grpc.DutAgentStub(channel_2) 
-  
+        
+        
+        
         # start with check both channel's status 
         health_1 = await stub_1.Health(pb2.HealthRequest(), timeout=3)
         print(f"[{DUT1_IP}] hostname={health_1.hostname}, os={health_1.os_version}")
@@ -67,10 +69,7 @@ async def main():
             print("Headset present:", resp.headset_present)
             print("Default mic:", resp.default_mic.name)
             print("Default speaker:", resp.default_speaker.name)
-                
-        #step2: wait for 30 sec
-        print("waiting for 30 sec")
-        time.sleep(30)
+                 
         
         #step3: DUT2 open teams calls and join the meeting, and then check the headset status
         print("open teams call and join meeting")
@@ -79,7 +78,11 @@ async def main():
             timeout=300,
         )
         print(resp.ok, resp.message)
- 
+
+        # wait for 15 sec
+        print("waiting for 15 sec")
+        time.sleep(15)
+        
         # check dut2 headset status
         print("check dut2 headset status:")
         resp = await stub_2.GetHeadsetStatus(pb2.HeadsetStatusRequest(
@@ -94,6 +97,10 @@ async def main():
             print("Headset present:", resp.headset_present)
             print("Default mic:", resp.default_mic.name)
             print("Default speaker:", resp.default_speaker.name)
+        
+        # wait for 15 sec
+        print("waiting for 15 sec")
+        time.sleep(15)
  
         #step4: dut2 close the meeting , and wait for 10 sec then check dut1 headset status
         

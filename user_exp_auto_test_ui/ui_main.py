@@ -664,8 +664,8 @@ class BTTestApp(QWidget):
         first_fail_message = lines[0] if lines else ""  # safe check
 
         message = self.log_output.toPlainText()
-        mouse_aver = la.latency_analyze("mouse", message)
-        keyboard_aver = la.latency_analyze("keyboard", message)
+        mouse_aver = la.latency_analyze("mouse", message , b_config.report_path )
+        keyboard_aver = la.latency_analyze("keyboard", message , b_config.report_path)
 
         # add bt_warning_message (from system event log) to error message box
         for warn in bt_warning_msg:
@@ -684,6 +684,7 @@ class BTTestApp(QWidget):
             self.label_mouse_latency.setText(f"{mouse_aver} ms")
         else:
             self.label_mouse_latency.setText("-")
+
 
     def test_case_setting(self, test_case: str):
         # setting the test case

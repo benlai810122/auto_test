@@ -1,7 +1,14 @@
 import sounddevice as sd
 import audio_test_pb2 as pb2
 
+
+def refresh_sounddevice():
+    # Private APIs but commonly used for this exact issue
+    sd._terminate()
+    sd._initialize()
+
 def _sd_devices():
+    refresh_sounddevice()
     return sd.query_devices()
 
 def _sd_default_indices():
