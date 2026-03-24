@@ -11,7 +11,7 @@ DUT2_IP = "192.168.70.158:50051"
 
 
 meeting_url = "https://teams.microsoft.com/meet/21942003076107?p=rl8WJrKGgHXU8itu2u"
-youtube_url = "https://www.youtube.com/watch?v=Kw1s1KlDqI0"
+youtube_url = "https://www.youtube.com/watch?v=PyD9cMarVJk"
 
 headset_target = "Poly"
 

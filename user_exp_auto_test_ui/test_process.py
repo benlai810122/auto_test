@@ -485,8 +485,11 @@ def headset_output_test(
      
     #set the volume to 100 %
     for _ in range(50):
-        pyautogui.press("volumeup")
-        time.sleep(0.1)
+        try:
+            pyautogui.press("volumeup")
+            time.sleep(0.1)
+        except:
+            pass
 
     while not res_output:
         # start play sound before detect
