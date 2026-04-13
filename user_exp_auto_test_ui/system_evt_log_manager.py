@@ -3,9 +3,13 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Union
 import xml.etree.ElementTree as ET 
-from Evtx.Evtx import Evtx
 from typing import List , Iterable
 import os
+
+try:
+    from Evtx.Evtx import Evtx
+except Exception:
+    Evtx = None
 
 # XML namespace for Windows event logs
 NS = {"e": "http://schemas.microsoft.com/win/2004/08/events/event"}
@@ -40,6 +44,14 @@ EVENT_LIST = {
 1855 :"FW_FSEQ_ERROR_EVENT",
 1856: "DRIVER_LOAD_IS_BLOCKED_DUE_TO_SECURITY_REASONS"
 }
+
+
+def _resolve_evtx_file(path_like: Union[str, Path]) -> Path:
+    """Return the final .evtx file path from a directory or file path input."""
+    path = Path(path_like)
+    if path.suffix.lower() == ".evtx":
+        return path
+    return path / "system_event_log.evtx"
 
 
 def _to_utc(dt_or_str: Union[datetime, str]) -> datetime:
@@ -102,8 +114,12 @@ def export_system_log_time_range(
         f"*[System[TimeCreated[@SystemTime >= '{start_str}' and "
         f"@SystemTime <= '{end_str}']]]"
     )
-    save_path = os.path.join(save_path,'system_event_log.evtx')
-    save_path = Path(save_path)
+    save_path = _resolve_evtx_file(save_path)
+    try:
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+    except Exception as exc:
+        print(f"[export_system_log_time_range] Cannot create folder: {exc}")
+        return False
   
     cmd = [
         "wevtutil",
@@ -121,12 +137,15 @@ def export_system_log_time_range(
         )
     except FileNotFoundError:
         print("[export_system_log_time_range] 'wevtutil' not found. Run on Windows.")
-        return False 
+        return False
+    except Exception as exc:
+        print(f"[export_system_log_time_range] export failed: {exc}")
+        return False
     if completed.returncode != 0:
         print("[export_system_log_time_range] wevtutil failed:")
         print(completed.stderr)
         return False
-    return True
+    return save_path.exists()
 
 
 def export_system_log_last_seconds(
@@ -186,47 +205,53 @@ def filter_evtx_by_event_ids(
         Each item is a human-readable string containing time, EventID,
         provider, level, computer, and record ID.
     """
-    evtx_path = os.path.join(evtx_path,'system_event_log.evtx')
-    evtx_path = Path(evtx_path)
+    evtx_path = _resolve_evtx_file(evtx_path)
     ids_set = {int(eid) for eid in event_ids}
     messages: List[str] = []
+
+    if Evtx is None:
+        print("[filter_evtx_by_event_ids] python-evtx is not available")
+        return messages
 
     if not evtx_path.exists():
         print(f"[filter_evtx_by_event_ids] File not found: {evtx_path}")
         return messages
 
-    with Evtx(str(evtx_path)) as log:
-        for record in log.records():
-            try:
-                xml_str = record.xml()
-                root = ET.fromstring(xml_str)
-
-                system = root.find("e:System", NS)
-                if system is None:
-                    continue 
-                event_id_el = system.find("e:EventID", NS)
-                if event_id_el is None or not event_id_el.text:
-                    continue 
+    try:
+        with Evtx(str(evtx_path)) as log:
+            for record in log.records():
                 try:
-                    event_id = int(event_id_el.text) 
-                except ValueError:
-                    continue 
-                if event_id not in ids_set: 
-                    continue 
-                # Extract basic info
-                time_el = system.find("e:TimeCreated", NS)
-                time_created = (
-                    time_el.get("SystemTime") if time_el is not None else ""
-                )
-                msg = (
-                    f"{time_created} | EventID={event_id} | Message={EVENT_LIST[event_id]} "
-                )
-                messages.append(msg)
+                    xml_str = record.xml()
+                    root = ET.fromstring(xml_str)
 
-            except Exception:
-                
-                # Skip malformed or unparsable records
-                continue
+                    system = root.find("e:System", NS)
+                    if system is None:
+                        continue
+                    event_id_el = system.find("e:EventID", NS)
+                    if event_id_el is None or not event_id_el.text:
+                        continue
+                    try:
+                        event_id = int(event_id_el.text)
+                    except ValueError:
+                        continue
+                    if event_id not in ids_set:
+                        continue
+                    # Extract basic info
+                    time_el = system.find("e:TimeCreated", NS)
+                    time_created = (
+                        time_el.get("SystemTime") if time_el is not None else ""
+                    )
+                    msg = (
+                        f"{time_created} | EventID={event_id} | Message={EVENT_LIST.get(event_id, 'UNKNOWN_EVENT')} "
+                    )
+                    messages.append(msg)
+
+                except Exception:
+                    # Skip malformed or unparsable records
+                    continue
+    except Exception as exc:
+        print(f"[filter_evtx_by_event_ids] failed to parse evtx: {exc}")
+        return messages
 
     return messages
 

@@ -68,3 +68,4 @@ wlan: AX211
 wlan_phase: B0
 wrt_preset: Custom
 wrt_version: 22.180.0.9
+short_platform: ''

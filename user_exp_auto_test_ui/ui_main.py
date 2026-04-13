@@ -1,10 +1,21 @@
-from dataclasses import dataclass
+import os
+import shutil
+import sys
+import threading
+import time
+import traceback
+from dataclasses import asdict
+from datetime import datetime
+from functools import partial
+from pathlib import Path
+
+import pyautogui
+import test_process
+import yaml
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
     QLabel,
-    QComboBox,
-    QCheckBox,
     QLineEdit,
     QTableView,
     QSlider,
@@ -30,52 +41,42 @@ from PyQt5.QtGui import (
     QFont,
 )
 from PyQt5.QtWidgets import QStyle
-from PyQt5.QtCore import Qt, QTimer, QPropertyAnimation
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtCore import pyqtSignal, QObject
-import sys
-import test_process
-from test_process import Basic_Config
-from test_process import Power_States
-from test_process import Test_case
-from utils import log as logger
-from bt_control import BluetoothControl
-from bt_control import  bt_type
-from ui_adv_setting import AdvanceSetting
-from functools import partial
-import threading
-import copy
-import yaml
-from dataclasses import asdict
-from datetime import datetime
-import latency_analyze as la
-from ui_database_setting import DataBase_Data_setting
 import database_manager as dbm
-from database_manager import Database_data
-import time
-import pyautogui
-import json
+import latency_analyze as la
 import system_evt_log_manager as sys_log
-from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
 import version_manager as ver
-import os
-from pathlib import Path
+from bt_control import BluetoothControl
+from bt_control import bt_type
+from database_manager import Database_data
+from test_process import Basic_Config
 from test_process import ENV
-import shutil
- 
+from test_process import Test_case
+from ui_adv_setting import AdvanceSetting
+from ui_database_setting import DataBase_Data_setting
+from utils import log as logger
+from wrt_controller import WRTController, WRT_CODE_WHITE_LIST
+
+
 class LogSignal(QObject):
+    """Qt signals used to update the UI safely from worker threads."""
+
     log = pyqtSignal(str, bool)
     error = pyqtSignal(str)
     cell = pyqtSignal(int, int, str)
     process = pyqtSignal(int, int)
-    save_report_database_data = pyqtSignal(int, int, int,bool)
+    save_report_database_data = pyqtSignal(int, int, int, bool)
     enable = pyqtSignal()
-    set_stutas = pyqtSignal(int, int, list,bool)
+    set_stutas = pyqtSignal(int, int, list, bool)
+
 
 class BTTestApp(QWidget):
+    """Main UI window for test configuration, execution, and reporting."""
 
     b_config: Basic_Config = None
     task_schedule_list: list[str] = []
-    test_thread: threading = None
+    test_thread: threading.Thread = None
     power_states_clicking: str = ""
     test_case_clicking: str = ""
     thread_stop_flag = False
@@ -228,8 +229,8 @@ class BTTestApp(QWidget):
         patten_level_1.addWidget(self.btn_tc1)
         patten_level_1.addWidget(self.btn_tc2)
         patten_level_1.addWidget(self.btn_tc3)
-        patten_layout.addLayout(patten_layout)
-        self.test_patten_group.setLayout(patten_level_1)
+        patten_layout.addLayout(patten_level_1)
+        self.test_patten_group.setLayout(patten_layout)
 
         # --- Test Case Selection ---
         self.test_case_group = QGroupBox("Test Case Selection")
@@ -620,14 +621,14 @@ class BTTestApp(QWidget):
         self.database_data.modern_standby = "Y" if Test_case.MS.value in self.b_config.task_schedule else "N"
         self.database_data.s4 = "Y" if Test_case.S4.value in self.b_config.task_schedule else "N"
         self.database_data.sys_event_log = self.error_message.toPlainText()
-        if Test_case.Environment_init.value in database_data.scenario:
+        if Test_case.Environment_init.value in self.database_data.scenario:
             if 'wav' in ENV(self.b_config.ENV_source).name:
                 self.database_data.music_type  = 'wav'
             elif 'mp3' in ENV(self.b_config.ENV_source).name:
                 self.database_data.music_type = 'mp3'
             elif 'Youtube' in ENV(self.b_config.ENV_source).name:
                 self.database_data.music_type = 'youtube'
-            self.database_data.microsoft_teams = "Y" if 'Teams' in ENV(b_config.ENV_source).name else "N"
+            self.database_data.microsoft_teams = "Y" if 'Teams' in ENV(self.b_config.ENV_source).name else "N"
         else:
             self.database_data.music_type = 'None'
             self.database_data.microsoft_teams = "N"
@@ -664,8 +665,8 @@ class BTTestApp(QWidget):
         first_fail_message = lines[0] if lines else ""  # safe check
 
         message = self.log_output.toPlainText()
-        mouse_aver = la.latency_analyze("mouse", message , b_config.report_path )
-        keyboard_aver = la.latency_analyze("keyboard", message , b_config.report_path)
+        mouse_aver = la.latency_analyze("mouse", message , self.b_config.report_path )
+        keyboard_aver = la.latency_analyze("keyboard", message , self.b_config.report_path)
 
         # add bt_warning_message (from system event log) to error message box
         for warn in bt_warning_msg:
@@ -718,7 +719,7 @@ class BTTestApp(QWidget):
         )
 
     def run_test(self):
-        # run the main test process
+        # Run the main test process in a worker thread.
         def _run_test_process_in_background():
             self.log_signal.log.emit("Start testing...", False)
             test_fail_times = 0
@@ -726,10 +727,10 @@ class BTTestApp(QWidget):
             self.log_signal.process.emit(0, 0)
             test_fail_flag = False
             test_fail_continue_times = 0
-            start,process = time.perf_counter(), time.perf_counter()
+            start, process = time.perf_counter(), time.perf_counter()
             start_float_time = time.time()
             true_fail_flag = False
-            while True: 
+            while True:
                 if self.ck_btn_times.isChecked():
                     if test_cycle >= self.b_config.test_times:
                         break
@@ -768,7 +769,7 @@ class BTTestApp(QWidget):
                             break
 
                     row += 1
-                test_cycle+= 1
+                test_cycle += 1
                 self.log_signal.log.emit(f"Current test Cycle:{test_cycle}", False)
                 process = time.perf_counter()
                 if test_fail_flag:
@@ -779,13 +780,13 @@ class BTTestApp(QWidget):
                     test_fail_continue_times = 0
 
                 # update process lab
-                self.log_signal.process.emit(test_cycle, test_fail_times) 
+                self.log_signal.process.emit(test_cycle, test_fail_times)
                 # renew the status for another run:
                 for i in range(row):
-                    self.log_signal.cell.emit(i, 1, "") 
+                    self.log_signal.cell.emit(i, 1, "")
                 # stop thread if stop btn have been clicked
                 if self.thread_stop_flag:
-                    break 
+                    break
                 # if out of continue fail range, stop testing
                 if test_fail_continue_times >= self.b_config.continue_fail_limit:
                     self.log_signal.log.emit("Stop testing!", True)
@@ -795,24 +796,41 @@ class BTTestApp(QWidget):
                     true_fail_flag = True
                     break
             # Test finish!
-            end = time.perf_counter() 
+            end = time.perf_counter()
             # copy wrt log to specific folder
-            if  WRTController.copy_wrt_log_to_file(start_float_time,b_config.report_path):
+            if  WRTController.copy_wrt_log_to_file(start_float_time, self.b_config.report_path):
                 self.log_signal.log.emit("wrt log copy success!", False)
             else :
                 self.log_signal.log.emit("wrt log copy fail!", False)
             bt_warn_message = []
             # analyze wrt log code
-            bt_warn_message.extend(WRTController.wrt_error_code_filter(b_config.report_path,WRT_CODE_WHITE_LIST)) 
+            bt_warn_message.extend(
+                WRTController.wrt_error_code_filter(
+                    self.b_config.report_path, WRT_CODE_WHITE_LIST
+                )
+            )
             # dump the system event log and analyze
-            sys_log.export_system_log_last_seconds(int(end-start),b_config.report_path)
-            bt_warn_message.extend(sys_log.filter_evtx_by_event_ids(b_config.report_path,sys_log.EVENT_LIST))
+            export_ok = sys_log.export_system_log_last_seconds(
+                int(end - start), self.b_config.report_path
+            )
+            if export_ok:
+                bt_warn_message.extend(
+                    sys_log.filter_evtx_by_event_ids(
+                        self.b_config.report_path, sys_log.EVENT_LIST
+                    )
+                )
+            else:
+                self.log_signal.log.emit(
+                    "System event log export failed, skip event analysis.", False
+                )
             # update UI after test
-            self.log_signal.set_stutas.emit(test_cycle, test_fail_times,bt_warn_message,true_fail_flag)
+            self.log_signal.set_stutas.emit(
+                test_cycle, test_fail_times, bt_warn_message, true_fail_flag
+            )
             # dump log aftet test
             self.log_signal.log.emit("Test Finish! generate final report...", True)
             self.log_signal.save_report_database_data.emit(
-                test_cycle, test_fail_times, int(end - start),true_fail_flag 
+                test_cycle, test_fail_times, int(end - start), true_fail_flag
             )
             self.log_signal.log.emit(
                 "Final report is ready and dump to report folder!", True
@@ -820,20 +838,20 @@ class BTTestApp(QWidget):
             self.log_signal.enable.emit()
 
             #copy log.txt to specific log folder
-            shutil.copy("log.txt", b_config.report_path)
+            shutil.copy("log.txt", self.b_config.report_path)
 
         if self.btn_start.text() == "Start":
             self.thread_stop_flag = False
             self.error_message.setPlainText("")
             self.log_output.setPlainText("")
             self.database_data.date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.b_config.report_path = test_process.create_report_folder()
             self.test_thread = threading.Thread(target=_run_test_process_in_background)
             self.test_thread.start()
             self.save_config()
             self.btn_start.setText("Stop")
             self.btn_start.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
             self.disable_all_item()
-            self.b_config.report_path = test_process.create_report_folder()
             self.status_label.set_state("RUNNING")
 
         elif self.btn_start.text() == "Stop":
@@ -920,12 +938,19 @@ class BTTestApp(QWidget):
         self.settings_window.show()
 
     def database_setting(self):
-
-        self.database_window = DataBase_Data_setting(
-            "database_data.xlsx", self.database_data
-        )
-        self.database_window.setting_changed.connect(self.apply_databaseSetting)
-        self.database_window.show()
+        try:
+            self.database_window = DataBase_Data_setting(
+                "database_data.xlsx", self.database_data
+            )
+            self.database_window.setting_changed.connect(self.apply_databaseSetting)
+            self.database_window.show()
+        except Exception as ex:
+            logger.exception("Failed to open database settings window")
+            QMessageBox.critical(
+                self,
+                "Database Setting Error",
+                f"Unable to open database settings.\n{ex}",
+            )
 
     def apply_setting(self, basic_config: Basic_Config):
         self.b_config = basic_config
@@ -1154,7 +1179,24 @@ def report_folder_checking():
         os.makedirs("report")
         print("Created report folder...")
 
+
+def handle_uncaught_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+
+    logger.error(
+        "Unhandled exception:\n%s",
+        "".join(traceback.format_exception(exc_type, exc_value, exc_traceback)),
+    )
+    QMessageBox.critical(
+        None,
+        "Unexpected Error",
+        f"Unhandled exception occurred:\n{exc_value}",
+    )
+
 if __name__ == "__main__":
+    sys.excepthook = handle_uncaught_exception
     app = QApplication(sys.argv)
     dbm.ensure_database_setting()
     test_process.ensure_config_setting()

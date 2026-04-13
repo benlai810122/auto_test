@@ -1,34 +1,37 @@
 from dataclasses import dataclass, asdict
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Tuple
+
+import os
+import shutil
+import subprocess
+import time
+
+import pyautogui
+import pygetwindow as gw
+import pygame
+import pyscreenshot as ImageGrab
+import serial
+import serial.tools.list_ports
+import yaml
 from bt_control import BluetoothControl as b_control
 from pynput.keyboard import Key, Controller
-from teams_meeting_control import MeetingControl
-from teams_call.auto_vpt.vpt_contoller import VPTControl
-from wrt_controller import WRTController
 from audio_detect_control import AudioDetectController as ADC
-from video_control import VideoControl
-from utils import Utils
-from enum import Enum
-import serial.tools.list_ports
-from serial.serialutil import SerialException
-import time
-import serial
-import os
-import pygame
-import pyautogui
-from pynput import mouse, keyboard
-from datetime import datetime
-import yaml
-from utils import log as logger
+from database_manager import Database_data
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
+from pynput import mouse, keyboard
+from serial.serialutil import SerialException
+from teams_call.auto_vpt.vpt_contoller import VPTControl
+from teams_meeting_control import MeetingControl
+from utils import Utils
+from utils import log as logger
+from video_control import VideoControl
+from wrt_controller import WRTController
 from youtube_control import YoutubeControl
-import pygetwindow as gw
-from database_manager import Database_data
-from pathlib import Path
-import shutil
-from typing import Tuple
-import subprocess
-import pyscreenshot as ImageGrab
+
 
 class Power_States(Enum):
     idle = 0
@@ -43,7 +46,7 @@ class Headset(Enum):
 
 class ENV(Enum):
     Teams = 0
-    Local_audio_mp3 = 1 
+    Local_audio_mp3 = 1
     Local_audio_wav = 2
     Teams_Local_mp3 = 3
     Teams_Local_wav = 4
@@ -58,7 +61,7 @@ class Test_case(Enum):
     keyboard_function = "Keyboard_Function_Check"
     keyboard_latency = "Keyboard_Latency_Test"
     keyboard_latency_with_mouse = "Keyboard_Latency_with_mouse_Test"
-    keyboard_latency_waked= "Keyboard_Latency_waked_Test"
+    keyboard_latency_waked = "Keyboard_Latency_waked_Test"
     Keyboard_random = "Keyboard_Random_Click"
     Mouse_random = "Mouse_Random_Click"
     Headset_init = "Headset_Initialization"
@@ -91,7 +94,7 @@ CMD_keyboard_latency_with_mouse = str.encode("d")
 CMD_test = str.encode("f")
 g_COM_PORT = ""
 
-#this const is for latency test
+# Global values used by latency tests.
 g_latency = 0.0
 g_long_press = 0.5
 
@@ -118,7 +121,7 @@ class Basic_Config:
     mouse_latency_threshold_ms: int = 80
     keyboard_latency_threshold_ms: int = 100
     latency_calibration_ms: int = 0
-    report_path:str = ""
+    report_path: str = ""
 
 
 
@@ -150,15 +153,15 @@ def create_report_folder(base_path="report") -> str:
 
     return folder_path
 
-def screen_shoot_bluetooth_status_(path:str):
+def screen_shoot_bluetooth_status_(path: str):
     # open window's bluetooth and device pages
     subprocess.Popen(["explorer.exe", "ms-settings:bluetooth"])
     time.sleep(5)
 
-    #screen shoot and save it to report folder
+    # Screenshot and save it to the report folder.
     img = ImageGrab.grab()
     picture_name = "bluetooth_status.png"
-    picture_name = os.path.join(path,picture_name)
+    picture_name = os.path.join(path, picture_name)
     img.save(picture_name, quality=90)
 
 
@@ -168,11 +171,10 @@ def save_report(
     data: Database_data,
     total_cycles: int,
     fail_times: int,
-    mouse_latency:str,
-    keyboard_latency:str,
-    earliest_error:str,
+    mouse_latency: str,
+    keyboard_latency: str,
+    earliest_error: str,
     error_message="",
-    
 ):
     wb = Workbook()
     ws = wb.active
@@ -221,7 +223,7 @@ def save_report(
 
     current_time = datetime.now()
     timestamp_str = current_time.strftime("%Y%m%d_%H%M%S")
-    filename = os.path.join(config.report_path,f"test_report_{timestamp_str}.xlsx")
+    filename = os.path.join(config.report_path, f"test_report_{timestamp_str}.xlsx")
 
     wb.save(filename)
     print(f"✅ Report saved as {filename}")
@@ -229,7 +231,7 @@ def save_report(
 
 def go_to_sleep():
     """
-    using keybaord to go to sleep mode
+    Use keyboard shortcuts to put DUT into sleep mode.
     """
     keyboard = Controller()
     keyboard.press(Key.cmd)
@@ -247,16 +249,16 @@ def go_to_sleep():
 
 def arduino_board_check(target_port_desc: str) -> str:
     """
-    arduino board checking
+    Detect the Arduino serial port by matching description text.
     """
+    target_port = ""
     ports = serial.tools.list_ports.comports()
     for port, desc, hwid in ports:
         if target_port_desc in desc:
             target_port = port
             print(f"{port}: {desc}")
             return port
-    if not target_port:
-        return ""
+    return target_port
 
 
 def headset_init(
@@ -267,9 +269,9 @@ def headset_init(
     timeout_s: int,
 ) -> bool:
     """
-    headset states init and check
-    idle: only check the headset states, don't turn on off the headset power
-    turn_on_off: turn on the headset and then check the connect states
+    Initialize/check headset state.
+    idle: only check headset state
+    turn_on_off: toggle power and wait for connect
     """
     counter = 0
 
@@ -297,8 +299,9 @@ def headset_del(
     timeout_s: int,
 ) -> bool:
     """
+    Restore headset state after test.
     idle: do nothing
-    turn on off: turn off the headset and make sure the headset is disconnect
+    turn_on_off: turn off headset and verify disconnect
     """
     match headset_states:
         case Headset.turn_on_off.value:
@@ -319,18 +322,18 @@ def headset_del(
 
 def voice_detect(ser: serial.Serial, command: bytes) -> bool:
     """
-    detect the sound
+    Detect sound via Arduino response.
     """
     ser.write(command + b"\n")
     time.sleep(3)
     res = ser.read()
     print(f"*******************res = {res}***********************")
-    return True if b"1" in res else False
+    return b"1" in res
 
 
 def buzzer_buzzing(ser: serial.Serial, command: bytes) -> bool:
     """
-    let buzzer start buzzing for 5 sec
+    Start buzzer output for input test flow.
     """
     ser.write(command + b"\n")
 
@@ -361,13 +364,13 @@ def close_teams_call_and_vpt():
 
 def get_arduino_port(port: str, log_callback) -> str:
     """
-    check and get the arduino board serial port
+    Check and return the Arduino serial port.
     """
     serial_port = ""
     try:
         serial_port = arduino_board_check(target_port_desc=port)
         log_callback(f"serial port detected: {serial_port}", False)
-    except Exception as e:
+    except Exception:
         log_callback("please insert the arduino board!", False)
 
     return serial_port
@@ -377,7 +380,7 @@ def env_init(
     ENV_source: ENV, t_control: MeetingControl, v_control: VPTControl, log_callback
 ) -> bool:
     """
-    doing some pre init before test the headset output function , like open teams or local music
+    Prepare environment before headset output checks.
     """
     match ENV_source:
         case ENV.Teams.value:
@@ -398,16 +401,16 @@ def env_init(
             time.sleep(10)
         case ENV.Local_audio_mp3.value:
             log_callback("Start playing the local music...", False)
-            videoControl = VideoControl(
+            video_control = VideoControl(
                 path=os.path.join("\\", "local_music", "test.mp3")
             )
-            videoControl.play()
+            video_control.play()
         case ENV.Local_audio_wav.value:
             log_callback("Start playing the local music...", False)
-            videoControl = VideoControl(
+            video_control = VideoControl(
                 path=os.path.join("\\", "local_music", "test.wav")
             )
-            videoControl.play()
+            video_control.play()
         case ENV.Teams_Local_mp3.value:
             # open the teams call and join the meeting
             res = open_teams_call_and_join_meeting(t_control=t_control)
@@ -418,10 +421,10 @@ def env_init(
             log_callback("Start the teams meeting...", False)
             # start playing local music after joining the teams call meeting
             log_callback("Start playing the local music...", False)
-            videoControl = VideoControl(
+            video_control = VideoControl(
                 path=os.path.join("\\", "local_music", "test.mp3")
             )
-            videoControl.play()
+            video_control.play()
 
         case ENV.Teams_Local_wav.value:
             # open the teams call and join the meeting
@@ -433,16 +436,16 @@ def env_init(
             log_callback("Start the teams meeting...", False)
             # start playing local music after joining the teams call meeting
             log_callback("Start playing the local music...", False)
-            videoControl = VideoControl(
+            video_control = VideoControl(
                 path=os.path.join("\\", "local_music", "test.wav")
             )
-            videoControl.play()
+            video_control.play()
         case ENV.Youtube.value:
             log_callback("Start Youtube...", False)
-            youtubeControl = YoutubeControl(
+            youtube_control = YoutubeControl(
                 link="https://www.youtube.com/watch?v=w9k7eWD0ik8"
             )
-            youtubeControl.play()
+            youtube_control.play()
     time.sleep(5)
     # make sure the main ui will be on the top of the screen
     window: gw.Win32Window
@@ -455,18 +458,18 @@ def env_init(
     return True
 
 
-def headset_connect_dected(b_config: Basic_Config,log_callback)-> Tuple[bool,str]:
-    #check the headset endpoit exist:
+def headset_connect_dected(b_config: Basic_Config, log_callback) -> Tuple[bool, str]:
+    # Check whether headset endpoint exists.
     audio_detect = ADC(headset=b_config.headset)
-    message = ''
-    if audio_detect.device_checking()<0:
+    message = ""
+    if audio_detect.device_checking() < 0:
         # waiting for 100 sec and check again
         log_callback("Headset disconnect, waiting 100s then check again...", False)
         message = "[Warn] Headset connection didn't resume at time! "
         audio_detect.audio_dect_terminate()
         time.sleep(100)
         audio_detect = ADC(headset=b_config.headset)
-        if audio_detect.device_checking() <0:
+        if audio_detect.device_checking() < 0:
             log_callback("Headset disconnect!", False)
             audio_detect.audio_dect_terminate()
             return False, message
@@ -476,14 +479,14 @@ def headset_connect_dected(b_config: Basic_Config,log_callback)-> Tuple[bool,str
 
 def headset_output_test(
     b_config: Basic_Config, ser: serial.Serial, log_callback
-) -> Tuple[bool,str]:
+) -> Tuple[bool, str]:
     
     log_callback("Start headset output function test...", False)
     test_time = 0
     res_output = False
     message = ""
      
-    #set the volume to 100 %
+    # Set system volume to 100%.
     for _ in range(50):
         try:
             pyautogui.press("volumeup")
@@ -499,11 +502,11 @@ def headset_output_test(
 
         if not res_output:
             log_callback("headset output test fail, retry again!", False)
-        if test_time > b_config.test_retry_times: 
+        if test_time > b_config.test_retry_times:
             return False, message
         test_time += 1
     log_callback("Headset output function test finish", False)
-    return res_output , message
+    return res_output, message
 
 
 def headset_input_test(
@@ -517,7 +520,7 @@ def headset_input_test(
         ad_Controller = ADC(headset=b_config.headset, threshold=150)
         buzzer_buzzing(ser=ser, command=CMD_buzzer)
         res_input = ad_Controller.audio_detect()
-        if test_time > b_config.test_retry_times: 
+        if test_time > b_config.test_retry_times:
             return False
         test_time += 1
     log_callback("Headset input function test finish", False)
@@ -569,38 +572,39 @@ def env_restore(env_source: ENV, log_callback) -> bool:
 def mouse_keyboard_function_detect(
     ser: serial.Serial, command: bytes, timeout_s: int, log_callback
 ) -> bool:
-    """_summary_
-        check mouse function still working or not
-    Returns:
-        bool: _description_
-    """
+    """Verify mouse/keyboard basic input events are still working."""
     counter = 0
-    pygame.init()
-    screen_width, screen_height = pyautogui.size()
-    pygame.display.set_mode((screen_width, screen_height))
+    try:
+        pygame.init()
+        screen_width, screen_height = pyautogui.size()
+        pygame.display.set_mode((screen_width, screen_height))
 
-    # control mouse clicking
-    ser.write(command + b"\n")
-    # start cehcking mouse click
-    while counter < timeout_s:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                log_callback("mouse function test have unexpected issue!", False)
-                pygame.quit()
-                return False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                log_callback("BLE mouse function pass!", False)
-                pygame.quit()
-                return True
-            elif event.type == pygame.KEYDOWN:
-                log_callback("BLE keyboard function pass!", False)
-                pygame.quit()
-                return True
+        # control mouse clicking
+        ser.write(command + b"\n")
+        # Start checking input events.
+        while counter < timeout_s:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    log_callback("mouse function test have unexpected issue!", False)
+                    return False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    log_callback("BLE mouse function pass!", False)
+                    return True
+                elif event.type == pygame.KEYDOWN:
+                    log_callback("BLE keyboard function pass!", False)
+                    return True
 
-        counter += 1
-        time.sleep(1)
-    pygame.quit()
-    return False
+            counter += 1
+            time.sleep(1)
+        return False
+    except Exception as e:
+        log_callback(f"pygame error: {e}", False)
+        return False
+    finally:
+        try:
+            pygame.quit()
+        except Exception:
+            pass
 
 
 def mouse_keyboard_random_click(
@@ -626,11 +630,7 @@ def mouse_keyboard_random_click(
 def mouse_function_detect_s3(
     ser: serial.Serial, command: bytes, sleep_time: int
 ) -> bool:
-    """_summary_
-        check mouse function still working or not (s3 states)
-    Returns:
-        bool: _description_
-    """
+    """Configure delayed mouse action used by S3 flow."""
     print("BLE mouse function test setting...")
     cmd = f"4,{sleep_time}\n".encode()
     ser.write(cmd)
@@ -639,14 +639,7 @@ def mouse_function_detect_s3(
 
 
 def arduino_serial_port_reset(ser: serial.Serial, serial_port: str):
-    """_summary_
-    reset the arduino serial port after s3 or s4
-    Args:
-        ser (serial.Serial): _description_
-
-    Returns:
-        _type_: _description_
-    """
+    """Reset the Arduino serial port after S3/S4 transitions."""
     try:
         ser.close()
     except:
@@ -673,12 +666,7 @@ def dut_states_init(
     sleep_time_s: int,
     ser: serial.Serial,
 ) -> None:
-    """_summary_
-    setting dut states, s3 ,s4 or idle
-
-    Args:
-        states (States): _description_
-    """
+    """Move DUT to target power state (idle, S3, or S4)."""
     match power_states:
         case Power_States.idle:
             time.sleep(wake_up_time_s)
@@ -695,7 +683,7 @@ def dut_states_init(
 
 def safe_write(ser: serial.Serial, data, baudrate=115200):
     global g_COM_PORT
-    # safe serial wirte cmd to aviod issue
+    # Safe serial write command to avoid transient disconnect issues.
     try:
         ser.write(data)
     except SerialException as e:
@@ -713,21 +701,26 @@ def safe_write(ser: serial.Serial, data, baudrate=115200):
 
 
 def mouse_latency(
-    ser: serial.Serial, threshold: int,latency_calibration: int, waked_flag = False, with_keyboard_flag = False, log_callback=None
+    ser: serial.Serial,
+    threshold: int,
+    latency_calibration: int,
+    waked_flag=False,
+    with_keyboard_flag=False,
+    log_callback=None,
 ) -> bool:
 
     global g_latency
-    latency_const = float(latency_calibration)/1000
+    latency_const = float(latency_calibration) / 1000
 
     def on_click(x, y, button, pressed):
         global g_latency
         if pressed:
             end = time.perf_counter()
             # minus the servo motor moving time
-            if(with_keyboard_flag):
+            if with_keyboard_flag:
                 g_latency = (end - start) - latency_const - g_long_press
             else:
-                g_latency = (end - start) - latency_const 
+                g_latency = (end - start) - latency_const
             return False  # stop listener
     latency_list = []
     for _ in range(15):
@@ -748,7 +741,7 @@ def mouse_latency(
 
         if g_latency > 0:
             latency_list.append(g_latency * 1000)
-            print(f"mouse clicking latency:{g_latency*1000:.3f} ms")
+            print(f"mouse clicking latency:{g_latency * 1000:.3f} ms")
         else:
             print("retry...")
         time.sleep(3)
@@ -766,23 +759,29 @@ def mouse_latency(
     average_latency = sum(latency_list) / len(latency_list)
     log_callback(f"mouse average clicking latency:{average_latency:.3f} ms", False)
 
-    return True if average_latency <= threshold else False
+    return average_latency <= threshold
 
 
 def keyboard_latency(
-    ser: serial.Serial, threshold: int,latency_calibration: int, waked_flag = False, with_mouse_flag = False, log_callback=None, 
+    ser: serial.Serial,
+    threshold: int,
+    latency_calibration: int,
+    waked_flag=False,
+    with_mouse_flag=False,
+    log_callback=None,
 ) -> bool:
 
     global g_latency
-    latency_const = float(latency_calibration)/1000
+    latency_const = float(latency_calibration) / 1000
+
     def on_press(key):
         global g_latency
         end = time.perf_counter()
         if with_mouse_flag:
-            g_latency = (end - start) - latency_const -g_long_press
-        else: 
+            g_latency = (end - start) - latency_const - g_long_press
+        else:
             g_latency = (end - start) - latency_const
-        return False  #stop listener
+        return False  # stop listener
 
     latency_list = []
     for _ in range(15):
@@ -803,7 +802,7 @@ def keyboard_latency(
 
         if g_latency > 0:
             latency_list.append(g_latency * 1000)
-            print(f"keyboard clicking latency:{g_latency*1000:.3f} ms")
+            print(f"keyboard clicking latency:{g_latency * 1000:.3f} ms")
         else:
             print("retry...")
         time.sleep(3)
@@ -819,8 +818,8 @@ def keyboard_latency(
         return False
 
     average_latency = sum(latency_list) / len(latency_list)
-    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms", False) 
-    return True if average_latency <= threshold else False
+    log_callback(f"keyboard average clicking latency:{average_latency:.3f} ms", False)
+    return average_latency <= threshold
 
 
 
@@ -831,31 +830,24 @@ def serial_test(ser: serial.Serial):
         ser.flush()
         ser.read()
         end = time.perf_counter()
-        print(f"serial port trans time {(end - start)/2:.6f} seconds")
+        print(f"serial port trans time {(end - start) / 2:.6f} seconds")
 
 
 def mouse_move_to_safe_place():
     # move mouse to safe place (top-right) before clicking
     try:
         screen_width, screen_height = pyautogui.size()
-        pyautogui.click(x=screen_width - 100, y= 5)
+        pyautogui.click(x=screen_width - 100, y=5)
     except:
         pass
 
-def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool, str]:
-    """_summary_
-    Args:
-        test_case (str): test case
-        b_config (Basic_Config): the configation of the test
-        log_callback (_type_): present the log one textbox and save the log txt
 
-    Returns:
-        bool: _description_
-    """
+def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool, str]:
+    """Run one test case and return (pass, message)."""
     # connect to arduino board
     global g_COM_PORT
     res = True
-    message = ''
+    message = ""
     g_COM_PORT = b_config.com
     ser: serial.Serial = None
 
@@ -873,14 +865,14 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
         except:
             log_callback("Can not find the arduino board!", False)
             message = "[Error] Arduino board lost!"
-            return False ,message
+            return False, message
 
     try:
         if wait_for_port(g_COM_PORT, 5):
             ser = serial.Serial(g_COM_PORT, 115200, timeout=30)
             time.sleep(5)
         else:
-            log_callback(f"Cant not find the serial device", False)
+            log_callback("Cant not find the serial device", False)
             message = "[Error] Serial port missing!"
             return False, message
 
@@ -1014,7 +1006,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             )
 
         case Test_case.Headset_output.value:
-            res,message = headset_output_test(
+            res, message = headset_output_test(
                 b_config=b_config, ser=ser, log_callback=log_callback
             )
 
@@ -1058,8 +1050,8 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
                 ser=ser,
                 threshold=b_config.mouse_latency_threshold_ms,
                 latency_calibration=b_config.latency_calibration_ms,
-                waked_flag = True,
-                with_keyboard_flag= True,
+                waked_flag=True,
+                with_keyboard_flag=True,
                 log_callback=log_callback,
             )
 
@@ -1067,7 +1059,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
-                latency_calibration=b_config.latency_calibration_ms, 
+                latency_calibration=b_config.latency_calibration_ms,
                 log_callback=log_callback,
             )
         
@@ -1086,7 +1078,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
                 threshold=b_config.keyboard_latency_threshold_ms,
                 latency_calibration=b_config.latency_calibration_ms,
                 waked_flag=True,
-                with_mouse_flag= True,
+                with_mouse_flag=True,
                 log_callback=log_callback,
             )
 
@@ -1106,7 +1098,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             res = env_restore(env_source=b_config.ENV_source, log_callback=log_callback)
 
         case Test_case.Headset_connect_check.value:
-            res,message = headset_connect_dected(b_config,log_callback)
+            res, message = headset_connect_dected(b_config, log_callback)
 
         case "test":
             serial_test(ser=ser)
@@ -1130,4 +1122,4 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
 
 
 if __name__ == "__main__":
-   screen_shoot_bluetooth_status_('report')
+    screen_shoot_bluetooth_status_("report")

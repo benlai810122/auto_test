@@ -19,6 +19,7 @@ from database_manager import Database_data
 import database_manager as dbm
 from PyQt5.QtCore import pyqtSignal
 import requests
+from utils import log as logger
 
 
 class DataBase_Data_setting(QWidget):
@@ -26,6 +27,7 @@ class DataBase_Data_setting(QWidget):
     def __init__(self, excel_path, database_data: Database_data):
         super().__init__()
         self.database_data = database_data
+        self._closing_from_save = False
         self.init_ui(excel_path)
         self.ui_renew(self.database_data)
 
@@ -131,62 +133,79 @@ class DataBase_Data_setting(QWidget):
     def ui_renew(self, database_data: Database_data):
         # showing the UI status according to the last time status
         for code in self.codes:
+            value = getattr(database_data, code, "")
             if type(self.widgets[code]) == QComboBox:
-                self.widgets[code].setEditText(getattr(database_data, code))
+                self.widgets[code].setEditText(str(value))
             elif type(self.widgets[code]) == QSpinBox:
-                value = int(getattr(database_data, code))
-                self.widgets[code].setValue(value)
+                try:
+                    self.widgets[code].setValue(int(value))
+                except (TypeError, ValueError):
+                    self.widgets[code].setValue(0)
             else:
-                self.widgets[code].setText(getattr(database_data, code))
+                self.widgets[code].setText(str(value))
 
         # auto filled the specific fold:
         driver_info = dbm.get_driver_versions()
         wrt_info = dbm.get_wrt_version_and_preset()
-        self.widgets['serial_num'].setText(dbm.get_serial_number())
-        self.widgets['serial_num'].setDisabled(True)
-        self.widgets['os_version'].setText(dbm.get_os_version())
-        self.widgets['os_version'].setDisabled(True)
-        self.widgets['platform_brand'].setText(dbm.get_platform_brand())
-        self.widgets['platform_brand'].setDisabled(True)
-        self.widgets['platform'].setText(dbm.get_platform_name())
-        self.widgets['platform'].setDisabled(True)
-        self.widgets['platform_bios'].setText(dbm.get_bios_version())
-        self.widgets['platform_bios'].setDisabled(True)
-        self.widgets['cpu'].setText(dbm.get_cpu_name())
-        self.widgets['cpu'].setDisabled(True)
+        self._set_widget_value('serial_num', dbm.get_serial_number(), disable=True)
+        self._set_widget_value('os_version', dbm.get_os_version(), disable=True)
+        self._set_widget_value('platform_brand', dbm.get_platform_brand(), disable=True)
+        self._set_widget_value('platform', dbm.get_platform_name(), disable=True)
+        self._set_widget_value('platform_bios', dbm.get_bios_version(), disable=True)
+        self._set_widget_value('cpu', dbm.get_cpu_name(), disable=True)
 
         if driver_info.get(dbm.DRIVER_WLAN):
-            self.widgets['wlan'].setText(driver_info.get(dbm.DRIVER_WLAN))
-            self.widgets['wlan'].setDisabled(True) 
+            self._set_widget_value('wlan', driver_info.get(dbm.DRIVER_WLAN), disable=True)
         if driver_info.get(dbm.DRIVER_BT):
-            self.widgets['bt_driver'].setText(driver_info.get(dbm.DRIVER_BT))
-            self.widgets['bt_driver'].setDisabled(True)
+            self._set_widget_value('bt_driver', driver_info.get(dbm.DRIVER_BT), disable=True)
         elif driver_info.get(dbm.DRIVER_BT_DUAL):
-            self.widgets['bt_driver'].setText(driver_info.get(dbm.DRIVER_BT_DUAL))
-            self.widgets['bt_driver'].setDisabled(True) 
+            self._set_widget_value('bt_driver', driver_info.get(dbm.DRIVER_BT_DUAL), disable=True)
         if driver_info.get(dbm.DRIVER_WIFI):
-            self.widgets['wifi_driver'].setText(driver_info.get(dbm.DRIVER_WIFI))
-            self.widgets['wifi_driver'].setDisabled(True)
+            self._set_widget_value('wifi_driver', driver_info.get(dbm.DRIVER_WIFI), disable=True)
         if driver_info.get(dbm.DRIVER_ISST):
-            self.widgets['audio_driver'].setText(driver_info.get(dbm.DRIVER_ISST))
-            self.widgets['audio_driver'].setDisabled(True)
-        if wrt_info['ver']:
-            self.widgets['wrt_version'].setText(wrt_info['ver'])
-            self.widgets['wrt_version'].setDisabled(True) 
-        if wrt_info['preset']:
-            self.widgets['wrt_preset'].setText(wrt_info['preset'])
-            self.widgets['wrt_preset'].setDisabled(True)
+            self._set_widget_value('audio_driver', driver_info.get(dbm.DRIVER_ISST), disable=True)
+        if wrt_info and wrt_info.get('ver'):
+            self._set_widget_value('wrt_version', wrt_info.get('ver'), disable=True)
+        if wrt_info and wrt_info.get('preset'):
+            self._set_widget_value('wrt_preset', wrt_info.get('preset'), disable=True)
 
-        self.widgets['msft_teams_version'].setText(dbm.get_teams_version())
-        self.widgets['msft_teams_version'].setDisabled(True)
+        self._set_widget_value('msft_teams_version', dbm.get_teams_version(), disable=True)
 
-        self.widgets['wifi_name'].setText(dbm.get_connected_wifi_name())
-        self.widgets['wifi_name'].setDisabled(True)
-        self.widgets['wifi_band'].setText(dbm.get_connected_wifi_band())
-        self.widgets['wifi_band'].setDisabled(True)
+        self._set_widget_value('wifi_name', dbm.get_connected_wifi_name(), disable=True)
+        self._set_widget_value('wifi_band', dbm.get_connected_wifi_band(), disable=True)
+
+    def _set_widget_value(self, code: str, value, disable: bool = False):
+        widget = self.widgets.get(code)
+        if widget is None:
+            logger.warning(f"UI field missing for code '{code}'")
+            return
+
+        safe_value = "" if value is None else str(value)
+        if isinstance(widget, QComboBox):
+            widget.setEditText(safe_value)
+        elif isinstance(widget, QSpinBox):
+            try:
+                widget.setValue(int(value))
+            except (TypeError, ValueError):
+                widget.setValue(0)
+        else:
+            widget.setText(safe_value)
+
+        if disable:
+            widget.setDisabled(True)
     
     def save_data(self):
         #database_data update
+        self._update_database_data_from_widgets()
+        # check the required item have value
+        if dbm.database_data_checking(self.database_data, self.required_datas):
+            self.setting_changed.emit(self.database_data)
+            self._closing_from_save = True
+            self.close()
+        else: 
+            QMessageBox.warning(self,"Warning!","Please fill all required field!")
+
+    def _update_database_data_from_widgets(self):
         for code in self.codes:
             if type(self.widgets[code]) == QComboBox:
                 value = self.widgets[code].currentText()
@@ -197,16 +216,19 @@ class DataBase_Data_setting(QWidget):
             else:
                 value = self.widgets[code].text()
                 setattr(self.database_data, code, value)
-        # check the required item have value
-        if dbm.database_data_checking(self.database_data, self.required_datas):
-            self.setting_changed.emit(self.database_data)
-            self.close()
-        else: 
-            QMessageBox.warning(self,"Warning!","Please fill all required field!")
     
     def closeEvent(self, event):
-        self.save_data()
-        event.accept()  # Accept the close event
+        if self._closing_from_save:
+            event.accept()
+            return
+
+        self._update_database_data_from_widgets()
+        if dbm.database_data_checking(self.database_data, self.required_datas):
+            self.setting_changed.emit(self.database_data)
+            event.accept()
+        else:
+            QMessageBox.warning(self, "Warning!", "Please fill all required field!")
+            event.ignore()
 
     
    

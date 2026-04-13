@@ -5,6 +5,7 @@ import grpc
 import audio_test_pb2 as pb2
 import audio_test_pb2_grpc as pb2_grpc
 from google.protobuf import empty_pb2
+from arduino_board_control_manager import ArduinoManager
 
 DUT1_IP = "192.168.70.2:50051"
 DUT2_IP = "192.168.70.158:50051"
@@ -29,6 +30,7 @@ async def main():
     out_dir = os.path.join(os.getcwd(), "record", run_id)
     channel_1 = grpc.aio.insecure_channel(DUT1_IP)
     channel_2 = grpc.aio.insecure_channel(DUT2_IP)
+    am = ArduinoManager()
     
     try:
         # create stub for both channel:
@@ -79,6 +81,9 @@ async def main():
         )
         print(resp.ok, resp.message)
 
+        #after meeting start, control side play 1k tone 30s to control-side headset
+        am.buzzer_control(30)
+        
         # wait for 15 sec
         print("waiting for 15 sec")
         time.sleep(15)

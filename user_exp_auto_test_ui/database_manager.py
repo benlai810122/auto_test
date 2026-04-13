@@ -11,6 +11,7 @@ from typing import Optional
 from pathlib import Path
 import shutil
 import winreg
+from dataclasses import fields
 
 @dataclass
 class Database_data:
@@ -85,6 +86,7 @@ class Database_data:
     wifi_band:str = ""
     comment:str = ""
     music_type:str = "None"
+    short_platform:str = ""
 
 
 IP = "192.168.70.122"
@@ -108,13 +110,17 @@ def ensure_database_setting():
 def load_database_data(file_path: str) -> Database_data:
     #load the database data from yaml file
     with open(file_path) as f:
-        data = yaml.safe_load(f)
-    return Database_data(**data)
+        data = yaml.safe_load(f) or {}
+
+    # Keep only known dataclass fields to avoid crashing on stale/extra YAML keys.
+    field_names = {f.name for f in fields(Database_data)}
+    filtered_data = {k: v for k, v in data.items() if k in field_names}
+    return Database_data(**filtered_data)
 
 def database_data_checking(ori_data:Database_data, nec_data_array:list[str])->bool:
     #check the necessary daata won't be Null
     for data in nec_data_array:
-        if getattr(ori_data,data) == "":
+        if getattr(ori_data, data, "") == "":
             return False  
     return True
     
@@ -314,7 +320,7 @@ def get_wrt_version_and_preset() -> Optional[dict]:
 
 def database_data_renew(data:Database_data):
     driver_info = get_driver_versions()
-    wrt_info = get_wrt_version_and_preset()
+    wrt_info = get_wrt_version_and_preset() or {}
     data.serial_num = get_serial_number() 
     data.os_version = get_os_version()
     data.platform_brand = get_platform_brand() 
@@ -331,10 +337,10 @@ def database_data_renew(data:Database_data):
         data.wifi_driver = driver_info.get(DRIVER_WIFI)
     if driver_info.get(DRIVER_ISST):
         data.audio_driver = driver_info.get(DRIVER_ISST)
-    if wrt_info['ver']:
-        data.wrt_version = wrt_info['ver']
-    if wrt_info['preset']:
-        data.wrt_preset = wrt_info['preset']
+    if wrt_info.get('ver'):
+        data.wrt_version = wrt_info.get('ver')
+    if wrt_info.get('preset'):
+        data.wrt_preset = wrt_info.get('preset')
     data.msft_teams_version = get_teams_version() 
     data.wifi_name = get_connected_wifi_name() 
     data.wifi_band = get_connected_wifi_band()
