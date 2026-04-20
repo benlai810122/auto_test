@@ -28,6 +28,7 @@ def latency_analyze(target:str,log_text:str,folder_path:str = None)->float:
         file_path = path.join(folder_path, "latency_test.txt") 
         with open(file_path, "w", encoding="utf-8") as f:
             i = 1
+            f.write(f"Latency Target: {target}\n")
             for t, latency in zip(time, latencies):
                 f.write(f"{str(i)} {t} {latency}\n")
                 i = i+1
