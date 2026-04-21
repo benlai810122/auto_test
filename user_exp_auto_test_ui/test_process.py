@@ -737,7 +737,10 @@ def mouse_latency(
             ser.write(CMD_mouse_latency + b"\n")
         ser.flush()
         with mouse.Listener(on_click=on_click) as listener:
-            listener.join()
+            listener.join(timeout=5)
+            if listener.is_alive():
+                listener.stop()
+                g_latency = 0  # mark as missed
 
         if g_latency > 0:
             latency_list.append(g_latency * 1000)
@@ -798,7 +801,10 @@ def keyboard_latency(
             ser.write(CMD_keyboard_latency + b"\n")
         ser.flush()
         with keyboard.Listener(on_press=on_press) as listener:
-            listener.join()
+            listener.join(timeout=5)
+            if listener.is_alive():
+                listener.stop()
+                g_latency = 0  # mark as missed
 
         if g_latency > 0:
             latency_list.append(g_latency * 1000)
