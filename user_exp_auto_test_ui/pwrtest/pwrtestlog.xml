@@ -1,12 +1,12 @@
-<PwrTestLog date="03/09/2026" time="11:32:11" filename="C:\Users\Admin\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
+<PwrTestLog date="03/30/2026" time="16:50:54" filename="C:\Users\Cashmere\Desktop\auto_workspace\auto_test\user_exp_auto_test_ui\pwrtest\pwrtestlog.xml">
   <SystemInformation>
-    <ComputerName>DESKTOP-LGJ88V6</ComputerName>
-    <OSBuildNumber>26220</OSBuildNumber>
-    <SystemManufacturer>Dell Inc.</SystemManufacturer>
-    <SystemProductName>Latitude 9430</SystemProductName>
-    <BIOSVersion>89.12.1</BIOSVersion>
-    <BIOSReleaseDate>05/04/2022</BIOSReleaseDate>
-    <ProcessorCount>12</ProcessorCount>
+    <ComputerName>DESKTOP-3C2UPS1</ComputerName>
+    <OSBuildNumber>26581</OSBuildNumber>
+    <SystemManufacturer>HP</SystemManufacturer>
+    <SystemProductName>HP EliteBook X G2i 14 inch Notebook Next Gen AI PC</SystemProductName>
+    <BIOSVersion>Y90 Ver. 01.01.05</BIOSVersion>
+    <BIOSReleaseDate>01/14/2026</BIOSReleaseDate>
+    <ProcessorCount>16</ProcessorCount>
     <ProcessorPackageCount>1</ProcessorPackageCount>
   </SystemInformation>
   <SYSTEM_POWER_CAPABILITIES>
@@ -23,5 +23,21 @@
     <HiberFilePresent>1</HiberFilePresent>
     <AoAc>1</AoAc>
   </SYSTEM_POWER_CAPABILITIES>
-  <CSTransitions>
-    </PwrTestLog>
+  <SleepScenario>
+    <SleepTransitions hybrid="1" delay="60" sleeptime="30" IgnoreUsbHub="0" EndTransitionEventTimeout="120">
+      <SleepTransition number="0" status="0">
+        <StartT>03/30/2026 16:50:55</StartT>
+        <EndT>03/30/2026 16:51:39</EndT>
+        <Duration>00:00:43</Duration>
+        <TargetState>4</TargetState>
+        <EffectiveState>4</EffectiveState>
+        <Suspend>2193</Suspend>
+        <BIOSInit>6109</BIOSInit>
+        <DriverInit>699</DriverInit>
+        <HiberPagesWritten>687597</HiberPagesWritten>
+        <HiberRead>2011</HiberRead>
+        <HiberWrite>2275</HiberWrite>
+      </SleepTransition>
+    </SleepTransitions>
+  </SleepScenario>
+</PwrTestLog>
