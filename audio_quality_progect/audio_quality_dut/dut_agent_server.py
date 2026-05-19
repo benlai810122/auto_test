@@ -62,7 +62,6 @@ class DutAgent(pb2_grpc.DutAgentServicer):
                 return pb2.JoinMeetingByUrlResponse(ok=False, message="meeting_url is empty")
             if not (url.startswith("http://") or url.startswith("https://")):
                 return pb2.JoinMeetingByUrlResponse(ok=False, message="meeting_url must start with http(s)://")
-            
             tc = TC(url,'teams_call')
             result = tc.open_teams_and_join_meeting()
             if not result:

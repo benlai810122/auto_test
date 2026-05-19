@@ -938,7 +938,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             '''
 
         case Test_case.keyboard_function.value:
-            # mouse function test
+            mouse_move_to_safe_place()
             res = mouse_keyboard_function_detect(
                 ser=ser,
                 command=CMD_keyboard_clicking,
@@ -972,6 +972,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
 
         case Test_case.Keyboard_random.value:
             # mouse function test
+            mouse_move_to_safe_place()
             res = mouse_keyboard_random_click(
                 ser=ser,
                 command=CMD_keyboard_random_clicking,
@@ -1062,6 +1063,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             )
 
         case Test_case.keyboard_latency.value:
+            mouse_move_to_safe_place()
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
@@ -1070,6 +1072,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             )
         
         case Test_case.keyboard_latency_waked.value:
+            mouse_move_to_safe_place()
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
@@ -1079,6 +1082,7 @@ def run_test(test_case: str, b_config: Basic_Config, log_callback) -> Tuple[bool
             )
 
         case Test_case.keyboard_latency_with_mouse.value:
+            mouse_move_to_safe_place()
             res = keyboard_latency(
                 ser=ser,
                 threshold=b_config.keyboard_latency_threshold_ms,
