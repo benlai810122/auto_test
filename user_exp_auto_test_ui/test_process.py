@@ -724,19 +724,17 @@ def mouse_latency(
             return False  # stop listener
     latency_list = []
     for _ in range(15):
-
         if waked_flag:
             ser.write(CMD_mouse_latency + b"\n")
             ser.flush()
             time.sleep(1)
-
-        start = time.perf_counter()  # mark the time
-        if with_keyboard_flag:
-            ser.write(CMD_mouse_latency_with_keyboard + b"\n")
-        else:
-            ser.write(CMD_mouse_latency + b"\n")
-        ser.flush()
         with mouse.Listener(on_click=on_click) as listener:
+            start = time.perf_counter()  # mark the time
+            if with_keyboard_flag:
+                ser.write(CMD_mouse_latency_with_keyboard + b"\n")
+            else:
+                ser.write(CMD_mouse_latency + b"\n")
+            ser.flush()
             listener.join(timeout=5)
             if listener.is_alive():
                 listener.stop()
@@ -794,13 +792,13 @@ def keyboard_latency(
             ser.flush()
             time.sleep(1)
 
-        start = time.perf_counter()  # mark the time
-        if with_mouse_flag:
-            ser.write(CMD_keyboard_latency_with_mouse + b"\n")
-        else:
-            ser.write(CMD_keyboard_latency + b"\n")
-        ser.flush()
         with keyboard.Listener(on_press=on_press) as listener:
+            start = time.perf_counter()  # mark the time
+            if with_mouse_flag:
+                ser.write(CMD_keyboard_latency_with_mouse + b"\n")
+            else:
+                ser.write(CMD_keyboard_latency + b"\n")
+            ser.flush()
             listener.join(timeout=5)
             if listener.is_alive():
                 listener.stop()
