@@ -170,65 +170,64 @@ def get_serial_number()->str:
 
 def get_driver_versions():
     #get wifi, bluetooth and isst driver version, also the wlan
+    cmd = (
+        "Get-CimInstance Win32_PnPSignedDriver "
+        "| Where-Object { $_.DeviceName -ne $null } "
+        "| Select-Object DeviceName, DriverVersion "
+        "| ForEach-Object { $_.DeviceName + '|' + $_.DriverVersion }"
+    )
     output = subprocess.check_output(
-        ["wmic", "path", "Win32_PnPSignedDriver", "get", "DeviceName,DriverVersion"],
+        ["powershell", "-Command", cmd],
         shell=False
-    ).decode("utf-8", errors="ignore") 
+    ).decode("utf-8", errors="ignore")
     results = {}
     for line in output.splitlines():
         line = line.strip()
-        if not line or line.startswith("DeviceName"):
+        if not line or '|' not in line:
             continue
-        if (DRIVER_BT in line):
-            # split from the right: name .... version
-            parts = line.rsplit(" ", 1)
-            if len(parts) == 2:
-                name, version = parts
-                results[DRIVER_BT] = version.strip()
-        if (DRIVER_BT_DUAL in line):
-            # split from the right: name .... version
-            parts = line.rsplit(" ", 1)
-            if len(parts) == 2:
-                name, version = parts
-                results[DRIVER_BT_DUAL] = version.strip()
-        elif (DRIVER_WIFI in line):
-            # split from the right: name .... version
-            parts = line.rsplit(" ", 1)
-            if len(parts) == 2:
-                name, version = parts
-                results[DRIVER_WIFI] = version.strip()
-
-                # also add the wlan
-                match = re.search(r"(AX\d{3}|BE\d{3}|AC\d{4}|AC\d{3}|\b[89]\d{3}\b)", name, re.IGNORECASE)
-                if match:
-                    results[DRIVER_WLAN] = match.group(0).upper()
-        
-        elif (DRIVER_ISST in line):
-            # split from the right: name .... version
-            parts = line.rsplit(" ", 1)
-            if len(parts) == 2:
-                name, version = parts
-                results[DRIVER_ISST] = version.strip()
+        name, version = line.rsplit('|', 1)
+        name = name.strip()
+        version = version.strip()
+        if not name or not version:
+            continue
+        if (DRIVER_BT in name):
+            results[DRIVER_BT] = version
+        if (DRIVER_BT_DUAL in name):
+            results[DRIVER_BT_DUAL] = version
+        elif (DRIVER_WIFI in name):
+            results[DRIVER_WIFI] = version
+            # also add the wlan
+            match = re.search(r"(AX\d{3}|BE\d{3}|AC\d{4}|AC\d{3}|\b[89]\d{3}\b)", name, re.IGNORECASE)
+            if match:
+                results[DRIVER_WLAN] = match.group(0).upper()
+        elif (DRIVER_ISST in name):
+            results[DRIVER_ISST] = version
 
     return results
 
 def get_bios_version():
-    cmd = ["wmic", "bios", "get", "smbiosbiosversion"]
-    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
-    lines = [line.strip() for line in output.splitlines() if line.strip() and "SMBIOSBIOSVersion" not in line]
-    return lines[0] if lines else None
+    cmd = "Get-CimInstance Win32_BIOS | Select-Object -ExpandProperty SMBIOSBIOSVersion"
+    output = subprocess.check_output(
+        ["powershell", "-Command", cmd], shell=False
+    ).decode("utf-8", errors="ignore")
+    result = output.strip()
+    return result if result else None
 
 def get_platform_brand():
-    cmd = ["wmic", "csproduct", "get", "vendor"]
-    output = subprocess.check_output(cmd, shell=False).decode(errors="ignore")
-    lines = [l.strip() for l in output.splitlines() if l.strip() and "Vendor" not in l]
-    return lines[0] if lines else None
+    cmd = "Get-CimInstance Win32_ComputerSystemProduct | Select-Object -ExpandProperty Vendor"
+    output = subprocess.check_output(
+        ["powershell", "-Command", cmd], shell=False
+    ).decode(errors="ignore")
+    result = output.strip()
+    return result if result else None
 
 def get_platform_name():
-    cmd = ["wmic", "csproduct", "get", "name"]
-    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
-    lines = [l.strip() for l in output.splitlines() if l.strip() and "Name" not in l]
-    return lines[0] if lines else None
+    cmd = "Get-CimInstance Win32_ComputerSystemProduct | Select-Object -ExpandProperty Name"
+    output = subprocess.check_output(
+        ["powershell", "-Command", cmd], shell=False
+    ).decode("utf-8", errors="ignore")
+    result = output.strip()
+    return result if result else None
 
 def get_os_version():
     #get os version with UBR
@@ -239,10 +238,12 @@ def get_os_version():
     return f"{current_build}.{ubr}"
 
 def get_cpu_name():
-    cmd = ["wmic", "cpu", "get", "name"]
-    output = subprocess.check_output(cmd, shell=False).decode("utf-8", errors="ignore")
-    lines = [l.strip() for l in output.splitlines() if l.strip() and "Name" not in l]
-    return lines[0] if lines else None
+    cmd = "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty Name"
+    output = subprocess.check_output(
+        ["powershell", "-Command", cmd], shell=False
+    ).decode("utf-8", errors="ignore")
+    result = output.strip()
+    return result if result else None
 
 def get_teams_version():
     cmd = [

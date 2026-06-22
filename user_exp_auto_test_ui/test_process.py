@@ -283,7 +283,7 @@ def headset_init(
                     return True
                 else:
                     print("headset doesn't connet, click the power button to turn on")
-                    ser.write(command + b"\n")
+                    ser = safe_write(ser, command + b"\n")
                     time.sleep(12)
                     counter += 1
             return False
@@ -312,7 +312,7 @@ def headset_del(
                     return True
                 else:
                     print("headset still, click the power button to turn off")
-                    ser.write(command + b"\n")
+                    ser = safe_write(ser, command + b"\n")
                     time.sleep(10)
                     counter += 1
             return False
@@ -324,7 +324,7 @@ def voice_detect(ser: serial.Serial, command: bytes) -> bool:
     """
     Detect sound via Arduino response.
     """
-    ser.write(command + b"\n")
+    ser = safe_write(ser, command + b"\n")
     time.sleep(3)
     res = ser.read()
     print(f"*******************res = {res}***********************")
@@ -335,7 +335,7 @@ def buzzer_buzzing(ser: serial.Serial, command: bytes) -> bool:
     """
     Start buzzer output for input test flow.
     """
-    ser.write(command + b"\n")
+    ser = safe_write(ser, command + b"\n")
 
 
 def open_teams_call_and_join_meeting(t_control: MeetingControl) -> bool:
@@ -580,7 +580,7 @@ def mouse_keyboard_function_detect(
         pygame.display.set_mode((screen_width, screen_height))
 
         # control mouse clicking
-        ser.write(command + b"\n")
+        ser = safe_write(ser, command + b"\n")
         # Start checking input events.
         while counter < timeout_s:
             for event in pygame.event.get():
@@ -616,7 +616,7 @@ def mouse_keyboard_random_click(
         log_callback("keyboard random click start!", False)
 
     # control mouse randomly clicking
-    ser.write(command + b"\n")
+    ser = safe_write(ser, command + b"\n")
     # waiting for the mouse click end
     ser.read()
 
@@ -633,7 +633,7 @@ def mouse_function_detect_s3(
     """Configure delayed mouse action used by S3 flow."""
     print("BLE mouse function test setting...")
     cmd = f"4,{sleep_time}\n".encode()
-    ser.write(cmd)
+    ser = safe_write(ser, cmd)
     print(f"BLE mouse will click after {sleep_time} second! ")
     return True
 
@@ -681,22 +681,35 @@ def dut_states_init(
             Utils.run_sync_cmd(cmd=cmd_pwrtest)
 
 
-def safe_write(ser: serial.Serial, data, baudrate=115200):
+def safe_write(ser: serial.Serial, data, retries=3, baudrate=115200) -> serial.Serial:
+    """
+    Safe serial write with retry and reconnection logic.
+    Returns the (possibly reconnected) serial object.
+    """
     global g_COM_PORT
-    # Safe serial write command to avoid transient disconnect issues.
-    try:
-        ser.write(data)
-    except SerialException as e:
-        print(f"[WARN] Serial exception: {e}")
+    for attempt in range(retries):
         try:
-            ser.close()
-        except:
-            pass
-
-        time.sleep(1)  # wait a bit for device to re-enumerate
-        ser = serial.Serial(g_COM_PORT, baudrate, timeout=30)
-        ser.write(data)
-        ser.close()
+            ser.write(data)
+            return ser
+        except (SerialException, OSError) as e:
+            print(f"[WARN] Serial write failed (attempt {attempt + 1}/{retries}): {e}")
+            try:
+                ser.close()
+            except Exception:
+                pass
+            time.sleep(2)
+            try:
+                if wait_for_port(g_COM_PORT, timeout=5):
+                    ser = serial.Serial(g_COM_PORT, baudrate, timeout=30)
+                    time.sleep(1)
+                else:
+                    print(f"[WARN] COM port {g_COM_PORT} not available")
+            except Exception as reconnect_err:
+                print(f"[WARN] Reconnect failed: {reconnect_err}")
+    # Final attempt after all retries exhausted
+    print("[ERROR] safe_write: all retries failed, attempting last write")
+    ser.write(data)
+    return ser
 
 
 
@@ -725,15 +738,15 @@ def mouse_latency(
     latency_list = []
     for _ in range(15):
         if waked_flag:
-            ser.write(CMD_mouse_latency + b"\n")
+            ser = safe_write(ser, CMD_mouse_latency + b"\n")
             ser.flush()
             time.sleep(1)
         with mouse.Listener(on_click=on_click) as listener:
             start = time.perf_counter()  # mark the time
             if with_keyboard_flag:
-                ser.write(CMD_mouse_latency_with_keyboard + b"\n")
+                ser = safe_write(ser, CMD_mouse_latency_with_keyboard + b"\n")
             else:
-                ser.write(CMD_mouse_latency + b"\n")
+                ser = safe_write(ser, CMD_mouse_latency + b"\n")
             ser.flush()
             listener.join(timeout=5)
             if listener.is_alive():
@@ -788,16 +801,16 @@ def keyboard_latency(
     for _ in range(15):
 
         if waked_flag:
-            ser.write(CMD_keyboard_latency + b"\n")
+            ser = safe_write(ser, CMD_keyboard_latency + b"\n")
             ser.flush()
             time.sleep(1)
 
         with keyboard.Listener(on_press=on_press) as listener:
             start = time.perf_counter()  # mark the time
             if with_mouse_flag:
-                ser.write(CMD_keyboard_latency_with_mouse + b"\n")
+                ser = safe_write(ser, CMD_keyboard_latency_with_mouse + b"\n")
             else:
-                ser.write(CMD_keyboard_latency + b"\n")
+                ser = safe_write(ser, CMD_keyboard_latency + b"\n")
             ser.flush()
             listener.join(timeout=5)
             if listener.is_alive():
@@ -830,7 +843,7 @@ def keyboard_latency(
 def serial_test(ser: serial.Serial):
     for _ in range(10):
         start = time.perf_counter()  # mark the time
-        ser.write(CMD_test + b"\n")  # example: send 'C' = click command
+        ser = safe_write(ser, CMD_test + b"\n")  # example: send 'C' = click command
         ser.flush()
         ser.read()
         end = time.perf_counter()
