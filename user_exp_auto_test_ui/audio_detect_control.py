@@ -68,15 +68,40 @@ class AudioDetectController:
 
 
     def device_checking(self)->int:
-        info = self.__audio.get_host_api_info_by_index(0)
+        info = self.__audio.get_host_api_info_by_index(1)
         numdevices = info.get('deviceCount')
+        input_index = -1
+        output_found = False
         for i in range(0, numdevices):
-            if (self.__audio.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-                dev_name = self.__audio.get_device_info_by_host_api_device_index(0, i).get('name')
-                print(dev_name)
-                if self.__headset_name in dev_name:
-                    return i
-        return -1
+            dev_info = self.__audio.get_device_info_by_host_api_device_index(1, i)
+            dev_name = dev_info.get('name', '')
+            if self.__headset_name not in dev_name:
+                continue
+            default_sample_rate = dev_info.get('defaultSampleRate', 0)
+            if default_sample_rate <= 0:
+                logger.error(f'Device "{dev_name}" has invalid sample rate: {default_sample_rate}')
+                continue
+            if dev_info.get('hostApi') is None:
+                logger.error(f'Device "{dev_name}" has no valid host API')
+                continue
+            # Check input (mic) endpoint
+            if dev_info.get('maxInputChannels') > 0 and input_index < 0:
+                input_index = dev_info.get('index')
+                print(f'Mic endpoint "{dev_name}" found, index={input_index}, '
+                      f'sampleRate={default_sample_rate}, inputChannels={dev_info.get("maxInputChannels")}')
+            # Check output (audio) endpoint
+            if dev_info.get('maxOutputChannels') > 0:
+                output_found = True
+                logger.info(f'Audio endpoint "{dev_name}" found, index={dev_info.get("index")}, '
+                      f'sampleRate={default_sample_rate}, outputChannels={dev_info.get("maxOutputChannels")}')
+
+        if input_index < 0:
+            logger.error(f'Headset "{self.__headset_name}" mic endpoint not found')
+            return -1
+        if not output_found:
+            logger.error(f'Headset "{self.__headset_name}" audio output endpoint not found')
+            return -1
+        return input_index
     
     def audio_dect_terminate(self):
         if self.__audio :
@@ -84,8 +109,9 @@ class AudioDetectController:
  
      
 if __name__ == '__main__':
-    headset = "WL5024"
+    headset = "LE-Logitech Zone Wireless 2"
     ad_Controller = AudioDetectController(headset= headset, threshold=500)
+    print(ad_Controller.device_checking())
      
     #else:
         #print('device dont exist')
